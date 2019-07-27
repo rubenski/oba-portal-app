@@ -1,0 +1,30 @@
+:host {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-box {
+  padding: 0px 50px 0px 0px;
+}
+
+.n {
+  display: none;
+}
+
+.h {
+  visibility: hidden;
+  height: 20px;
+}
+
+.c {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.o {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}

@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+
+@font-face {
+  font-family: 'ubuntu';
+  src: url('/ubuntu-r-webfont.woff2') format('woff2'),
+  url('/ubuntu-r-webfont.woff') format('woff');
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body, html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+nav a {
+  display: block;
+}
+
+.main {
+  place-content: center space-around;
+}
+
+a[target="_blank"]:after {
+  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+  margin: 0 3px 0 5px;
+}

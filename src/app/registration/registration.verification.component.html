@@ -1,0 +1,22 @@
+<h1>Verify your account registration</h1>
+<br/>
+<br/>
+<div fxLayout="row" fxFlex="100">
+  <div fxLayout="column" fxFlex="350px" class="form-box" *ngIf="!success">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" #verificationForm="ngForm">
+      <div class="form-group">
+        <label for="verificationCode">Verification code</label>
+        <input type="text" class="form-control" name="verificationCode" id="verificationCode"
+               [(ngModel)]="verificationCode"
+               #verificationCodeField="ngModel" required maxlength="20" appNotEmpty>
+        <div [hidden]="!(verificationCodeField.touched && verificationCodeField.invalid)" class="alert alert-danger">
+          Please provide the code from the verification email you received
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!verificationForm.form.valid">Send</button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="success">
+    Thank you! You can now <a routerLink="/login">log in</a>!
+  </div>
+</div>
