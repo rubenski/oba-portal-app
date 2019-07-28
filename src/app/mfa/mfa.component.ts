@@ -15,13 +15,18 @@ export class MfaComponent {
 
   onSubmitMfa() {
     if (this.scenario === 'verify') {
+      // Called after first login of the user and right after user set up his Authy/Google Authenticator account
       this.cognitoUser.verifySoftwareToken(this.totp, 'My TOTP device', {
         onSuccess: session => {
+          console.log(session);
         },
         onFailure: err => {
+          console.error(err);
         }
       });
+
     } else if (this.scenario === 'regular') {
+      // Called after every login
       this.cognitoUser.sendMFACode(this.totp, {
         onSuccess: session => {
           console.log(session);

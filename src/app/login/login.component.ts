@@ -27,10 +27,8 @@ export class LoginComponent implements CognitoCallback {
   public cognitoUser: CognitoUser;
   public showMfa;
 
-
   onSubmitLogin() {
     this.loginService.authenticate(this.credentials, this);
-
   }
 
   processCallback(message: string, result: any): void {
