@@ -54,7 +54,7 @@ export class RegistrationService {
 
     attributeList.push(firstName, lastName, email);
 
-    userPool.signUp(registration.username, registration.password, attributeList, null, callback);
+    userPool.signUp(registration.dqwuh, registration.password, attributeList, null, callback);
 
 
   }

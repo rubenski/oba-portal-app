@@ -34,14 +34,6 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" name="username" id="username"
-               [(ngModel)]="registration.username" #username=ngModel maxlength="100" appNotEmpty>
-        <div [hidden]="!(username.touched && username.invalid)" class="alert alert-danger">username name is
-          required
-        </div>
-      </div>
-      <div class="form-group">
         <label for="dqwuh">Work email</label>
         <input type="text" class="form-control" name="dqwuh" id="dqwuh" [(ngModel)]="registration.dqwuh"
                #workEmail="ngModel" [email]="true" required maxlength="100" appNotEmpty>

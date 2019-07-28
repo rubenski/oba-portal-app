@@ -1,0 +1,10 @@
+<form (ngSubmit)="onSubmitMfa()" #loginForm="ngForm">
+  <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
+  <div class="form-group">
+    <label for="totp">MFA code</label>
+    <input type="text" class="form-control" name="totp" id="totp"
+           [(ngModel)]="totp" appNotEmpty #totpassword=ngModel>
+    <div [hidden]="!(totpassword.touched && totpassword.invalid)" class="alert alert-danger">MFA code is required</div>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Submit</button>
+</form>

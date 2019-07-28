@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Credentials} from './login/login.component';
-import {CognitoCallback} from './shared/cognito.callback';
+import {Credentials} from './login.component';
+import {CognitoCallback} from '../shared/cognito.callback';
 import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
-import {CognitoUtil} from './cognito.util';
+import {CognitoUtil} from '../cognito.util';
 
 @Injectable({
   providedIn: 'root',
@@ -38,13 +38,15 @@ export class LoginService {
             onFailure: err => this.onLoginError(cognitoCallback, err)
           });
         });
-      }
-    });
+      },
+      totpRequired: (challengeName, challengeParameters) => cognitoCallback.handleTotpRequired(challengeName, challengeParameters, cognitoUser)
+    })
+    ;
   }
 
   private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
     console.log(session);
-  }
+  };
 
   private onLoginError(cognitoCallback: CognitoCallback, err: any) {
     console.log(err);

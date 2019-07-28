@@ -8,6 +8,5 @@ export class Registration {
   dqwuh: string; // this is the actual email address
   email: string; // this is the honeypot email address
   name: string;
-  username: any;
-  // this is the honeypot name
+
 }

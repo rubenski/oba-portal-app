@@ -7,4 +7,6 @@ export interface CognitoCallback {
   handleMFAStep(challengeName: any, challengeParameters: any, param3: (confirmationCode: string) => void): void;
 
   handleMFASetup(challengeName: any, challengeParameters: any, cognitoUser: CognitoUser);
+
+  handleTotpRequired(challengeName, challengeParameters, cognitoUser: CognitoUser);
 }
