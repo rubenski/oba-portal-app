@@ -6,5 +6,6 @@
            [(ngModel)]="totp" appNotEmpty #totpassword=ngModel>
     <div [hidden]="!(totpassword.touched && totpassword.invalid)" class="alert alert-danger">MFA code is required</div>
   </div>
+
   <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Submit</button>
 </form>

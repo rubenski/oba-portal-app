@@ -1,30 +1,22 @@
-@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+@font-face {
+  font-family: "PTSans-Regular";
+  src: url("/assets/font/PTSans-Regular.eot");
+  src: url("/assets/font/PTSans-Regular.ttf") format("truetype"),
+  url("/assets/font/PTSans-Regular.otf") format("opentype"),
+  url("/assets/font/PTSans-Regular.woff") format("woff"),
+  url("/assets/font/PTSans-Regular.woff2") format("woff2");
+}
 
 @font-face {
-  font-family: 'ubuntu';
-  src: url('/ubuntu-r-webfont.woff2') format('woff2'),
-  url('/ubuntu-r-webfont.woff') format('woff');
+  font-family: "Assistant";
+  src: url("/assets/font/Assistant-Regular.ttf") format("truetype"),
+  url("/assets/font/Assistant-Regular.woff") format("woff");
 }
 
+html {
+  background-image: url("/assets/img/europe.jpg");
+}
 body {
-  display: flex;
-  flex-direction: column;
-}
-
-body, html {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-}
-nav a {
-  display: block;
-}
-
-.main {
-  place-content: center space-around;
-}
-
-a[target="_blank"]:after {
-  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
-  margin: 0 3px 0 5px;
+  font-family: 'Assistant', sans-serif;
+  background-color: unset;
 }

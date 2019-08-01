@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -14,12 +13,12 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
-    data: {showHeader: false, showSidebar: false}
+    data: {showHeader: true, showSidebar: false}
   },
   {
     path: 'register',
     loadChildren: './registration/registration.module#RegistrationModule',
-    data: {showHeader: false, showSidebar: false}
+    data: {showHeader: true, showSidebar: false}
   },
   {
     path: 'customers',

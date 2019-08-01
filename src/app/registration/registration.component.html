@@ -1,8 +1,7 @@
 <h1>Get a developer account</h1>
-<br/>
-<br/>dwwddddd
-<div fxLayout="row" fxFlex="100">
-  <div fxLayout="column" fxFlex="350px" class="form-box">
+
+<div class="row">
+  <div class="col mr-5">
     <form autocomplete="off" (ngSubmit)="onSubmitRegistration()" #registrationForm="ngForm">
 
       <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
@@ -68,11 +67,8 @@
         <input type="text" class="form-control" name="name" id="name" [(ngModel)]="registration.name"
                autocomplete="new-password">
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!registrationForm.form.valid">Send</button>
-
+      <button type="submit" class="btn btn-success" [disabled]="!registrationForm.form.valid">Register</button>
     </form>
   </div>
-  <div fxLayout="column" fxFlex class="form-box">
-    Register for a developer account and get access to OBAs API within a few minutes.
-  </div>
+  <div class="col">Hello</div>
 </div>

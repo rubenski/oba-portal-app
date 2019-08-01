@@ -1,7 +1,18 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <div>Header</div>
-  <div fxLayout="row" fxLayoutGap="20px">
-    <a routerLink="/login">Login</a>
-    <a routerLink="/register">Registration</a>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="/assets/img/oba.png" width="52" height="60" alt="">
+    </a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [class.active]="isHomePage()">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item" [class.active]="isRegister()">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li class="nav-item" [class.active]="isLogin()">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+    </ul>
   </div>
-</div>
+</nav>
