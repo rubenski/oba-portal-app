@@ -25,6 +25,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.registrationForm.form.setErrors({});
   }
 
   onSubmitRegistration() {

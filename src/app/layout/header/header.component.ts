@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   isRegister() {
-    return this.router.url === '/register';
+    return this.router.url.includes('/register');
   }
 
   isLogin() {

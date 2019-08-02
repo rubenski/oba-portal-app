@@ -16,7 +16,6 @@ export class CustomerService {
 
   private customersUrl = '/customers';
 
-
   constructor(
     private http: HttpClient,
     private messageService: MessageService) {

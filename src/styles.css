@@ -16,7 +16,26 @@
 html {
   background-image: url("/assets/img/europe.jpg");
 }
+
 body {
   font-family: 'Assistant', sans-serif;
   background-color: unset;
+}
+
+h1 {
+  font-size: 2rem;
+  padding-bottom: 2rem;
+}
+
+app-header {
+  min-height: 10vh;
+}
+
+.content {
+  background-color: white;
+  min-height: 80vh;
+}
+
+label {
+  font-weight: bold;
 }

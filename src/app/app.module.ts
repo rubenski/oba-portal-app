@@ -12,7 +12,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {LayoutModule} from './layout/layout.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
-import { PageComponent } from './page/page.component';
 import {CognitoUtil} from './cognito.util';
 import {RegistrationService} from './registration.service';
 
@@ -33,7 +32,6 @@ import {RegistrationService} from './registration.service';
     LayoutModule
   ],
   exports: [
-
   ],
   providers: [CognitoUtil, RegistrationService],
   bootstrap: [AppComponent]
