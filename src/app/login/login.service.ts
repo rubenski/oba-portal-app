@@ -3,13 +3,17 @@ import {Credentials} from './login.component';
 import {CognitoCallback} from '../shared/cognito.callback';
 import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
 import {CognitoUtil} from '../cognito.util';
+import {HttpClient} from '@angular/common/http';
+import {AppConstants} from '../app.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
 
-  constructor(private cognito: CognitoUtil) {
+  private sessionUrl = AppConstants.API_HOST + '/sessions/';
+
+  constructor(private cognito: CognitoUtil, private http: HttpClient) {
   }
 
   authenticate(credentials: Credentials, cognitoCallback: CognitoCallback) {
@@ -42,6 +46,10 @@ export class LoginService {
       totpRequired: (challengeName, challengeParameters) => cognitoCallback.handleTotpRequired(challengeName, challengeParameters, cognitoUser)
     })
     ;
+  }
+
+  cognitoTokenToOba(token: any) {
+    return this.http.post(this.sessionUrl, token);
   }
 
   private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Registration} from '../registration';
-import {RegistrationService} from '../registration.service';
+import {RegistrationService} from './registration.service';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 

@@ -1,16 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, tap} from 'rxjs/operators';
-import {AppConstants} from './app.constants';
-import {Registration} from './registration';
-import {MessageService} from './message.service';
-import {CognitoUtil} from './cognito.util';
-import {EmailValidator} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {AppConstants} from '../app.constants';
+import {Registration} from '../registration';
+import {MessageService} from '../message.service';
+import {CognitoUtil} from '../cognito.util';
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +22,11 @@ export class RegistrationService {
 
   addRegistration1(registration: Registration, callback): any {
 
+    if (registration.companyLocation || registration.email) {
+      return;
+    }
 
     const userPool = this.cognitoUtil.getUserPool();
-    console.log(userPool);
-    const currentUser = userPool.getCurrentUser();
-    console.log(currentUser);
-
-
     const attributeList = [];
 
     const firstName = {
@@ -51,12 +44,9 @@ export class RegistrationService {
       Value: registration.dqwuh
     };
 
-
     attributeList.push(firstName, lastName, email);
 
     userPool.signUp(registration.dqwuh, registration.password, attributeList, null, callback);
-
-
   }
 
   private log(message: string) {

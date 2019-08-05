@@ -47,12 +47,9 @@ export class LoginComponent implements CognitoCallback {
     cognitoUser.associateSoftwareToken({
       associateSecretCode: (secretCode: string) => {
         const url = 'otpauth://totp/OBA:' + cognitoUser.getUsername() + '?secret=' + secretCode;
-
         QRCode.toDataURL(url, (err, dataUrl) => {
-
           this.image = this.sanitizer.bypassSecurityTrustUrl(dataUrl);
         });
-        console.log(secretCode);
         this.cognitoUser = cognitoUser;
       },
       onFailure: (err: any) => {

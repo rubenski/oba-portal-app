@@ -13,7 +13,7 @@ import {LayoutModule} from './layout/layout.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
 import {CognitoUtil} from './cognito.util';
-import {RegistrationService} from './registration.service';
+import {RegistrationService} from './registration/registration.service';
 
 @NgModule({
   declarations: [

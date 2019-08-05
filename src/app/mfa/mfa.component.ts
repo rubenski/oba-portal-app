@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CognitoUser} from 'amazon-cognito-identity-js';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {LoginService} from '../login/login.service';
+import * as AWS from 'aws-sdk';
 
 @Component({
   selector: 'app-mfa',
@@ -17,7 +19,7 @@ export class MfaComponent implements OnInit {
   totp: any;
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private loginService: LoginService) {
   }
 
   ngOnInit() {
@@ -31,28 +33,42 @@ export class MfaComponent implements OnInit {
       this.cognitoUser.verifySoftwareToken(this.totp, 'My TOTP device', {
         onSuccess: session => {
           console.log(session);
-          this.router.navigate(['/portal']);
+          this.submitTokenToObaPortal(session);
         },
         onFailure: err => {
           this.globalError = 'shit verify';
         }
       });
-
     } else if (this.scenario === 'regular') {
       // Called after every login
       this.cognitoUser.sendMFACode(this.totp, {
         onSuccess: session => {
           console.log(session);
+          this.submitTokenToObaPortal(session);
         },
         onFailure: err => {
           if (err.code === 'CodeMismatchException') {
             this.globalError = 'Invalid code. Try again.';
+          } else if (err.code === 'NotAuthorizedException') {
+            this.globalError = 'Please log in again';
           }
         }
       }, 'SOFTWARE_TOKEN_MFA');
     } else {
       console.error('Unknown scenario for MFA');
     }
+  }
+
+  submitTokenToObaPortal(token: any) {
+    this.loginService.cognitoTokenToOba(token).subscribe(
+      data => {
+        console.log('POST Request is successful ', data);
+        this.router.navigate(['/portal']);
+      },
+      error => {
+        console.log('Error', error);
+      }
+    );
   }
 
 }

@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {MessageService} from './message.service';
+import {MessageService} from '../message.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
-import {Page} from './page';
-import {AppConstants} from './app.constants';
+import {Page} from '../page';
+import {AppConstants} from '../app.constants';
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json', Origin: 'http://localhost:4200'})
-};
 
 @Injectable({
   providedIn: 'root'
