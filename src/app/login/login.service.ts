@@ -4,14 +4,17 @@ import {CognitoCallback} from '../shared/cognito.callback';
 import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
 import {CognitoUtil} from '../cognito.util';
 import {HttpClient} from '@angular/common/http';
-import {AppConstants} from '../app.constants';
+import {environment} from '../../environments/environment';
+import {catchError, tap} from 'rxjs/operators';
+import {Page} from '../page';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
 
-  private sessionUrl = AppConstants.API_HOST + '/sessions/';
+  private sessionUrl = environment.obaPortalBackendHostName + '/sessions/';
+  private organizationUrl = environment.obaPortalBackendHostName + '/organization/';
 
   constructor(private cognito: CognitoUtil, private http: HttpClient) {
   }
@@ -48,15 +51,20 @@ export class LoginService {
     ;
   }
 
-  cognitoTokenToOba(token: any) {
+  getObaSession(token: any) {
     return this.http.post(this.sessionUrl, token);
+  }
+
+  createOrganization(token: any) {
+    return this.http.post(this.organizationUrl, token);
   }
 
   private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
     console.log(session);
-  };
+  }
 
   private onLoginError(cognitoCallback: CognitoCallback, err: any) {
     console.log(err);
   }
+
 }

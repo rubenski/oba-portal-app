@@ -1,12 +1,14 @@
 <form (ngSubmit)="onSubmitMfa()" #totpForm="ngForm">
   <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
-  <p>Use the authenticator app on your mobile phone to get a one time password (OTP) for your OBA account</p>
-  <div class="form-group">
-    <label for="totp">OTP</label>
-    <input type="text" class="form-control" name="totp" id="totp"
-           [(ngModel)]="totp" appNotEmpty #totpassword=ngModel required>
-    <div [hidden]="!(totpassword.touched && totpassword.invalid)" class="alert alert-danger">OTP is required</div>
-  </div>
+  <div *ngIf="validCognitoSession">
+    <p>Use the authenticator app on your mobile phone to get a one time password (OTP) for your OBA account</p>
+    <div class="form-group">
+      <label for="totp">OTP</label>
+      <input type="text" class="form-control" name="totp" id="totp"
+             [(ngModel)]="totp" appNotEmpty #totpassword=ngModel required>
+      <div [hidden]="!(totpassword.touched && totpassword.invalid)" class="alert alert-danger">OTP is required</div>
+    </div>
 
-  <button type="submit" class="btn btn-success" [disabled]="!totpForm.form.valid">Submit</button>
+    <button type="submit" class="btn btn-success" [disabled]="!totpForm.form.valid">Submit</button>
+  </div>
 </form>

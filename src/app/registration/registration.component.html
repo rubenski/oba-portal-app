@@ -25,10 +25,10 @@
         <div [hidden]="!(lastName.touched && lastName.invalid)" class="alert alert-danger">Last name is required</div>
       </div>
       <div class="form-group">
-        <label for="companyName">Company name</label>
-        <input type="text" class="form-control" name="companyName" id="companyName"
-               [(ngModel)]="registration.companyName" #companyName=ngModel maxlength="100" appNotEmpty>
-        <div [hidden]="!(companyName.touched && companyName.invalid)" class="alert alert-danger">Company name is
+        <label for="organizationName">Organization name</label>
+        <input type="text" class="form-control" name="organizationName" id="organizationName"
+               [(ngModel)]="registration.organizationName" #organizationName=ngModel maxlength="100" appNotEmpty>
+        <div [hidden]="!(organizationName.touched && organizationName.invalid)" class="alert alert-danger">Organization name is
           required
         </div>
       </div>

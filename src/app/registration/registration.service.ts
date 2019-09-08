@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {AppConstants} from '../app.constants';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Registration} from '../registration';
-import {MessageService} from '../message.service';
 import {CognitoUtil} from '../cognito.util';
+import {environment} from '../../environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 
 @Injectable({
@@ -12,15 +14,14 @@ import {CognitoUtil} from '../cognito.util';
 })
 export class RegistrationService {
 
-  private registrationServiceUrl = AppConstants.API_HOST + '/registrations/';
+  private customersUrl = environment.obaPortalBackendHostName + '/registrations/';
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService,
     private cognitoUtil: CognitoUtil) {
   }
 
-  addRegistration1(registration: Registration, callback): any {
+  registerWithCognitoUserPool(registration: Registration, callback): any {
 
     if (registration.companyLocation || registration.email) {
       return;
@@ -46,25 +47,12 @@ export class RegistrationService {
 
     attributeList.push(firstName, lastName, email);
 
+    // Register at Cognito user pool
     userPool.signUp(registration.dqwuh, registration.password, attributeList, null, callback);
   }
 
-  private log(message: string) {
-    this.messageService.add(`CustomerService: ${message}`);
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+  registerWithOba(registration: Registration) {
+    return this.http.post(this.customersUrl, registration, httpOptions);
   }
 
 }

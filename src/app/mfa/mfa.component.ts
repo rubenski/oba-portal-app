@@ -3,7 +3,6 @@ import {CognitoUser} from 'amazon-cognito-identity-js';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {LoginService} from '../login/login.service';
-import * as AWS from 'aws-sdk';
 
 @Component({
   selector: 'app-mfa',
@@ -17,9 +16,11 @@ export class MfaComponent implements OnInit {
   @Input() cognitoUser: CognitoUser;
   globalError: any;
   totp: any;
+  validCognitoSession: boolean;
 
 
   constructor(private router: Router, private loginService: LoginService) {
+    this.validCognitoSession = true;
   }
 
   ngOnInit() {
@@ -33,10 +34,14 @@ export class MfaComponent implements OnInit {
       this.cognitoUser.verifySoftwareToken(this.totp, 'My TOTP device', {
         onSuccess: session => {
           console.log(session);
-          this.submitTokenToObaPortal(session);
+          this.exchangeCognitoTokenForObaSession(session.getIdToken());
         },
         onFailure: err => {
-          this.globalError = 'shit verify';
+          if (err.name === 'EnableSoftwareTokenMFAException') {
+            this.globalError = 'Invalid code. Try again.';
+          } else {
+            this.globalError = 'A technical error occurred';
+          }
         }
       });
     } else if (this.scenario === 'regular') {
@@ -44,13 +49,14 @@ export class MfaComponent implements OnInit {
       this.cognitoUser.sendMFACode(this.totp, {
         onSuccess: session => {
           console.log(session);
-          this.submitTokenToObaPortal(session);
+          this.exchangeCognitoTokenForObaSession(session.getIdToken());
         },
         onFailure: err => {
           if (err.code === 'CodeMismatchException') {
             this.globalError = 'Invalid code. Try again.';
           } else if (err.code === 'NotAuthorizedException') {
-            this.globalError = 'Please log in again';
+            this.globalError = 'Login failed. Please try logging in again.';
+            this.validCognitoSession = false;
           }
         }
       }, 'SOFTWARE_TOKEN_MFA');
@@ -59,16 +65,17 @@ export class MfaComponent implements OnInit {
     }
   }
 
-  submitTokenToObaPortal(token: any) {
-    this.loginService.cognitoTokenToOba(token).subscribe(
+
+  exchangeCognitoTokenForObaSession(token: any) {
+    this.loginService.getObaSession(token).subscribe(
       data => {
         console.log('POST Request is successful ', data);
         this.router.navigate(['/portal']);
       },
       error => {
         console.log('Error', error);
+        this.globalError = 'An error occurred. Could not log in at OBA.';
       }
     );
   }
-
 }

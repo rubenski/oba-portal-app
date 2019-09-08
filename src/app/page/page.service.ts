@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {MessageService} from '../message.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
 import {Page} from '../page';
-import {AppConstants} from '../app.constants';
+import {environment} from '../../environments/environment';
 
 
 @Injectable({
@@ -12,7 +12,7 @@ import {AppConstants} from '../app.constants';
 })
 export class PageService {
 
-  private pagesUrl = AppConstants.API_HOST + '/pages/';
+  private pagesUrl = environment.obaPortalBackendHostName + '/pages/';
 
   constructor(
     private http: HttpClient,

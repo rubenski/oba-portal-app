@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  obaPortalBackendHostName: 'https://localhost:8445',
+  awsCognitoClientId: '7gtcjjr5gun8tke5057qae082b',
+  obaCognitoUserPoolId: 'eu-central-1_KKiWSBK07'
 };
 
 /*

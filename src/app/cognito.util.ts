@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CognitoUserPool} from 'amazon-cognito-identity-js';
 import {CognitoUser} from 'amazon-cognito-identity-js';
-import {AppConstants} from './app.constants';
+import {environment} from '../environments/environment';
 
 /**
  * Code taken from https://github.com/awslabs/aws-cognito-angular-quickstart
@@ -11,8 +11,8 @@ import {AppConstants} from './app.constants';
 export class CognitoUtil {
 
   public static _POOL_DATA: any = {
-    UserPoolId: AppConstants.AWS_OBA_USER_POOL_ID,
-    ClientId: AppConstants.AWS_COGNITO_CLIENT_ID
+    UserPoolId: environment.obaCognitoUserPoolId,
+    ClientId: environment.awsCognitoClientId
   };
 
   getUserPool(): CognitoUserPool {

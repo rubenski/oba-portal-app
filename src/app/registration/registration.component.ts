@@ -33,11 +33,13 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   add(): void {
-    this.registrationService.addRegistration1(this.registration, (err, result) => {
+    this.register();
+  }
+
+  register() {
+    this.registrationService.registerWithCognitoUserPool(this.registration, (err, result) => {
       if (err) {
-
         const code = err.code;
-
         if (code === 'UsernameExistsException') {
           this.registrationForm.form.controls.dqwuh.setErrors({emailExists: true});
           this.registrationForm.form.controls.dqwuh.markAsTouched();
@@ -45,9 +47,18 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
           this.globalError = 'A technical error occurred';
         }
       } else {
-        console.log('user: ' + result.user);
-        console.log(btoa(result.user.username));
-        this.router.navigate(['verify/' + btoa(result.user.username)], {relativeTo: this.route});
+        // Set the Cognito user id on the message for OBA
+        // TODO: change to OAUTH2 in the future to avoid ending up with orphaned users in Cognito. See ideas.
+        this.registration.cognitoUserId = result.userSub;
+        this.registrationService.registerWithOba(this.registration).subscribe(registration => {
+          this.router.navigate(['verify/' + btoa(result.user.username)], {relativeTo: this.route});
+        }, error => {
+          if (error.error.code === 'PRT003') {
+            this.globalError = 'This email address has already been registered';
+          } else {
+            this.globalError = 'A technical error occurred';
+          }
+        });
       }
     });
   }
