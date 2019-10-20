@@ -73,6 +73,7 @@ export class MfaComponent implements OnInit {
     this.loginService.getObaSession(token).subscribe(
       data => {
         console.log('POST Request is successful ', data);
+        this.loginService.setLoggedIn(true);
         this.router.navigate(['/admin']);
       },
       error => {

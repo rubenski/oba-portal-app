@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from './shared/AuthGuard';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: './admin-home/admin-home.module#AdminHomeModule',
-    data: {showHeader: true, admin: true}
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
   },
   {
     path: 'users',
@@ -48,7 +50,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }

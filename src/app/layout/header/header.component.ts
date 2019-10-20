@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {LoginService} from '../../login/login.service';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) {
-    console.log('Header constructor called');
-  }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
     console.log('header init!');
@@ -26,6 +25,10 @@ export class HeaderComponent implements OnInit {
 
   isLogin() {
     return this.router.url === '/login';
+  }
+
+  isLoggedIn() {
+    return this.loginService.isLoggedIn();
   }
 
 }

@@ -12,7 +12,7 @@ import {environment} from '../../environments/environment';
 export class LoginService {
 
   private sessionUrl = environment.obaPortalBackendHostName + '/sessions/';
-  private organizationUrl = environment.obaPortalBackendHostName + '/organization/';
+  private loggedIn = false;
 
   constructor(private cognito: CognitoUtil, private http: HttpClient) {
   }
@@ -49,17 +49,29 @@ export class LoginService {
     ;
   }
 
+  public logout() {
+    this.loggedIn = false;
+    return this.http.delete(this.sessionUrl);
+  }
+
+  public isLoggedIn() {
+    console.log('Logged in ? ' + this.loggedIn);
+    return this.loggedIn;
+  }
+
+  public setLoggedIn(loggedIn: boolean) {
+    this.loggedIn = loggedIn;
+  }
+
   getObaSession(token: any) {
     return this.http.post(this.sessionUrl, token);
   }
 
-  createOrganization(token: any) {
-    return this.http.post(this.organizationUrl, token);
-  }
-
   private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
+    console.log('Setting loggedIn = true');
+    this.loggedIn = true;
     console.log(session);
-  }
+  };
 
   private onLoginError(cognitoCallback: CognitoCallback, err: any) {
     console.log(err);
