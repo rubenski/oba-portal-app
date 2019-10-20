@@ -39,3 +39,7 @@ app-header {
 label {
   font-weight: bold;
 }
+
+.navbar {
+  background-color: #a7bed3;
+}

@@ -37,11 +37,7 @@ export class MfaComponent implements OnInit {
           this.exchangeCognitoTokenForObaSession(session.getIdToken());
         },
         onFailure: err => {
-          if (err.name === 'EnableSoftwareTokenMFAException') {
-            this.globalError = 'Invalid code. Try again.';
-          } else {
-            this.globalError = 'A technical error occurred';
-          }
+          this.handleMfaLoginError(err);
         }
       });
     } else if (this.scenario === 'regular') {
@@ -52,12 +48,7 @@ export class MfaComponent implements OnInit {
           this.exchangeCognitoTokenForObaSession(session.getIdToken());
         },
         onFailure: err => {
-          if (err.code === 'CodeMismatchException') {
-            this.globalError = 'Invalid code. Try again.';
-          } else if (err.code === 'NotAuthorizedException') {
-            this.globalError = 'Login failed. Please try logging in again.';
-            this.validCognitoSession = false;
-          }
+          this.handleMfaLoginError(err);
         }
       }, 'SOFTWARE_TOKEN_MFA');
     } else {
@@ -65,12 +56,24 @@ export class MfaComponent implements OnInit {
     }
   }
 
+  handleMfaLoginError(err) {
+    if (err.code === 'CodeMismatchException') {
+      this.globalError = 'Invalid code. Try again.';
+    } else if (err.code === 'NotAuthorizedException') {
+      this.globalError = 'Login failed. Please try logging in again.';
+      this.validCognitoSession = false;
+    } else if (err.name === 'EnableSoftwareTokenMFAException') {
+      this.globalError = 'Invalid code. Try again.';
+    } else {
+      this.globalError = 'A technical error occurred';
+    }
+  }
 
   exchangeCognitoTokenForObaSession(token: any) {
     this.loginService.getObaSession(token).subscribe(
       data => {
         console.log('POST Request is successful ', data);
-        this.router.navigate(['/portal']);
+        this.router.navigate(['/admin']);
       },
       error => {
         console.log('Error', error);

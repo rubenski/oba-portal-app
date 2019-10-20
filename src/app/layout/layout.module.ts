@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import {AdminHeaderComponent} from './admin-header/admin-header.component';
 
 @NgModule({
   imports: [
@@ -13,11 +14,13 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    AdminHeaderComponent
   ],
   declarations: [
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    AdminHeaderComponent
   ]
 })
 export class LayoutModule { }

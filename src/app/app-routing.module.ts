@@ -7,23 +7,32 @@ const routes: Routes = [
     redirectTo: '/page/home',
     pathMatch: 'full'
   },
-  {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule'},
-  {path: 'users', loadChildren: './users/users.module#UsersModule'},
-  {path: 'account-settings', loadChildren: './account-settings/account-settings.module#AccountSettingsModule'},
-  {
-    path: 'login',
-    loadChildren: './login/login.module#LoginModule',
-    data: {showHeader: true, showSidebar: false}
-  },
   {
     path: 'register',
     loadChildren: './registration/registration.module#RegistrationModule',
-    data: {showHeader: true, showSidebar: false}
+    data: {showHeader: true, admin: false}
   },
   {
-    path: 'customers',
-    loadChildren: './customers/customers.module#CustomersModule',
-    data: {showHeader: true, showSidebar: true}
+    path: 'login',
+    loadChildren: './login/login.module#LoginModule',
+    data: {showHeader: true, admin: false}
+  },
+  {
+    path: 'dashboard',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin-home/admin-home.module#AdminHomeModule',
+    data: {showHeader: true, admin: true}
+  },
+  {
+    path: 'users',
+    loadChildren: './users/users.module#UsersModule'
+  },
+  {
+    path: 'account-settings',
+    loadChildren: './account-settings/account-settings.module#AccountSettingsModule'
   },
   {
     path: 'site',

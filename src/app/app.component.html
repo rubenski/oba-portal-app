@@ -1,6 +1,7 @@
 <app-header *ngIf="showHeader"></app-header>
-<div class="container content mt-4 p-5 rounded-top">
-  <router-outlet></router-outlet>
+<div class="container content mt-4 p-0 rounded-top">
+  <app-admin-header *ngIf="admin"></app-admin-header>
+  <div class="p-4">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-
-

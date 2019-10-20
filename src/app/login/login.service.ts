@@ -5,8 +5,6 @@ import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cog
 import {CognitoUtil} from '../cognito.util';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {catchError, tap} from 'rxjs/operators';
-import {Page} from '../page';
 
 @Injectable({
   providedIn: 'root',

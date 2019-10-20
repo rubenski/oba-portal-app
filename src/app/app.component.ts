@@ -9,8 +9,7 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'Open Banking Accelerator Portal';
   showHeader = false;
-  showSidebar = false;
-  showFooter = false;
+  admin = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
@@ -18,8 +17,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showHeader = this.activatedRoute.firstChild.snapshot.data.showHeader !== false;
-        this.showSidebar = this.activatedRoute.firstChild.snapshot.data.showSidebar !== false;
-        this.showFooter = this.activatedRoute.firstChild.snapshot.data.showFooter !== false;
+        this.admin = this.activatedRoute.firstChild.snapshot.data.admin;
       }
     });
   }
