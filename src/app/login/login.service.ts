@@ -55,7 +55,6 @@ export class LoginService {
   }
 
   public isLoggedIn() {
-    console.log('Logged in ? ' + this.loggedIn);
     return this.loggedIn;
   }
 
@@ -64,14 +63,15 @@ export class LoginService {
   }
 
   getObaSession(token: any) {
-    return this.http.post(this.sessionUrl, token);
+    console.log('getting oba session');
+    return this.http.post(this.sessionUrl, token, {withCredentials: true});
   }
 
   private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
     console.log('Setting loggedIn = true');
     this.loggedIn = true;
     console.log(session);
-  };
+  }
 
   private onLoginError(cognitoCallback: CognitoCallback, err: any) {
     console.log(err);

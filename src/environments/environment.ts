@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  obaPortalBackendHostName: 'https://localhost:8445',
+  obaPortalBackendHostName: 'https://localhost/api',
   awsCognitoClientId: '7gtcjjr5gun8tke5057qae082b',
   obaCognitoUserPoolId: 'eu-central-1_KKiWSBK07'
 };
