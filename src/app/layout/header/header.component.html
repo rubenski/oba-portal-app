@@ -13,7 +13,7 @@
       <li *ngIf="!(isLoggedIn() | async)" class="nav-item" [class.active]="isLogin()">
         <a class="nav-link" routerLink="/login">Login</a>
       </li>
-      <li *ngIf="isLoggedIn() | async" class="nav-item">
+      <li *ngIf="isLoggedIn() | async" class="nav-item" [class.active]="isAdmin()">
         <a class="nav-link" routerLink="/admin">Admin</a>
       </li>
       <li *ngIf="isLoggedIn() | async" class="nav-item">

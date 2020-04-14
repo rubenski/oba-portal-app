@@ -36,4 +36,8 @@ export class HeaderComponent implements OnInit {
     this.loginService.logout();
     this.router.navigate(['/']);
   }
+
+  isAdmin() {
+    return this.router.url === '/admin';
+  }
 }

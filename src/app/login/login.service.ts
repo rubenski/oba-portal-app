@@ -52,6 +52,7 @@ export class LoginService {
   }
 
   public isLoggedIn() {
+    this.loggedIn.next(localStorage.getItem('loggedIn') === '1');
     return this.loggedIn.asObservable();
   }
 
