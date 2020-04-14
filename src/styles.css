@@ -43,3 +43,7 @@ label {
 .navbar {
   background-color: #a7bed3;
 }
+
+a {
+  cursor: pointer;
+}

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LoginService} from '../login/login.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -6,5 +7,6 @@ import {Component} from '@angular/core';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent {
+
 
 }

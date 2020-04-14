@@ -18,7 +18,6 @@ export class MfaComponent implements OnInit {
   totp: any;
   validCognitoSession: boolean;
 
-
   constructor(private router: Router, private loginService: LoginService) {
     this.validCognitoSession = true;
   }
@@ -33,7 +32,6 @@ export class MfaComponent implements OnInit {
       // Called after first login of the user and right after user set up his Authy/Google Authenticator account
       this.cognitoUser.verifySoftwareToken(this.totp, 'My TOTP device', {
         onSuccess: session => {
-          console.log(session);
           this.exchangeCognitoTokenForObaSession(session.getIdToken());
         },
         onFailure: err => {
@@ -70,9 +68,8 @@ export class MfaComponent implements OnInit {
   }
 
   exchangeCognitoTokenForObaSession(token: any) {
-    this.loginService.getObaSession(token).subscribe(
+    this.loginService.createObaSession(token).subscribe(
       data => {
-        console.log('POST Request is successful ', data);
         this.loginService.setLoggedIn(true);
         this.router.navigate(['/admin']);
       },

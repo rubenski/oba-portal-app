@@ -3,26 +3,28 @@ import {Credentials} from './login.component';
 import {CognitoCallback} from '../shared/cognito.callback';
 import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
 import {CognitoUtil} from '../cognito.util';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {AppConstants} from '../app.constants';
+import {BehaviorSubject} from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LoginService {
 
-  private sessionUrl = environment.obaPortalBackendHostName + '/sessions/';
-  private loggedIn = false;
+  private sessionsUrl = environment.obaPortalBackendHostName + '/sessions/';
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private cognito: CognitoUtil, private http: HttpClient) {
+    console.log('login service created');
   }
 
-  authenticate(credentials: Credentials, cognitoCallback: CognitoCallback) {
-    const authenticationData = {
+  login(credentials: Credentials, cognitoCallback: CognitoCallback) {
+    console.log('LOGIN called!');
+
+    const authenticationDetails = new AuthenticationDetails({
       Username: credentials.username,
       Password: credentials.password,
-    };
-    const authenticationDetails = new AuthenticationDetails(authenticationData);
+    });
 
     const userData = {
       Username: credentials.username,
@@ -32,49 +34,39 @@ export class LoginService {
     const cognitoUser = new CognitoUser(userData);
 
     cognitoUser.authenticateUser(authenticationDetails, {
-      newPasswordRequired: (userAttributes, requiredAttributes) => cognitoCallback.processCallback(`User needs to set password.`, null),
-      onSuccess: result => this.onLoginSuccess(cognitoCallback, result),
-      onFailure: err => this.onLoginError(cognitoCallback, err),
+      newPasswordRequired: (userAttributes, requiredAttributes) => console.log('method not implemented'),
+      onSuccess: result => console.log('method not implemented'),
+      onFailure: err => cognitoCallback.handleLoginError(err),
       mfaSetup: (challengeName: any, challengeParameters: any) => cognitoCallback.handleMFASetup(challengeName, challengeParameters, cognitoUser),
       mfaRequired: (challengeName, challengeParameters) => {
-        cognitoCallback.handleMFAStep(challengeName, challengeParameters, (confirmationCode: string) => {
-          cognitoUser.sendMFACode(confirmationCode, {
-            onSuccess: result => this.onLoginSuccess(cognitoCallback, result),
-            onFailure: err => this.onLoginError(cognitoCallback, err)
-          });
-        });
+        console.log('method not implemented');
       },
       totpRequired: (challengeName, challengeParameters) => cognitoCallback.handleTotpRequired(challengeName, challengeParameters, cognitoUser)
-    })
-    ;
+    });
   }
 
   public logout() {
-    this.loggedIn = false;
-    return this.http.delete(this.sessionUrl);
+    this.loggedIn.next(false);
+    localStorage.removeItem('loggedIn');
+    return this.http.delete(this.sessionsUrl);
   }
 
   public isLoggedIn() {
-    return this.loggedIn;
+    return this.loggedIn.asObservable();
   }
 
-  public setLoggedIn(loggedIn: boolean) {
-    this.loggedIn = loggedIn;
-  }
-
-  getObaSession(token: any) {
+  createObaSession(token: any) {
     console.log('getting oba session');
-    return this.http.post(this.sessionUrl, token, {withCredentials: true});
+    return this.http.post(this.sessionsUrl, token, {headers: new HttpHeaders({Host: AppConstants.HOST}), withCredentials: true});
   }
 
-  private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
-    console.log('Setting loggedIn = true');
-    this.loggedIn = true;
-    console.log(session);
+  private async handleError() {
+    console.log('error!');
   }
 
-  private onLoginError(cognitoCallback: CognitoCallback, err: any) {
-    console.log(err);
+  public setLoggedIn(b: boolean) {
+    this.loggedIn.next(true);
+    localStorage.setItem('loggedIn', '1');
   }
 
 }

@@ -9,7 +9,8 @@ import {LoginService} from '../../login/login.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(private router: Router, private loginService: LoginService) {
+  }
 
   ngOnInit() {
     console.log('header init!');
@@ -31,4 +32,8 @@ export class HeaderComponent implements OnInit {
     return this.loginService.isLoggedIn();
   }
 
+  logOut() {
+    this.loginService.logout();
+    this.router.navigate(['/']);
+  }
 }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {CognitoUtil} from '../cognito.util';
 import {LoginService} from './login.service';
 import {CognitoCallback} from '../shared/cognito.callback';
-import {CognitoUser, CognitoUserPool, CognitoUserSession, ICognitoStorage, ICognitoUserData} from 'amazon-cognito-identity-js';
+import {CognitoUser} from 'amazon-cognito-identity-js';
 import * as QRCode from 'qrcode';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -28,20 +28,11 @@ export class LoginComponent implements CognitoCallback {
   public showMfa;
 
   onSubmitLogin() {
-    this.loginService.authenticate(this.credentials, this);
-  }
-
-  processCallback(message: string, result: any): void {
-    console.log(message);
-  }
-
-  handleMFAStep(challengeName: any, challengeParameters: any, param3: (confirmationCode: string) => void): void {
-    console.log(challengeName);
-    console.log(challengeParameters);
-    console.log(param3);
+    this.loginService.login(this.credentials, this);
   }
 
   handleMFASetup(challengeName: any, challengeParameters: any, cognitoUser: CognitoUser) {
+    console.log('handle mfa setup');
     this.cognitoUser = cognitoUser;
 
     cognitoUser.associateSoftwareToken({
@@ -59,8 +50,15 @@ export class LoginComponent implements CognitoCallback {
   }
 
   handleTotpRequired(challengeName, challengeParameters, cognitoUser: CognitoUser) {
+    console.log('handle totp required');
     this.cognitoUser = cognitoUser;
     this.showMfa = true;
   }
+
+  handleLoginError(error) {
+    this.globalError = error.message;
+  }
+
+
 
 }

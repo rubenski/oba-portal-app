@@ -5,16 +5,19 @@
     </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" [class.active]="isHomePage()">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" routerLink="/">Home</a>
       </li>
       <li class="nav-item" [class.active]="isRegister()">
         <a class="nav-link" routerLink="/register">Register</a>
       </li>
-      <li *ngIf="!isLoggedIn()" class="nav-item" [class.active]="isLogin()">
+      <li *ngIf="!(isLoggedIn() | async)" class="nav-item" [class.active]="isLogin()">
         <a class="nav-link" routerLink="/login">Login</a>
       </li>
-      <li *ngIf="isLoggedIn()" class="nav-item">
-        <a class="nav-link" routerLink="/logout">Logout</a>
+      <li *ngIf="isLoggedIn() | async" class="nav-item">
+        <a class="nav-link" routerLink="/admin">Admin</a>
+      </li>
+      <li *ngIf="isLoggedIn() | async" class="nav-item">
+        <a class="nav-link" (click)="logOut()">Logout</a>
       </li>
     </ul>
   </div>

@@ -11,7 +11,9 @@ export class AppComponent implements OnInit {
   showHeader = false;
   admin = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+
+  }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
