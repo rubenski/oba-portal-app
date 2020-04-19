@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Credentials} from './login.component';
 import {CognitoCallback} from '../shared/cognito.callback';
-import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
+import {AuthenticationDetails, CognitoUser} from 'amazon-cognito-identity-js';
 import {CognitoUtil} from '../cognito.util';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {AppConstants} from '../app.constants';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Session} from './session';
+
 
 @Injectable()
 export class LoginService {
@@ -46,28 +48,30 @@ export class LoginService {
   }
 
   public logout() {
+    console.log('logging out');
     this.loggedIn.next(false);
-    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('loggedInOrganization');
     return this.http.delete(this.sessionsUrl);
   }
 
   public isLoggedIn() {
-    this.loggedIn.next(localStorage.getItem('loggedIn') === '1');
+    if (localStorage.getItem('loggedInOrganization') != null) {
+      this.loggedIn.next(true);
+    }
     return this.loggedIn.asObservable();
   }
 
-  createObaSession(token: any) {
+  public getServerSession() {
+    return this.http.get<Session>(this.sessionsUrl, {headers: new HttpHeaders({Host: AppConstants.HOST}), withCredentials: true});
+  }
+
+  createObaSession(token: any): Observable<Session> {
     console.log('getting oba session');
-    return this.http.post(this.sessionsUrl, token, {headers: new HttpHeaders({Host: AppConstants.HOST}), withCredentials: true});
+    return this.http.post<Session>(this.sessionsUrl, token, {headers: new HttpHeaders({Host: AppConstants.HOST}), withCredentials: true});
   }
 
-  private async handleError() {
-    console.log('error!');
-  }
-
-  public setLoggedIn(b: boolean) {
+  public setLoggedIn(session: Session) {
     this.loggedIn.next(true);
-    localStorage.setItem('loggedIn', '1');
+    localStorage.setItem('loggedInOrganization', session.organizationId);
   }
-
 }

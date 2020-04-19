@@ -29,6 +29,7 @@ export class MfaComponent implements OnInit {
 
   onSubmitMfa() {
     if (this.scenario === 'verify') {
+      console.log('Verifying token');
       // Called after first login of the user and right after user set up his Authy/Google Authenticator account
       this.cognitoUser.verifySoftwareToken(this.totp, 'My TOTP device', {
         onSuccess: session => {
@@ -40,9 +41,10 @@ export class MfaComponent implements OnInit {
       });
     } else if (this.scenario === 'regular') {
       // Called after every login
+      console.log('Regular token');
       this.cognitoUser.sendMFACode(this.totp, {
         onSuccess: session => {
-          console.log(session);
+          console.log('Cognito session received: ' + session);
           this.exchangeCognitoTokenForObaSession(session.getIdToken());
         },
         onFailure: err => {
@@ -69,8 +71,9 @@ export class MfaComponent implements OnInit {
 
   exchangeCognitoTokenForObaSession(token: any) {
     this.loginService.createObaSession(token).subscribe(
-      data => {
-        this.loginService.setLoggedIn(true);
+      session => {
+        this.loginService.setLoggedIn(session);
+        console.log('Redirect to admin...' + JSON.stringify(session));
         this.router.navigate(['/admin']);
       },
       error => {
