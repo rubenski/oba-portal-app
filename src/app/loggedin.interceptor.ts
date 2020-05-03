@@ -3,12 +3,13 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from
 import {Observable, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {LoginService} from './login/login.service';
 
 @Injectable()
 export class LoggedinInterceptor implements HttpInterceptor {
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private loginService: LoginService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,8 +23,8 @@ export class LoggedinInterceptor implements HttpInterceptor {
       catchError((err: any) => {
         console.log('some error happened');
         if (err.status === 401 || err.status === 403) {
-          console.log('Routing to login page...')
-          this.router.navigate(['/login']);
+          console.log('Routing to login page...');
+          this.loginService.logout();
         }
 
         console.log(JSON.stringify(err));

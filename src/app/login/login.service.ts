@@ -8,6 +8,7 @@ import {environment} from '../../environments/environment';
 import {AppConstants} from '../app.constants';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Session} from './session';
+import {Router} from '@angular/router';
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class LoginService {
   private sessionsUrl = environment.obaPortalBackendHostName + '/sessions/';
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private cognito: CognitoUtil, private http: HttpClient) {
+  constructor(private cognito: CognitoUtil, private http: HttpClient, private router: Router) {
     console.log('login service created');
   }
 
@@ -51,7 +52,8 @@ export class LoginService {
     console.log('logging out');
     this.loggedIn.next(false);
     localStorage.removeItem('loggedInOrganization');
-    return this.http.delete(this.sessionsUrl);
+    this.router.navigate(['/login']);
+    this.http.delete(this.sessionsUrl);
   }
 
   public isLoggedIn() {
