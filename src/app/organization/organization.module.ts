@@ -15,4 +15,4 @@ import {OrganizationComponent} from './organization.component';
   ],
   declarations: [OrganizationComponent]
 })
-export class MfaModule { }
+export class OrganizationModule { }

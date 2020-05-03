@@ -31,34 +31,7 @@ _xamzrequire = function() {
         var _hidden = {};
         _hidden.toString();
         module.exports = AWS;
-        AWS.util.update(AWS, {
-            VERSION: "2.496.0",
-            Signers: {},
-            Protocol: {
-                Json: require("./protocol/json"),
-                Query: require("./protocol/query"),
-                Rest: require("./protocol/rest"),
-                RestJson: require("./protocol/rest_json"),
-                RestXml: require("./protocol/rest_xml")
-            },
-            XML: {
-                Builder: require("./xml/builder"),
-                Parser: null
-            },
-            JSON: {
-                Builder: require("./json/builder"),
-                Parser: require("./json/parser")
-            },
-            Model: {
-                Api: require("./model/api"),
-                Operation: require("./model/operation"),
-                Shape: require("./model/shape"),
-                Paginator: require("./model/paginator"),
-                ResourceWaiter: require("./model/resource_waiter")
-            },
-            apiLoader: require("./api_loader"),
-            EndpointCache: require("../vendor/endpoint-cache").EndpointCache
-        });
+        AWS.util.update(this.organization);
         require("./sequential_executor");
         require("./service");
         require("./config");
@@ -1454,109 +1427,7 @@ _xamzrequire = function() {
                     return paginator;
                 }
             });
-            AWS.util.update(AWS.Service, {
-                defineMethods: function defineMethods(svc) {
-                    AWS.util.each(svc.prototype.api.operations, function iterator(method) {
-                        if (svc.prototype[method]) return;
-                        var operation = svc.prototype.api.operations[method];
-                        if (operation.authtype === "none") {
-                            svc.prototype[method] = function(params, callback) {
-                                return this.makeUnauthenticatedRequest(method, params, callback);
-                            };
-                        } else {
-                            svc.prototype[method] = function(params, callback) {
-                                return this.makeRequest(method, params, callback);
-                            };
-                        }
-                    });
-                },
-                defineService: function defineService(serviceIdentifier, versions, features) {
-                    AWS.Service._serviceMap[serviceIdentifier] = true;
-                    if (!Array.isArray(versions)) {
-                        features = versions;
-                        versions = [];
-                    }
-                    var svc = inherit(AWS.Service, features || {});
-                    if (typeof serviceIdentifier === "string") {
-                        AWS.Service.addVersions(svc, versions);
-                        var identifier = svc.serviceIdentifier || serviceIdentifier;
-                        svc.serviceIdentifier = identifier;
-                    } else {
-                        svc.prototype.api = serviceIdentifier;
-                        AWS.Service.defineMethods(svc);
-                    }
-                    AWS.SequentialExecutor.call(this.prototype);
-                    if (!this.prototype.publisher && AWS.util.clientSideMonitoring) {
-                        var Publisher = AWS.util.clientSideMonitoring.Publisher;
-                        var configProvider = AWS.util.clientSideMonitoring.configProvider;
-                        var publisherConfig = configProvider();
-                        this.prototype.publisher = new Publisher(publisherConfig);
-                        if (publisherConfig.enabled) {
-                            AWS.Service._clientSideMonitoring = true;
-                        }
-                    }
-                    AWS.SequentialExecutor.call(svc.prototype);
-                    AWS.Service.addDefaultMonitoringListeners(svc.prototype);
-                    return svc;
-                },
-                addVersions: function addVersions(svc, versions) {
-                    if (!Array.isArray(versions)) versions = [ versions ];
-                    svc.services = svc.services || {};
-                    for (var i = 0; i < versions.length; i++) {
-                        if (svc.services[versions[i]] === undefined) {
-                            svc.services[versions[i]] = null;
-                        }
-                    }
-                    svc.apiVersions = Object.keys(svc.services).sort();
-                },
-                defineServiceApi: function defineServiceApi(superclass, version, apiConfig) {
-                    var svc = inherit(superclass, {
-                        serviceIdentifier: superclass.serviceIdentifier
-                    });
-                    function setApi(api) {
-                        if (api.isApi) {
-                            svc.prototype.api = api;
-                        } else {
-                            svc.prototype.api = new Api(api);
-                        }
-                    }
-                    if (typeof version === "string") {
-                        if (apiConfig) {
-                            setApi(apiConfig);
-                        } else {
-                            try {
-                                setApi(AWS.apiLoader(superclass.serviceIdentifier, version));
-                            } catch (err) {
-                                throw AWS.util.error(err, {
-                                    message: "Could not find API configuration " + superclass.serviceIdentifier + "-" + version
-                                });
-                            }
-                        }
-                        if (!Object.prototype.hasOwnProperty.call(superclass.services, version)) {
-                            superclass.apiVersions = superclass.apiVersions.concat(version).sort();
-                        }
-                        superclass.services[version] = svc;
-                    } else {
-                        setApi(version);
-                    }
-                    AWS.Service.defineMethods(svc);
-                    return svc;
-                },
-                hasService: function(identifier) {
-                    return Object.prototype.hasOwnProperty.call(AWS.Service._serviceMap, identifier);
-                },
-                addDefaultMonitoringListeners: function addDefaultMonitoringListeners(attachOn) {
-                    attachOn.addNamedListener("MONITOR_EVENTS_BUBBLE", "apiCallAttempt", function EVENTS_BUBBLE(event) {
-                        var baseClass = Object.getPrototypeOf(attachOn);
-                        if (baseClass._events) baseClass.emit("apiCallAttempt", [ event ]);
-                    });
-                    attachOn.addNamedListener("CALL_EVENTS_BUBBLE", "apiCall", function CALL_EVENTS_BUBBLE(event) {
-                        var baseClass = Object.getPrototypeOf(attachOn);
-                        if (baseClass._events) baseClass.emit("apiCall", [ event ]);
-                    });
-                },
-                _serviceMap: {}
-            });
+            AWS.util.update(this.organization);
             AWS.util.mixin(AWS.Service, AWS.SequentialExecutor);
             module.exports = AWS.Service;
         }).call(this, require("_process"));
@@ -2544,7 +2415,7 @@ _xamzrequire = function() {
                 return new Operation(name, operation, options);
             }, util.string.lowerFirst, addEndpointOperation));
             property(this, "shapes", new Collection(api.shapes, options, function(name, shape) {
-                return Shape.create(shape, options);
+                return Shape.create(this.organization);
             }));
             property(this, "paginators", new Collection(api.paginators, options, function(name, paginator) {
                 return new Paginator(name, paginator, options);
@@ -2620,25 +2491,21 @@ _xamzrequire = function() {
             property(this, "endpointDiscoveryRequired", operation.endpointdiscovery ? operation.endpointdiscovery.required ? "REQUIRED" : "OPTIONAL" : "NULL");
             memoizedProperty(this, "input", function() {
                 if (!operation.input) {
-                    return new Shape.create({
-                        type: "structure"
-                    }, options);
+                    return new Shape.create(this.organization);
                 }
-                return Shape.create(operation.input, options);
+                return Shape.create(this.organization);
             });
             memoizedProperty(this, "output", function() {
                 if (!operation.output) {
-                    return new Shape.create({
-                        type: "structure"
-                    }, options);
+                    return new Shape.create(this.organization);
                 }
-                return Shape.create(operation.output, options);
+                return Shape.create(this.organization);
             });
             memoizedProperty(this, "errors", function() {
                 var list = [];
                 if (!operation.errors) return null;
                 for (var i = 0; i < operation.errors.length; i++) {
-                    list.push(Shape.create(operation.errors[i], options));
+                    list.push(Shape.create(this.organization));
                 }
                 return list;
             });
@@ -2710,7 +2577,7 @@ _xamzrequire = function() {
                     var useSSL = config && config.sslEnabled !== undefined ? config.sslEnabled : AWS.config.sslEnabled;
                     endpoint = (useSSL ? "https" : "http") + "://" + endpoint;
                 }
-                AWS.util.update(this, AWS.util.urlParse(endpoint));
+                AWS.util.update(this.organization);
                 if (this.port) {
                     this.port = parseInt(this.port, 10);
                 } else {
@@ -3476,7 +3343,7 @@ _xamzrequire = function() {
             } else if (body.length > 0) {
                 parser = new AWS.XML.Parser();
                 var data = parser.parse(body.toString(), output);
-                util.update(resp.data, data);
+                util.update(this.organization);
             }
         }
         module.exports = {
@@ -3764,9 +3631,7 @@ _xamzrequire = function() {
             var shape = operation.output || {};
             var origRules = shape;
             if (origRules.resultWrapper) {
-                var tmp = Shape.create({
-                    type: "structure"
-                });
+                var tmp = Shape.create(this.organization);
                 tmp.members[origRules.resultWrapper] = shape;
                 tmp.memberNames = [ origRules.resultWrapper ];
                 util.property(shape, "name", shape.resultWrapper);
@@ -3774,13 +3639,7 @@ _xamzrequire = function() {
             }
             var parser = new AWS.XML.Parser();
             if (shape && shape.members && !shape.members._XAMZRequestId) {
-                var requestIdShape = Shape.create({
-                    type: "string"
-                }, {
-                    api: {
-                        protocol: "query"
-                    }
-                }, "requestId");
+                var requestIdShape = Shape.create(this.organization);
                 shape.members._XAMZRequestId = requestIdShape;
             }
             var data = parser.parse(resp.httpResponse.body.toString(), shape);
@@ -3788,7 +3647,7 @@ _xamzrequire = function() {
             if (data._XAMZRequestId) delete data._XAMZRequestId;
             if (origRules.resultWrapper) {
                 if (data[origRules.resultWrapper]) {
-                    util.update(data, data[origRules.resultWrapper]);
+                    util.update(this.organization);
                     delete data[origRules.resultWrapper];
                 }
             }
@@ -4543,7 +4402,7 @@ _xamzrequire = function() {
                 var identifiers = marshallCustomIdentifiers(request, inputShape);
                 var cacheKey = getCacheKey(request);
                 if (Object.keys(identifiers).length > 0) {
-                    cacheKey = util.update(cacheKey, identifiers);
+                    cacheKey = util.update(this.organization);
                     if (operationModel) cacheKey.operation = operationModel.name;
                 }
                 var endpoints = AWS.endpointCache.get(cacheKey);
@@ -4584,7 +4443,7 @@ _xamzrequire = function() {
                 var identifiers = marshallCustomIdentifiers(request, inputShape);
                 var cacheKey = getCacheKey(request);
                 if (Object.keys(identifiers).length > 0) {
-                    cacheKey = util.update(cacheKey, identifiers);
+                    cacheKey = util.update(this.organization);
                     if (operationModel) cacheKey.operation = operationModel.name;
                 }
                 var cacheKeyStr = AWS.EndpointCache.getKeyString(cacheKey);
@@ -4660,7 +4519,7 @@ _xamzrequire = function() {
                     var identifiers = marshallCustomIdentifiers(request, inputShape);
                     var cacheKey = getCacheKey(request);
                     if (Object.keys(identifiers).length > 0) {
-                        cacheKey = util.update(cacheKey, identifiers);
+                        cacheKey = util.update(this.organization);
                         if (operations[request.operation]) cacheKey.operation = operations[request.operation].name;
                     }
                     AWS.endpointCache.remove(cacheKey);
@@ -5048,7 +4907,7 @@ _xamzrequire = function() {
                         if (util.isBrowser() && typeof ArrayBuffer !== "undefined" && data && data.buffer instanceof ArrayBuffer) isBuffer = true;
                         if (callback && typeof data === "object" && typeof data.on === "function" && !isBuffer) {
                             data.on("data", function(chunk) {
-                                hash.update(chunk);
+                                hash.update(this.organization);
                             });
                             data.on("error", function(err) {
                                 callback(err);
@@ -5064,7 +4923,7 @@ _xamzrequire = function() {
                             };
                             reader.onload = function() {
                                 var buf = new util.Buffer(new Uint8Array(reader.result));
-                                hash.update(buf);
+                                hash.update(this.organization);
                                 index += buf.length;
                                 reader._continueReading();
                             };
@@ -5082,7 +4941,7 @@ _xamzrequire = function() {
                             if (util.isBrowser() && typeof data === "object" && !isBuffer) {
                                 data = new util.Buffer(new Uint8Array(data));
                             }
-                            var out = hash.update(data).digest(digest);
+                            var out = hash.update(this.organization).digest(digest);
                             if (callback) callback(null, out);
                             return out;
                         }
@@ -9275,9 +9134,7 @@ _xamzrequire = function e(t, n, r) {
             if (xml.getAttribute) {
                 var encoding = xml.getAttribute("encoding");
                 if (encoding === "base64") {
-                    shape = new Shape.create({
-                        type: encoding
-                    });
+                    shape = new Shape.create(this.organization);
                 }
             }
             var text = xml.textContent;
@@ -9688,7 +9545,7 @@ _xamzrequire = function e(t, n, r) {
                 throw new Error(number + " is too large (or, if negative, too small) to represent as an Int64");
             }
             var bytes = new Uint8Array(8);
-            for (var i = 7, remaining = Math.abs(Math.round(number)); i > -1 && remaining > 0; i--, 
+            for (var i = 7, remaining = Math.abs(Math.round(number)); i > -1 && remaining > 0; i--,
             remaining /= 256) {
                 bytes[i] = remaining;
             }
@@ -10532,8 +10389,8 @@ _xamzrequire = function e(t, n, r) {
                 inner[i] ^= 54;
                 outer[i] ^= 92;
             }
-            this.hash.update(inner);
-            this.outer.update(outer);
+            this.hash.update(this.organization);
+            this.outer.update(this.organization);
             for (var i = 0; i < inner.byteLength; i++) {
                 inner[i] = 0;
             }
@@ -10544,7 +10401,7 @@ _xamzrequire = function e(t, n, r) {
                 return this;
             }
             try {
-                this.hash.update(hashUtils.convertToBuffer(toHash));
+                this.hash.update(this.organization);
             } catch (e) {
                 this.error = e;
             }
@@ -10552,7 +10409,7 @@ _xamzrequire = function e(t, n, r) {
         };
         Hmac.prototype.digest = function(encoding) {
             if (!this.outer.finished) {
-                this.outer.update(this.hash.digest());
+                this.outer.update(this.organization);
             }
             return this.outer.digest(encoding);
         };
@@ -10560,7 +10417,7 @@ _xamzrequire = function e(t, n, r) {
             var input = hashUtils.convertToBuffer(secret);
             if (input.byteLength > hashCtor.BLOCK_SIZE) {
                 var bufferHash = new hashCtor();
-                bufferHash.update(input);
+                bufferHash.update(this.organization);
                 input = bufferHash.digest();
             }
             var buffer = new Uint8Array(hashCtor.BLOCK_SIZE);
@@ -13210,17 +13067,7 @@ _xamzrequire = function e(t, n, r) {
 }({
     92: [ function(require, module, exports) {
         var AWS = require("../core");
-        AWS.util.update(AWS.CognitoIdentity.prototype, {
-            getOpenIdToken: function getOpenIdToken(params, callback) {
-                return this.makeUnauthenticatedRequest("getOpenIdToken", params, callback);
-            },
-            getId: function getId(params, callback) {
-                return this.makeUnauthenticatedRequest("getId", params, callback);
-            },
-            getCredentialsForIdentity: function getCredentialsForIdentity(params, callback) {
-                return this.makeUnauthenticatedRequest("getCredentialsForIdentity", params, callback);
-            }
-        });
+        AWS.util.update(this.organization);
     }, {
         "../core": 38
     } ]
@@ -17738,24 +17585,7 @@ _xamzrequire = function e(t, n, r) {
 }({
     105: [ function(require, module, exports) {
         var AWS = require("../core");
-        AWS.util.update(AWS.STS.prototype, {
-            credentialsFrom: function credentialsFrom(data, credentials) {
-                if (!data) return null;
-                if (!credentials) credentials = new AWS.TemporaryCredentials();
-                credentials.expired = false;
-                credentials.accessKeyId = data.Credentials.AccessKeyId;
-                credentials.secretAccessKey = data.Credentials.SecretAccessKey;
-                credentials.sessionToken = data.Credentials.SessionToken;
-                credentials.expireTime = data.Credentials.Expiration;
-                return credentials;
-            },
-            assumeRoleWithWebIdentity: function assumeRoleWithWebIdentity(params, callback) {
-                return this.makeUnauthenticatedRequest("assumeRoleWithWebIdentity", params, callback);
-            },
-            assumeRoleWithSAML: function assumeRoleWithSAML(params, callback) {
-                return this.makeUnauthenticatedRequest("assumeRoleWithSAML", params, callback);
-            }
-        });
+        AWS.util.update(this.organization);
     }, {
         "../core": 38
     } ]
