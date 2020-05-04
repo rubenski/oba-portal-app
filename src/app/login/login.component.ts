@@ -5,6 +5,7 @@ import {CognitoCallback} from '../shared/cognito.callback';
 import {CognitoUser} from 'amazon-cognito-identity-js';
 import * as QRCode from 'qrcode';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Router} from '@angular/router';
 
 export class Credentials {
   username: string;
@@ -18,7 +19,7 @@ export class Credentials {
 })
 export class LoginComponent implements CognitoCallback {
 
-  constructor(private cognito: CognitoUtil, private loginService: LoginService, private sanitizer: DomSanitizer) {
+  constructor(private cognito: CognitoUtil, private loginService: LoginService, private sanitizer: DomSanitizer, private router: Router) {
   }
 
   public globalError: string;
@@ -55,10 +56,13 @@ export class LoginComponent implements CognitoCallback {
     this.showMfa = true;
   }
 
-  handleLoginError(error) {
+  handleLoginError(error, username) {
+    if (error.code === 'UserNotConfirmedException') {
+      console.log('user not confirmed ' + username);
+      this.router.navigate(['/register/verify/' + btoa(username)]);
+    }
     this.globalError = error.message;
   }
-
 
 
 }

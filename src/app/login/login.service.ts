@@ -39,7 +39,7 @@ export class LoginService {
     cognitoUser.authenticateUser(authenticationDetails, {
       newPasswordRequired: (userAttributes, requiredAttributes) => console.log('method not implemented'),
       onSuccess: result => console.log('method not implemented'),
-      onFailure: err => cognitoCallback.handleLoginError(err),
+      onFailure: err => cognitoCallback.handleLoginError(err, credentials.username),
       mfaSetup: (challengeName: any, challengeParameters: any) => cognitoCallback.handleMFASetup(challengeName, challengeParameters, cognitoUser),
       mfaRequired: (challengeName, challengeParameters) => {
         console.log('method not implemented');
@@ -48,11 +48,11 @@ export class LoginService {
     });
   }
 
-  public logout() {
+  public logout(redirectTo) {
     console.log('logging out');
     this.loggedIn.next(false);
     localStorage.removeItem('loggedInOrganization');
-    this.router.navigate(['/login']);
+    this.router.navigate([redirectTo]);
     this.http.delete(this.sessionsUrl);
   }
 

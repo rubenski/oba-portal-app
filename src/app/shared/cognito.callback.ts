@@ -7,5 +7,5 @@ export interface CognitoCallback {
 
   handleTotpRequired(challengeName, challengeParameters, cognitoUser: CognitoUser);
 
-  handleLoginError(error);
+  handleLoginError(error, username);
 }

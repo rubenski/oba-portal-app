@@ -24,7 +24,7 @@ export class LoggedinInterceptor implements HttpInterceptor {
         console.log('some error happened');
         if (err.status === 401 || err.status === 403) {
           console.log('Routing to login page...');
-          this.loginService.logout();
+          this.loginService.logout('/login');
         }
 
         console.log(JSON.stringify(err));
