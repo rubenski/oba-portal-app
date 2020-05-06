@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OrganizationService} from '../organization.service';
+import {OrganizationService} from '../../organization.service';
 
 @Component({
   templateUrl: './organization.component.html',
@@ -11,12 +11,12 @@ export class OrganizationComponent implements OnInit {
 
 
   constructor(private organizationService: OrganizationService) {
+    console.log('organization component loaded');
   }
 
   ngOnInit(): void {
 
   }
-
 
 
 }

@@ -24,7 +24,13 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: './admin-home/admin-home.module#AdminHomeModule',
+    loadChildren: './admin/home/admin-home.module#AdminHomeModule',
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin/organization',
+    loadChildren: './admin/organization/organization.module#OrganizationModule',
     data: {showHeader: true, admin: true},
     canActivate: [AuthGuard]
   },
