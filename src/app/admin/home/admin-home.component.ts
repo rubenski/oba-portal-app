@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrganizationService} from '../../organization.service';
+import {Organization} from '../../organization';
 
 @Component({
   selector: 'app-admin-home',
@@ -11,12 +12,12 @@ export class AdminHomeComponent implements OnInit {
   constructor(private organizationService: OrganizationService) {
   }
 
-  private organization: Organization;
+  organization: Organization;
 
   ngOnInit(): void {
     const organizationId = localStorage.getItem('loggedInOrganization');
     console.log('Finding organization for id ' + organizationId);
-    this.organizationService.findOrganization(organizationId).subscribe(o => this.organization = o);
+    this.organizationService.findLoggedInOrganization().subscribe(o => this.organization = o);
   }
 
 }

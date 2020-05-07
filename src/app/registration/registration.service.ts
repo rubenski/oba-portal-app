@@ -3,11 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Registration} from '../registration';
 import {CognitoUtil} from '../cognito.util';
 import {environment} from '../../environments/environment';
-
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-
+import {AppConstants} from '../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +48,7 @@ export class RegistrationService {
   }
 
   registerWithOba(registration: Registration) {
-    return this.http.post(this.customersUrl, registration, httpOptions);
+    return this.http.post(this.customersUrl, registration, AppConstants.HTTP_OPTIONS);
   }
 
 }

@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
 import {FormsModule} from '@angular/forms';
-import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import {MessagesComponent} from './messages/messages.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LayoutModule} from './layout/layout.module';
@@ -21,7 +20,6 @@ import {OrganizationService} from './organization.service';
 @NgModule({
   declarations: [
     AppComponent,
-    CustomerDetailComponent,
     MessagesComponent
   ],
   imports: [

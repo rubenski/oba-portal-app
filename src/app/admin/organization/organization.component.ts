@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrganizationService} from '../../organization.service';
+import {Organization} from '../../organization';
 
 @Component({
   templateUrl: './organization.component.html',
@@ -7,16 +8,19 @@ import {OrganizationService} from '../../organization.service';
 })
 export class OrganizationComponent implements OnInit {
 
-  private organization: Organization;
-
+  organization: Organization;
+  globalError: any;
+  countries: any = ['Belgium', 'Czech Republic', 'Denmark', 'Finland', 'Norway', 'France',  'Germany', 'Italy', 'Luxembourg', 'Netherlands', 'Poland',
+    'Portugal', 'Romania', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom', 'United States', 'Ukraine'];
 
   constructor(private organizationService: OrganizationService) {
-    console.log('organization component loaded');
   }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
+    this.organizationService.findLoggedInOrganization().subscribe(o => this.organization = o);
   }
 
-
+  onSubmit() {
+    this.organizationService.updateOrganization(this.organization).subscribe(o => this.organization = o);
+  }
 }

@@ -1,1 +1,42 @@
 <h1>Organization</h1>
+
+<div class="row" *ngIf="organization">
+  <div class="col mr-5">
+    <form autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+      <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" id="name" [(ngModel)]="organization.name" required appNotEmpty>
+      </div>
+      <div class="form-group">
+        <label for="vatNumber">VAT Number</label>
+        <input type="text" class="form-control" name="vatNumber" id="vatNumber" [(ngModel)]="organization.vatNumber" appNotEmpty>
+      </div>
+      <div class="form-group">
+        <label for="street">Street</label>
+        <input type="text" class="form-control" name="street" id="street" [(ngModel)]="organization.street" required appNotEmpty>
+      </div>
+      <div class="form-group">
+        <label for="streetNumber">Street number</label>
+        <input type="text" class="form-control" name="streetNumber" id="streetNumber"
+               [(ngModel)]="organization.streetNumber" required appNotEmpty>
+      </div>
+      <div class="form-group">
+        <label for="streetNumber">Postal code</label>
+        <input type="text" class="form-control" name="postalCode" id="postalCode"
+               [(ngModel)]="organization.postalCode" required appNotEmpty>
+      </div>
+      <div class="form-group">
+        <label for="streetNumber">Country</label>
+        <select class="form-control" name="country" id="country"
+                [(ngModel)]="organization.country" required appNotEmpty>
+          <option *ngFor="let country of countries">{{country}}</option>
+        </select>
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Save</button>
+    </form>
+  </div>
+  <div class="col">Hello</div>
+</div>

@@ -9,6 +9,9 @@ import {FormControl, NG_VALIDATORS, Validator} from '@angular/forms';
     multi: true
   }]
 })
+/**
+ * Prevents users from posting empty string form values
+ */
 export class NotEmptyValidatorDirective implements Validator {
 
   validate(c: FormControl): { [key: string]: any; } {
@@ -16,8 +19,7 @@ export class NotEmptyValidatorDirective implements Validator {
     if (!c.pristine && c.value != null) {
       const val = c.value as string;
       const valueLength = val.trim().length;
-      const result = valueLength > 0 ? null : {valid: false};
-      return result;
+      return valueLength > 0 ? null : {valid: false};
     }
   }
 }
