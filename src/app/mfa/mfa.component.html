@@ -8,7 +8,6 @@
              [(ngModel)]="totp" appNotEmpty #totpassword=ngModel required>
       <div [hidden]="!(totpassword.touched && totpassword.invalid)" class="alert alert-danger">OTP is required</div>
     </div>
-
     <button type="submit" class="btn btn-success" [disabled]="!totpForm.form.valid">Submit</button>
   </div>
 </form>

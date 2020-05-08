@@ -9,8 +9,9 @@ import {Organization} from '../../organization';
 export class OrganizationComponent implements OnInit {
 
   organization: Organization;
-  globalError: any;
-  countries: any = ['Belgium', 'Czech Republic', 'Denmark', 'Finland', 'Norway', 'France',  'Germany', 'Italy', 'Luxembourg', 'Netherlands', 'Poland',
+  globalError: string;
+  globalSuccess: string;
+  countries: any = ['Belgium', 'Czech Republic', 'Denmark', 'Finland', 'Norway', 'France', 'Germany', 'Italy', 'Luxembourg', 'Netherlands', 'Poland',
     'Portugal', 'Romania', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom', 'United States', 'Ukraine'];
 
   constructor(private organizationService: OrganizationService) {
@@ -21,6 +22,14 @@ export class OrganizationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.organizationService.updateOrganization(this.organization).subscribe(o => this.organization = o);
+
+    this.organizationService.updateOrganization(this.organization).subscribe(
+      o => {
+        this.organization = o;
+        this.globalSuccess = 'Organization saved';
+      },
+      () => {
+        this.globalError = 'An error occurred';
+      });
   }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {LoginService} from './login/login.service';
@@ -29,7 +29,7 @@ export class LoggedinInterceptor implements HttpInterceptor {
 
         console.log(JSON.stringify(err));
 
-        return of(err);
+        return throwError(err);
       }));
   }
 }
