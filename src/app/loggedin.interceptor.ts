@@ -16,9 +16,7 @@ export class LoggedinInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       tap(evt => {
-        if (evt instanceof HttpResponse) {
-          console.log('hit interceptor ' + evt);
-        }
+        // ignore successful responses
       }),
       catchError((err: any) => {
         console.log('some error happened');
