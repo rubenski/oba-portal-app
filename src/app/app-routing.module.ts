@@ -35,6 +35,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'admin/keys-certs',
+    loadChildren: './admin/keys-certs/keys-and-certs.module#KeysAndCertsModule',
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'users',
     loadChildren: './users/users.module#UsersModule'
   },

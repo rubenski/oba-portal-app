@@ -16,6 +16,7 @@ import {FindActiveSessionInterceptor} from './shared/find-active-session-interce
 import {LoginService} from './login/login.service';
 import {LoggedinInterceptor} from './loggedin.interceptor';
 import {OrganizationService} from './organization.service';
+import {CertificateService} from './certificate.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import {OrganizationService} from './organization.service';
     LayoutModule
   ],
   exports: [],
-  providers: [LoginService, OrganizationService, CognitoUtil, RegistrationService, {
+  providers: [LoginService, CertificateService, OrganizationService, CognitoUtil, RegistrationService, {
     provide: HTTP_INTERCEPTORS,
     useClass: FindActiveSessionInterceptor,
     multi: true

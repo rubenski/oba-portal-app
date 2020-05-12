@@ -9,11 +9,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class AdminHeaderComponent implements OnInit {
 
   constructor(private router: Router) {
-    console.log('Header constructor called');
+
   }
 
   ngOnInit() {
-    console.log('admin header init!');
   }
 
   isHomePage() {

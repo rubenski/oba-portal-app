@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {LoginService} from './login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +11,7 @@ export class AppComponent implements OnInit {
   showHeader = false;
   admin = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private loginService:LoginService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
 
   }
 
