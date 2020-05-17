@@ -1,6 +1,8 @@
 <h1>Create certificate</h1>
 
-<div class="row" *ngIf="certificate">
+<div *ngIf="certificateLimitReached" class="alert alert-warning">You reached the maximum number of certificates.</div>
+
+<div class="row" *ngIf="certificate && !certificateLimitReached">
   <div class="col mr-5">
     <form autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
 
@@ -8,21 +10,21 @@
 
       <div class="form-group">
         <label for="name">Name</label>
-        <div class="small">The name is used for your own reference. It will not be part of the certificate</div>
+        <div class="small p-1">The name is used for your own reference. It will not be part of the certificate. <br/>Example: "My QWAC certificate"</div>
         <input type="text" class="form-control" name="name" id="name" [(ngModel)]="certificate.name" required
                appNotEmpty maxlength="50" #name=ngModel>
         <div [hidden]="!(name.touched && name.invalid)" class="alert alert-danger">Name is required</div>
       </div>
       <div class="form-group">
         <label for="description">Description(optional)</label>
-        <div class="small">The description is used for your own reference. It will not be part of the certificate</div>
+        <div class="small p-1">The description is used for your own reference. It will not be part of the certificate</div>
         <input type="text" class="form-control" name="description" id="description"
                [(ngModel)]="certificate.description"
                appNotEmpty maxlength="100">
       </div>
       <div class="form-group">
         <label for="purpose">Purpose</label>
-        <div class="small">Certificates can be used for either signing or transport (TLS).</div>
+        <div class="small p-1">Certificates can be used for either signing or transport (TLS).</div>
         <select class="form-control" name="purpose" id="purpose"
                 [(ngModel)]="certificate.purpose" required appNotEmpty maxlength="50" #purpose=ngModel>
           <option value="TRANSPORT">Transport (eIDAS QWAC)</option>
@@ -33,7 +35,7 @@
 
       <div class="form-group">
         <label for="country">Country</label>
-        <div class="small">Country must be a 2-letter ISO code</div>
+        <div class="small p-1">Country must be a 2-letter ISO code</div>
         <input type="text" class="form-control" name="country" id="country" [(ngModel)]="certificate.country" required
                appNotEmpty maxlength="2" #country=ngModel oninput="this.value = this.value.toUpperCase()">
         <div [hidden]="!(country.touched && country.invalid)" class="alert alert-danger">Country is required</div>
@@ -51,7 +53,7 @@
 
       <div class="form-group">
         <label for="locality">Locality</label>
-        <div class="small">City or town name</div>
+        <div class="small p-1">City or town name</div>
         <input type="text" class="form-control" name="locality" id="locality" [(ngModel)]="certificate.locality"
                required
                appNotEmpty maxlength="50" #locality=ngModel>
@@ -80,7 +82,7 @@
 
       <div class="form-group">
         <label for="commonName">Common name</label>
-        <div class="small">Often the organization domain name is provided here</div>
+        <div class="small p-1">Often the organization domain name is provided here</div>
         <input type="text" class="form-control" name="commonName" id="commonName"
                [(ngModel)]="certificate.commonName" required
                appNotEmpty maxlength="50" #commonName=ngModel>
@@ -101,7 +103,7 @@
 
       <div class="form-group" ngModelGroup="roles" appMinSelected="1" #roles="ngModelGroup">
         <label>Roles</label>
-        <div class="small">Check at least one of the below roles</div>
+        <div class="small p-1">Check at least one of the below roles</div>
         <div class="form-inline">
           <input type="checkbox" class="form-control" name="roleAisp" id="roleAisp" [(ngModel)]="certificate.roleAisp">
           &nbsp; Account Information Service Provider

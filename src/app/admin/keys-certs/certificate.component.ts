@@ -1,16 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CreateCertificate} from './create-certificate';
 import {CertificateService} from '../../certificate.service';
 import {Router} from '@angular/router';
+import {AppConstants} from '../../app.constants';
 
 @Component({
   templateUrl: './certificate.component.html',
   styleUrls: ['./certificate.component.css']
 })
-export class CertificateComponent {
+export class CertificateComponent implements OnInit {
 
   certificate: CreateCertificate = new CreateCertificate();
   globalError: any;
+  certificateLimitReached = false;
 
   constructor(private certificateService: CertificateService, private router: Router) {
   }
@@ -24,5 +26,14 @@ export class CertificateComponent {
       () => {
         this.globalError = 'An error occurred';
       });
+  }
+
+  ngOnInit(): void {
+
+    this.certificateService.finalAll().subscribe(all => {
+      if (all.length >= AppConstants.MAX_NUMBER_OF_CERTIFICATES) {
+        this.certificateLimitReached = true;
+      }
+    });
   }
 }

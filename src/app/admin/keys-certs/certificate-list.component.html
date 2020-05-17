@@ -18,5 +18,10 @@
     <td>{{certificate.distinguishedName}}</td>
     <td>{{certificate.created}}</td>
   </tr>
+  <tr *ngIf="certificates?.length == 0">
+    <td colspan="6">You have no certificates yet</td>
+  </tr>
   </tbody>
 </table>
+
+<button type="submit" class="btn btn-success" routerLink="new">New certificate</button>
