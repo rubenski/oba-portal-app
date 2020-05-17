@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Certificate} from '../../certificate';
+import {CreateCertificate} from './create-certificate';
 import {CertificateService} from '../../certificate.service';
 import {Router} from '@angular/router';
 
@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class CertificateComponent {
 
-  certificate: Certificate = new Certificate();
+  certificate: CreateCertificate = new CreateCertificate();
   globalError: any;
 
   constructor(private certificateService: CertificateService, private router: Router) {

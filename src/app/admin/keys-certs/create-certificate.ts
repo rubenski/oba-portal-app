@@ -1,4 +1,4 @@
-export class Certificate {
+export class CreateCertificate {
   name: string;
   description: string;
   purpose: string;

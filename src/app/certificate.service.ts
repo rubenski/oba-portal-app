@@ -3,7 +3,8 @@ import {environment} from '../environments/environment';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AppConstants} from './app.constants';
-import {Certificate} from './certificate';
+import {CreateCertificate} from './admin/keys-certs/create-certificate';
+import {ListCertificate} from './admin/keys-certs/list-certificate';
 
 @Injectable()
 export class CertificateService {
@@ -18,16 +19,16 @@ export class CertificateService {
     this.certificatesUrl = environment.obaPortalBackendHostName + '/' + organizationId + '/certificates/';
   }
 
-  findOne(id): Observable<Certificate> {
-    return this.http.get<Certificate>(this.certificatesUrl + id);
+  findOne(id): Observable<CreateCertificate> {
+    return this.http.get<CreateCertificate>(this.certificatesUrl + id);
   }
 
-  finalAll(): Observable<Certificate[]> {
-    return this.http.get<Certificate[]>(this.certificatesUrl);
+  finalAll(): Observable<ListCertificate[]> {
+    return this.http.get<ListCertificate[]>(this.certificatesUrl);
   }
 
-  create(certificate: Certificate): Observable<Certificate> {
-    return this.http.post<Certificate>(this.certificatesUrl, certificate, AppConstants.HTTP_OPTIONS);
+  create(certificate: CreateCertificate): Observable<CreateCertificate> {
+    return this.http.post<CreateCertificate>(this.certificatesUrl, certificate, AppConstants.HTTP_OPTIONS);
   }
 
   delete(id): Observable<void> {
