@@ -5,7 +5,6 @@
     <form autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
 
       <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
-      <div *ngIf="globalSuccess" class="alert alert-success">{{globalSuccess}}</div>
 
       <div class="form-group">
         <label for="name">Name</label>
@@ -112,8 +111,8 @@
           &nbsp; Payment Initiation Service Provider
         </div>
         <div class="form-inline">
-          <input type="checkbox" class="form-control" name="rolePiisp" id="rolePiisp"
-                 [(ngModel)]="certificate.rolePiisp"> &nbsp; Payment Instrument Issuer Service Provider
+          <input type="checkbox" class="form-control" name="roleCisp" id="roleCisp"
+                 [(ngModel)]="certificate.roleCisp"> &nbsp; Card Issuer Service Provider
         </div>
         <div [hidden]="!(roles.touched && roles.invalid)" class="alert alert-danger">Select at least one role
         </div>

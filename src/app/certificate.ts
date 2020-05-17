@@ -13,5 +13,5 @@ export class Certificate {
 
   rolePisp: boolean;
   roleAisp: boolean;
-  rolePiisp: boolean;
+  roleCisp: boolean;
 }

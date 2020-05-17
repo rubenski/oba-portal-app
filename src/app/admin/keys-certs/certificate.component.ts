@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Certificate} from '../../certificate';
 import {CertificateService} from '../../certificate.service';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './certificate.component.html',
@@ -10,17 +11,15 @@ export class CertificateComponent {
 
   certificate: Certificate = new Certificate();
   globalError: any;
-  globalSuccess: any;
-  purposes: any = ['', 'Signing (eIDAS QSEAL)', 'Transport (eIDAS QWAC)'];
 
-  constructor(private certificateService: CertificateService) {
+  constructor(private certificateService: CertificateService, private router: Router) {
   }
 
   onSubmit() {
     this.certificateService.create(this.certificate).subscribe(
       o => {
         this.certificate = o;
-        this.globalSuccess = 'Certificate saved';
+        this.router.navigate(['admin/keys-certs']);
       },
       () => {
         this.globalError = 'An error occurred';
