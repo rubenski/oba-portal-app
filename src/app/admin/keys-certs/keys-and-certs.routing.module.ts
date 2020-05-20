@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CertificateComponent} from './certificate.component';
+import {CertificateAddComponent} from './certificate-add.component';
 import {CertificateListComponent} from './certificate-list.component';
+import {CertificateDetailComponent} from './certificate-detail.component';
 
 const routes: Routes = [
   {path: '', component: CertificateListComponent},
-  {path: 'new', component: CertificateComponent}
+  {path: 'new', component: CertificateAddComponent},
+  {path: ':id', component: CertificateDetailComponent}
 ];
 
 @NgModule({

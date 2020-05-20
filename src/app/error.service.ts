@@ -21,4 +21,9 @@ export class ErrorService {
   getServerError(): any {
     return this.serverError;
   }
+
+  clearError() {
+    this.serverError = null;
+    this.isServerError.next(false);
+  }
 }

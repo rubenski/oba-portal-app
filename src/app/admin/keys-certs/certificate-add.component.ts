@@ -5,10 +5,10 @@ import {Router} from '@angular/router';
 import {AppConstants} from '../../app.constants';
 
 @Component({
-  templateUrl: './certificate.component.html',
-  styleUrls: ['./certificate.component.css']
+  templateUrl: './certificate-add.component.html',
+  styleUrls: ['./certificate-add.component.css']
 })
-export class CertificateComponent implements OnInit {
+export class CertificateAddComponent implements OnInit {
 
   certificate: CreateCertificate = new CreateCertificate();
   globalError: any;

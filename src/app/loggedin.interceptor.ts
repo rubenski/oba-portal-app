@@ -14,7 +14,7 @@ export class LoggedinInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    this.errorService.clearError();
     return next.handle(req).pipe(
       tap(evt => {
         // ignore successful responses

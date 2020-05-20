@@ -1,21 +1,22 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col">ID</th>
     <th scope="col">Name</th>
+    <th scope="col">Status</th>
     <th scope="col">Description</th>
     <th scope="col">Purpose</th>
-    <th scope="col">DN</th>
     <th scope="col">Created</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let certificate of certificates">
-    <td>{{certificate.id}}</td>
-    <td>{{certificate.name}}</td>
+    <td><a routerLink="{{certificate.id}}">{{certificate.name}}</a></td>
+    <td>
+      <span *ngIf="certificate.signedCertificate">Ready</span>
+      <span class="alert-warning" *ngIf="!certificate.signedCertificate">Waiting for signed certificate</span>
+    </td>
     <td>{{certificate.description}}</td>
     <td>{{certificate.keyPurpose}}</td>
-    <td>{{certificate.distinguishedName}}</td>
     <td>{{certificate.created}}</td>
   </tr>
   <tr *ngIf="certificates?.length == 0">
