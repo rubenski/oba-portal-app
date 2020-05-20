@@ -6,6 +6,7 @@
     <th scope="col">Description</th>
     <th scope="col">Purpose</th>
     <th scope="col">Created</th>
+    <th scope="col">Expires in</th>
   </tr>
   </thead>
   <tbody>
@@ -18,6 +19,7 @@
     <td>{{certificate.description}}</td>
     <td>{{certificate.keyPurpose}}</td>
     <td>{{certificate.created}}</td>
+    <td>{{certificate.daysUntilExpiration}} days</td>
   </tr>
   <tr *ngIf="certificates?.length == 0">
     <td colspan="6">You have no certificates yet</td>

@@ -11,4 +11,7 @@ export class Certificate {
   certificateDistinguishedName: string;
   signedCertificate: string;
   created: string;
+  validFrom: string;
+  validUntil: string;
+  daysUntilExpiration: string;
 }

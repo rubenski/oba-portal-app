@@ -42,6 +42,14 @@
       <th scope="row">Created</th>
       <td>{{certificate.created}}</td>
     </tr>
+    <tr>
+      <th scope="row">Valid from</th>
+      <td>{{certificate.validFrom}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Valid until</th>
+      <td>{{certificate.validUntil}} (expires in {{certificate.daysUntilExpiration}} days)</td>
+    </tr>
     <tr *ngIf="!certificate.signedCertificate">
       <td colspan="2" align="right"><button type="submit" class="btn btn-success">Save</button></td>
     </tr>
