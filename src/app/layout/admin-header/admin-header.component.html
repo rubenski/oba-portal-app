@@ -35,3 +35,9 @@
     <li class="breadcrumb-item active" aria-current="page">Library</li>
   </ol>
 </nav>
+
+<div *ngIf="serverError" class="justify-content-center alert-danger p-1 m-1">
+  <div class="text-center">
+    {{getServerError().error.message}} ({{getServerError().error.code}})
+  </div>
+</div>
