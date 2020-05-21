@@ -25,7 +25,7 @@ export class MainInfoComponent implements OnInit {
     this.organizationService.updateOrganization(this.organization).subscribe(
       o => {
         this.organization = o;
-        this.globalSuccess = 'Organization saved';
+        this.globalSuccess = 'Organization info saved';
       },
       () => {
         this.globalError = 'An error occurred';

@@ -48,7 +48,7 @@ a {
   cursor: pointer;
 }
 
-.btn-dark {
+.navbar .btn-light.button-active {
   color: #fff;
   background-color: #24588e;
   border-color: #24588e;
@@ -75,5 +75,5 @@ a {
 .navbar .btn-light:hover {
   background-color: #ccdcee;
   color: #444;
-  border: 1px solid #white;
+  border: 1px solid white;
 }
