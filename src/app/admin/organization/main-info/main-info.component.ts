@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {OrganizationService} from '../../organization.service';
-import {Organization} from '../../organization';
+import {OrganizationService} from '../../../organization.service';
+import {Organization} from '../../../organization';
 
 @Component({
-  templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css']
+  templateUrl: './main-info.component.html'
 })
-export class OrganizationComponent implements OnInit {
+export class MainInfoComponent implements OnInit {
 
   organization: Organization;
   globalError: string;

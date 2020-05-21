@@ -19,6 +19,10 @@ export class AdminHeaderComponent implements OnInit {
     this.errorService.hasServerError().subscribe(e => this.serverError = e);
   }
 
+  isOrganization() {
+    return this.router.url === '/admin/organization';
+  }
+
   isHomePage() {
     return this.router.url === '/page/home';
   }

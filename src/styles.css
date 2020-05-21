@@ -47,3 +47,15 @@ label {
 a {
   cursor: pointer;
 }
+
+.btn-dark {
+  color: #fff;
+  background-color: #204163;
+  border-color: #204163;
+}
+
+.btn-dark:hover {
+  color: #fff;
+  background-color: #2566aa;
+  border-color: #204163;
+}

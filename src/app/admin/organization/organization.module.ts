@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../../shared/shared.module';
-import {OrganizationComponent} from './organization.component';
+import {MainInfoComponent} from './main-info/main-info.component';
 import {OrganizationRoutingModule} from './organization.routing.module';
 
 @NgModule({
@@ -13,9 +13,9 @@ import {OrganizationRoutingModule} from './organization.routing.module';
     OrganizationRoutingModule
   ],
   exports: [
-    OrganizationComponent
+    MainInfoComponent
   ],
-  declarations: [OrganizationComponent]
+  declarations: [MainInfoComponent]
 })
 export class OrganizationModule {
 }
