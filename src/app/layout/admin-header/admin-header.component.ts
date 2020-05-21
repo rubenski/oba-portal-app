@@ -19,11 +19,15 @@ export class AdminHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.errorService.hasServerError().subscribe(e => this.serverError = e);
-    this.loginService.getServerSession()
+    this.loginService.getServerSession();
   }
 
 
   getServerError(): any {
     return this.errorService.getServerError();
+  }
+
+  isOrganization(): boolean {
+    return this.router.url.includes('admin/organization');
   }
 }

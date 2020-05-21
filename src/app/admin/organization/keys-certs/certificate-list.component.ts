@@ -12,6 +12,7 @@ export class CertificateListComponent implements OnInit {
   globalError: any;
 
   constructor(private certificateService: CertificateService, private router: Router) {
+    console.log('bla');
   }
 
   ngOnInit(): void {

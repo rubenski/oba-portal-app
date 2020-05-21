@@ -8,19 +8,19 @@
               [routerLinkActiveOptions]="{exact: true}">
         Home
       </button>
-      <button *ngIf="!(isLoggedIn() | async)" class="btn btn-light " pull-right type="button" routerLink="/register" routerLinkActive="button-active"
+      <button *ngIf="!(isLoggedIn() | async)" class="btn btn-light" type="button" routerLink="/register" routerLinkActive="button-active"
               [routerLinkActiveOptions]="{exact: true}">
         Register
       </button>
-      <button *ngIf="!(isLoggedIn() | async)" class="btn btn-light  pull-right" type="button" routerLink="/login" routerLinkActive="button-active"
+      <button *ngIf="!(isLoggedIn() | async)" class="btn btn-light" type="button" routerLink="/login" routerLinkActive="button-active"
               [routerLinkActiveOptions]="{exact: true}">
         Login
       </button>
-      <button *ngIf="isLoggedIn() | async" class="btn btn-light pull-right" type="button" routerLink="/admin"
+      <button *ngIf="isLoggedIn() | async" class="btn btn-light" type="button" routerLink="/admin"
               routerLinkActive="button-active">
         Admin
       </button>
-      <button *ngIf="isLoggedIn() | async" class="btn btn-light pull-right" type="button" (click)="logOut()">
+      <button *ngIf="isLoggedIn() | async" class="btn btn-light" type="button" (click)="logOut()">
         Logout
       </button>
     </div>

@@ -72,11 +72,7 @@ a {
   border: 1px solid white;
 }
 
-.navbar .btn-light:hover {
-  background-color: #ccdcee;
-  color: #444;
-  border: 1px solid white;
-}
+
 
 .btn-top {
   color: #fff;

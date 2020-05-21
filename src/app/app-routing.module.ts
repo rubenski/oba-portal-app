@@ -23,14 +23,20 @@ const routes: Routes = [
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
   {
-    path: 'admin',
-    loadChildren: './admin/home/admin-home.module#AdminHomeModule',
+    path: 'admin/organization/keys-certs',
+    loadChildren: './admin/organization/keys-certs/keys-and-certs.module#KeysAndCertsModule',
     data: {showHeader: true, admin: true},
     canActivate: [AuthGuard]
   },
   {
     path: 'admin/organization',
     loadChildren: './admin/organization/organization.module#OrganizationModule',
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin/home/admin-home.module#AdminHomeModule',
     data: {showHeader: true, admin: true},
     canActivate: [AuthGuard]
   },
