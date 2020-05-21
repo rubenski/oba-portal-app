@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CertificateService} from '../../certificate.service';
+import {CertificateService} from '../../../certificate.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Certificate} from './certificate';
 

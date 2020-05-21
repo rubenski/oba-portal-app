@@ -1,24 +1,29 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand" >
   <div class="container">
     <a class="navbar-brand" href="#">
       <img src="/assets/img/oba.png" width="52" height="60" alt="">
     </a>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" [class.active]="isHomePage()">
-        <a class="nav-link" routerLink="/">Home</a>
-      </li>
-      <li class="nav-item" [class.active]="isRegister()">
-        <a class="nav-link" routerLink="/register">Register</a>
-      </li>
-      <li *ngIf="!(isLoggedIn() | async)" class="nav-item" [class.active]="isLogin()">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-      <li *ngIf="isLoggedIn() | async" class="nav-item" [class.active]="isAdmin()">
-        <a class="nav-link" routerLink="/admin">Admin</a>
-      </li>
-      <li *ngIf="isLoggedIn() | async" class="nav-item">
-        <a class="nav-link" (click)="logOut()">Logout</a>
-      </li>
-    </ul>
+    <div class="btn-group">
+      <button class="btn btn-light  pull-right" type="button" routerLink="/" routerLinkActive="button-active"
+              [routerLinkActiveOptions]="{exact: true}">
+        Home
+      </button>
+      <button *ngIf="!(isLoggedIn() | async)" class="btn btn-light " pull-right type="button" routerLink="/register" routerLinkActive="button-active"
+              [routerLinkActiveOptions]="{exact: true}">
+        Register
+      </button>
+      <button *ngIf="!(isLoggedIn() | async)" class="btn btn-light  pull-right" type="button" routerLink="/login" routerLinkActive="button-active"
+              [routerLinkActiveOptions]="{exact: true}">
+        Login
+      </button>
+      <button *ngIf="isLoggedIn() | async" class="btn btn-light pull-right" type="button" routerLink="/admin"
+              routerLinkActive="button-active">
+        Admin
+      </button>
+      <button *ngIf="isLoggedIn() | async" class="btn btn-light pull-right" type="button" (click)="logOut()">
+        Logout
+      </button>
+    </div>
+
   </div>
 </nav>

@@ -3,8 +3,8 @@ import {environment} from '../environments/environment';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AppConstants} from './app.constants';
-import {CreateCertificate} from './admin/keys-certs/create-certificate';
-import {Certificate} from './admin/keys-certs/certificate';
+import {CreateCertificate} from './admin/organization/keys-certs/create-certificate';
+import {Certificate} from './admin/organization/keys-certs/certificate';
 
 @Injectable()
 export class CertificateService {

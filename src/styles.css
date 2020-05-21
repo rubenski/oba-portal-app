@@ -48,7 +48,7 @@ a {
   cursor: pointer;
 }
 
-.navbar .btn-light.button-active {
+.btn.btn-top.button-active, .btn.btn-light.button-active {
   color: #fff;
   background-color: #24588e;
   border-color: #24588e;
@@ -77,3 +77,10 @@ a {
   color: #444;
   border: 1px solid white;
 }
+
+.btn-top {
+  color: #fff;
+  background-color: #99b3d0;
+  border-color: #99b3d0;
+}
+

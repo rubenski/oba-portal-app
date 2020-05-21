@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CreateCertificate} from './create-certificate';
-import {CertificateService} from '../../certificate.service';
+import {CertificateService} from '../../../certificate.service';
 import {Router} from '@angular/router';
-import {AppConstants} from '../../app.constants';
+import {AppConstants} from '../../../app.constants';
 
 @Component({
   templateUrl: './certificate-add.component.html',
@@ -21,7 +21,7 @@ export class CertificateAddComponent implements OnInit {
     this.certificateService.create(this.certificate).subscribe(
       o => {
         this.certificate = o;
-        this.router.navigate(['admin/keys-certs']);
+        this.router.navigate(['admin/organization/keys-certs']);
       },
       () => {
         this.globalError = 'An error occurred';

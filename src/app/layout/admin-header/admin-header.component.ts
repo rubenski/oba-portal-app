@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {ErrorService} from '../../error.service';
+import {LoginService} from '../../login/login.service';
 
 @Component({
   selector: 'app-admin-header',
@@ -10,29 +11,15 @@ import {ErrorService} from '../../error.service';
 export class AdminHeaderComponent implements OnInit {
 
   serverError: any;
+  user: any;
 
-  constructor(private router: Router, private errorService: ErrorService) {
+  constructor(private router: Router, private errorService: ErrorService, private loginService: LoginService) {
 
   }
 
   ngOnInit(): void {
     this.errorService.hasServerError().subscribe(e => this.serverError = e);
-  }
-
-  isOrganization() {
-    return this.router.url === '/admin/organization';
-  }
-
-  isHomePage() {
-    return this.router.url === '/page/home';
-  }
-
-  isRegister() {
-    return this.router.url.includes('/register');
-  }
-
-  isLogin() {
-    return this.router.url === '/login';
+    this.loginService.getServerSession()
   }
 
 
