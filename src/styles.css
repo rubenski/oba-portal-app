@@ -41,7 +41,7 @@ label {
 }
 
 .navbar {
-  background-color: #a7bed3;
+  background-color: #99b3d0;
 }
 
 a {
@@ -50,12 +50,30 @@ a {
 
 .btn-dark {
   color: #fff;
-  background-color: #204163;
-  border-color: #204163;
+  background-color: #24588e;
+  border-color: #24588e;
 }
 
 .btn-dark:hover {
   color: #fff;
-  background-color: #2566aa;
-  border-color: #204163;
+  background-color: #2c6aaf;
+  border-color: #2c6aaf;
+}
+
+.btn-dark:active {
+  color: #fff;
+  background-color: #24588e;
+  border-color: #24588e;
+}
+
+.navbar .btn-light {
+  background-color: #b5cae2;
+  color: #444;
+  border: 1px solid white;
+}
+
+.navbar .btn-light:hover {
+  background-color: #ccdcee;
+  color: #444;
+  border: 1px solid #white;
 }
