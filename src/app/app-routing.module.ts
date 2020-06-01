@@ -29,6 +29,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'admin/organization/redirect-urls',
+    loadChildren: './admin/organization/redirect-urls/redirect-urls.module#RedirectUrlsModule',
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'admin/organization',
     loadChildren: './admin/organization/organization.module#OrganizationModule',
     data: {showHeader: true, admin: true},

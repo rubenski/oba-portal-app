@@ -147,5 +147,8 @@
       }
     }
   },
-  "defaultProject": "oba-portal-app"
+  "defaultProject": "oba-portal-app",
+  "cli": {
+    "analytics": "77e28ea5-5674-4a94-8260-25f916e9d8f2"
+  }
 }
