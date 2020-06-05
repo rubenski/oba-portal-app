@@ -16,11 +16,11 @@ export class CertificateService {
     if (!organizationId) {
       throw new Error('No logged in organization found');
     }
-    this.certificatesUrl = environment.obaPortalBackendHostName + '/organization/' + organizationId + '/certificates/';
+    this.certificatesUrl = environment.obaPortalBackendHostName + '/certificates';
   }
 
   findOne(id): Observable<Certificate> {
-    return this.http.get<Certificate>(this.certificatesUrl + id);
+    return this.http.get<Certificate>(this.certificatesUrl + '/' + id);
   }
 
   finalAll(): Observable<Certificate[]> {
@@ -32,6 +32,6 @@ export class CertificateService {
   }
 
   delete(id): Observable<void> {
-    return this.http.delete<void>(this.certificatesUrl + id, AppConstants.HTTP_OPTIONS);
+    return this.http.delete<void>(this.certificatesUrl + '/' + id, AppConstants.HTTP_OPTIONS);
   }
 }

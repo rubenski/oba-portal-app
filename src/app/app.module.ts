@@ -18,6 +18,7 @@ import {LoggedinInterceptor} from './loggedin.interceptor';
 import {OrganizationService} from './organization.service';
 import {CertificateService} from './certificate.service';
 import {ErrorService} from './error.service';
+import {RedirectUrlService} from './redirect-url.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import {ErrorService} from './error.service';
     LayoutModule
   ],
   exports: [],
-  providers: [ErrorService, LoginService, CertificateService, OrganizationService, CognitoUtil, RegistrationService, {
+  providers: [RedirectUrlService, ErrorService, LoginService, CertificateService, OrganizationService, CognitoUtil, RegistrationService, {
     provide: HTTP_INTERCEPTORS,
     useClass: FindActiveSessionInterceptor,
     multi: true

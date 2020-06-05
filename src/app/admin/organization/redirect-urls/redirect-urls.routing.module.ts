@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {RedirectUrlsComponent} from './redirect-urls.component';
+import {RedirectUrlsListComponent} from './redirect-urls-list.component';
 
 const routes: Routes = [
-  {path: '', component: RedirectUrlsComponent}
+  {path: '', component: RedirectUrlsListComponent}
 ];
 
 @NgModule({

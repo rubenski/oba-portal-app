@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Url</th>
+    <th scope="col">Used in # of registrations</th>
+    <th scope="col">Created</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let redirectUrl of redirectUrls">
+    <td><a routerLink="{{redirectUrl.id}}">{{redirectUrl.id}}</a></td>
+    <td>{{redirectUrl.redirectUrl}}</td>
+    <td>{{redirectUrl.created}}</td>
+    <td>{{redirectUrl.bankRegistrations.length}}</td>
+  </tr>
+  <tr *ngIf="redirectUrls?.length == 0">
+    <td colspan="6">You have no redirect URLs yet</td>
+  </tr>
+  </tbody>
+</table>
+<br/>
+
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+
+  <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
+
+  <div class="form-group">
+    <label for="redirectUrl">Add redirect URL</label>
+    <input type="text" class="form-control" name="redirectUrl" id="redirectUrl"
+           [(ngModel)]="newRedirectUrl.redirectUrl" required
+           appNotEmpty appUrlValid maxlength="255" #redirectUrl=ngModel>
+    <div [hidden]="!(redirectUrl.touched && redirectUrl.invalid)" class="alert alert-danger">Redirect URL cannot be empty and must start with http:// or https://</div>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Save</button>
+</form>

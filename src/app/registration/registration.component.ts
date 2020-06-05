@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.registrationForm.form.setErrors({});
+    // this.registrationForm.form.setErrors({});
   }
 
   onSubmitRegistration() {
@@ -47,9 +47,11 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
           this.globalError = 'A technical error occurred';
         }
       } else {
-        // Set the Cognito user id on the message for OBA
         // TODO: change to OAUTH2 in the future to avoid ending up with orphaned users in Cognito. See ideas.
+        // Set the Cognito user id on the message for OBA
         this.registration.cognitoUserId = result.userSub;
+        // Clear the password. No need to send this to the portal
+        this.registration.password = null;
         this.registrationService.registerWithOba(this.registration).subscribe(registration => {
           this.router.navigate(['verify/' + btoa(result.user.username)], {relativeTo: this.route});
         }, error => {

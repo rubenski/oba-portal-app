@@ -24,7 +24,6 @@ export class MfaComponent implements OnInit {
 
   ngOnInit() {
     console.log('init mfa comp');
-    this.totpForm.form.setErrors({});
   }
 
   onSubmitMfa() {
