@@ -3,8 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {MainInfoComponent} from './main-info/main-info.component';
 
 const routes: Routes = [
-  {path: '', component: MainInfoComponent},
-  {path: 'keys-certs', component: MainInfoComponent}
+  {path: '', component: MainInfoComponent}
 ];
 
 @NgModule({
