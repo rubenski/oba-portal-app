@@ -10,7 +10,7 @@ import {CreateRedirectUrl} from './admin/organization/redirect-urls/create.redir
 @Injectable()
 export class RedirectUrlService {
 
-  private redirectUrlServiceUrl = environment.obaPortalBackendHostName + '/redirect-urls/';
+  private redirectUrlServiceUrl = environment.obaPortalBackendHostName + '/redirect-urls';
 
   constructor(private http: HttpClient) {
   }

@@ -3,16 +3,16 @@
   <tr>
     <th scope="col">Id</th>
     <th scope="col">URL</th>
-    <th scope="col">Used in # of registrations</th>
     <th scope="col">Created</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let redirectUrl of redirectUrls">
     <td>{{redirectUrl.id}}</td>
     <td>{{redirectUrl.redirectUrl}}</td>
-    <td>{{redirectUrl.bankRegistrations?.length}} <b>-- TO DO --</b></td>
     <td>{{redirectUrl.created}}</td>
+    <td><span (click)="delete(redirectUrl.id)"><img src="../assets/img/del.png" width="20" height="20"/></span></td>
   </tr>
   <tr *ngIf="redirectUrls?.length == 0">
     <td colspan="4">You have no redirect URLs yet</td>
