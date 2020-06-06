@@ -11,7 +11,7 @@ export class UrlValidDirective implements Validator {
     // Prevent validation from firing when the form is loaded
     if (!c.pristine && c.value != null) {
       const val = c.value as string;
-      return (val.startsWith('http://') || val.startsWith('https://')) && val.length > 10 ? null : {valid: false};
+      return (val.startsWith('http://') || val.startsWith('https://')) && val.length > 8 ? null : {valid: false};
     }
   }
 }

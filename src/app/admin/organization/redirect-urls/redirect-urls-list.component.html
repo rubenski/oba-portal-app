@@ -2,20 +2,20 @@
   <thead>
   <tr>
     <th scope="col">Id</th>
-    <th scope="col">Url</th>
+    <th scope="col">URL</th>
     <th scope="col">Used in # of registrations</th>
     <th scope="col">Created</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let redirectUrl of redirectUrls">
-    <td><a routerLink="{{redirectUrl.id}}">{{redirectUrl.id}}</a></td>
+    <td>{{redirectUrl.id}}</td>
     <td>{{redirectUrl.redirectUrl}}</td>
+    <td>{{redirectUrl.bankRegistrations?.length}} <b>-- TO DO --</b></td>
     <td>{{redirectUrl.created}}</td>
-    <td>{{redirectUrl.bankRegistrations.length}}</td>
   </tr>
   <tr *ngIf="redirectUrls?.length == 0">
-    <td colspan="6">You have no redirect URLs yet</td>
+    <td colspan="4">You have no redirect URLs yet</td>
   </tr>
   </tbody>
 </table>
