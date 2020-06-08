@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Organization} from './organization';
 import {AppConstants} from './app.constants';
+import {CompletenessReport} from './admin/home/completeness.report';
 
 @Injectable()
 export class OrganizationService {
@@ -24,5 +25,9 @@ export class OrganizationService {
   updateOrganization(updatedOrganization: Organization): Observable<Organization> {
     updatedOrganization.organizationId = localStorage.getItem('loggedInOrganization');
     return this.http.put<Organization>(this.organizationsUrl, updatedOrganization, AppConstants.HTTP_OPTIONS);
+  }
+
+  completenessReport(): Observable<CompletenessReport> {
+    return this.http.get<CompletenessReport>(this.organizationsUrl + 'completeness-report');
   }
 }

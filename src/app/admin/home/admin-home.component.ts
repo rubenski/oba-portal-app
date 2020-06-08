@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OrganizationService} from '../../organization.service';
 import {Organization} from '../../organization';
+import {CompletenessReport} from './completeness.report';
 
 @Component({
   selector: 'app-admin-home',
@@ -13,11 +14,23 @@ export class AdminHomeComponent implements OnInit {
   }
 
   organization: Organization;
+  completenessReport: CompletenessReport;
 
   ngOnInit(): void {
-    const organizationId = localStorage.getItem('loggedInOrganization');
-    console.log('Finding organization for id ' + organizationId);
-    this.organizationService.findLoggedInOrganization().subscribe(o => this.organization = o);
+
+    this.organizationService.findLoggedInOrganization().subscribe(
+      data => this.organization = data,
+      error => console.log(error)
+    );
+
+    this.organizationService.completenessReport().subscribe(
+      data => this.completenessReport = data,
+      error => console.log(error)
+    );
   }
 
+  isComplete() {
+    return this.completenessReport.organizationFieldsComplete && this.completenessReport.redirectUrl
+      && this.completenessReport.validSigningCertificate && this.completenessReport.validTransportCertificate;
+  }
 }

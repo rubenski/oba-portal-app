@@ -30,7 +30,7 @@ export class CertificateAddComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.certificateService.finalAll().subscribe(all => {
+    this.certificateService.findAll(false).subscribe(all => {
       if (all.length >= AppConstants.MAX_NUMBER_OF_CERTIFICATES) {
         this.certificateLimitReached = true;
       }

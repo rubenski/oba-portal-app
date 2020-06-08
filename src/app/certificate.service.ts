@@ -9,22 +9,17 @@ import {Certificate} from './admin/organization/keys-certs/certificate';
 @Injectable()
 export class CertificateService {
 
-  private readonly certificatesUrl;
+  private readonly certificatesUrl = environment.obaPortalBackendHostName + '/certificates';
 
-  constructor(private http: HttpClient) {
-    const organizationId = localStorage.getItem('loggedInOrganization');
-    if (!organizationId) {
-      throw new Error('No logged in organization found');
-    }
-    this.certificatesUrl = environment.obaPortalBackendHostName + '/certificates';
-  }
+  constructor(private http: HttpClient) {}
 
   findOne(id): Observable<Certificate> {
     return this.http.get<Certificate>(this.certificatesUrl + '/' + id);
   }
 
-  finalAll(): Observable<Certificate[]> {
-    return this.http.get<Certificate[]>(this.certificatesUrl);
+  findAll(nonExpiredOnly: boolean): Observable<Certificate[]> {
+    console.log(this.certificatesUrl);
+    return this.http.get<Certificate[]>(this.certificatesUrl + '?nonExpiredOnly=' + nonExpiredOnly);
   }
 
   create(certificate: CreateCertificate): Observable<CreateCertificate> {

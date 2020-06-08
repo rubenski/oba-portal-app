@@ -16,7 +16,7 @@ export class CertificateListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.certificateService.finalAll().subscribe(
+    this.certificateService.findAll(false).subscribe(
       data => {
         this.certificates = data;
       }, error => {
