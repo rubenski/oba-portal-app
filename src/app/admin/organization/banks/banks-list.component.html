@@ -1,0 +1,23 @@
+<div *ngIf="!isOrganizationComplete && render">Before you can work with banks you must complete your organization's information.
+  <br/>
+  We need some more information about your organization in order to onboard you with banks. Please review your
+  <a routerLink="/admin" href="#">pending tasks</a>
+</div>
+
+
+<table *ngIf="isOrganizationComplete && render" class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">System name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let bank of banks">
+    <td>{{bank.displayName}}</td>
+    <td>{{bank.bankSystemName}}</td>
+  </tr>
+  </tbody>
+</table>
+
+

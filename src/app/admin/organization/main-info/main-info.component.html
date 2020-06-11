@@ -8,7 +8,9 @@
       <div *ngIf="globalSuccess" class="alert alert-success">{{globalSuccess}}</div>
 
       <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Organization Name</label>
+        <div class="small p-1">Organization Name is used when we register your organization with a bank.
+          Note that changing your Organization Name does not automatically update your organization's name with the banks you are registered with.</div>
         <input type="text" class="form-control" name="name" id="name" [(ngModel)]="organization.name" required
                appNotEmpty maxlength="50" #name=ngModel>
         <div [hidden]="!(name.touched && name.invalid)" class="alert alert-danger">Name is required</div>

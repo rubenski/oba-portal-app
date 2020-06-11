@@ -19,7 +19,7 @@ import {OrganizationService} from './organization.service';
 import {CertificateService} from './certificate.service';
 import {ErrorService} from './error.service';
 import {RedirectUrlService} from './redirect-url.service';
-import {BankService} from './bank.service';
+import {BankService} from './banks.service';
 
 @NgModule({
   declarations: [
