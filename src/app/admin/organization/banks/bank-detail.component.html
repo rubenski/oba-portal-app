@@ -1,0 +1,48 @@
+<div *ngIf="bank">
+  <h1>{{bank.displayName}}</h1>
+  <table class="table table-striped">
+    <tbody>
+    <tr>
+      <th scope="row">System name</th>
+      <td>{{bank.bankSystemName}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Beta</th>
+      <td>{{bank.beta}}</td>
+    </tr>
+    <tr>
+      <th>
+        Groups
+      </th>
+      <td>
+        <div *ngFor="let group of bank.groups">{{group.name}} ({{group.type}})</div>
+        <span *ngIf="!bank.groups">-</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h4>APIs</h4>
+
+  <table class="table table-striped">
+    <thead>
+    <th>Name</th>
+    <th>Services</th>
+    <th>Sandbox</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let api of bank.apis">
+      <td>{{api.type}}</td>
+      <td>
+        <div *ngFor="let service of api.mainServices">{{service.displayName}}</div>
+      </td>
+      <td>{{api.sandbox}}</td>
+      <td>
+        <a href="#"  routerLink="/admin/organization/api-registration/{{api.id}}">Registration</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

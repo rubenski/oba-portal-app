@@ -1,7 +1,7 @@
 <h1 *ngIf="organization">Welcome {{organization.name}}</h1>
 
 
-<table class="table table-striped" *ngIf="!isComplete()">
+<table class="table table-striped" *ngIf="completenessReport && !isComplete()">
   <thead>
   <tr>
     <td colspan="2">

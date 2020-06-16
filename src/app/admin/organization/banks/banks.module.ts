@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../../../shared/shared.module';
 import {BanksListComponent} from './banks-list.component';
 import {BanksRoutingModule} from './banks.routing.module';
+import {BankDetailComponent} from './bank-detail.component';
 
 @NgModule({
   imports: [
@@ -12,8 +13,8 @@ import {BanksRoutingModule} from './banks.routing.module';
     SharedModule,
     BanksRoutingModule
   ],
-  declarations: [BanksListComponent],
-  exports: [BanksListComponent]
+  declarations: [BanksListComponent, BankDetailComponent],
+  exports: [BanksListComponent, BankDetailComponent]
 })
 export class BanksModule {
 

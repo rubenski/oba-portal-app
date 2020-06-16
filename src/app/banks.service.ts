@@ -16,4 +16,9 @@ export class BankService {
   findAll(): Observable<Bank[]> {
     return this.http.get<Bank[]>(this.bankServiceUrl);
   }
+
+  findOne(systemName): Observable<Bank> {
+    console.log('finding bank ' + systemName);
+    return this.http.get<Bank>(this.bankServiceUrl + '/' + systemName);
+  }
 }

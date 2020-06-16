@@ -41,6 +41,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'admin/organization/api-registration',
+    loadChildren: './admin/organization/api-registration/api.registration.module#ApiRegistrationModule',
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'admin/organization',
     loadChildren: './admin/organization/organization.module#OrganizationModule',
     data: {showHeader: true, admin: true},
