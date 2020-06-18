@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MessagesComponent} from './messages/messages.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LayoutModule} from './layout/layout.module';
@@ -32,6 +32,7 @@ import {ApiRegistrationService} from './api.registration.service';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     BrowserModule,
     RouterModule.forRoot([], {enableTracing: false}),
     FlexLayoutModule,

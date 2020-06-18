@@ -1,1 +1,43 @@
-blabla
+<!--
+<form *ngIf="apiRegistrationSteps && apiRegistrationSteps.currentStep" (ngSubmit)="processForm()" #form="ngForm">
+
+  <fieldset *ngFor="let layoutGroup of apiRegistrationSteps.currentStep.formDefinition.fieldLayoutGroups"
+           name="{{layoutGroup.groupTitle}}">
+
+
+    <div *ngFor="let field of layoutGroup.fields" class="form-group">
+      <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
+      <div *ngIf="field.labelExplanation.explanation" class="small p-1">{{field.labelExplanation.explanation}}</div>
+      <div *ngIf="field.type == 'TEXT'">
+        <input type="text" class="form-control" name="{{field.key}}" id="{{field.key}}" maxlength="100" appNotEmpty required>
+        <div [hidden]="!(firstName.touched && firstName.invalid)" class="alert alert-danger">First name is required</div>
+      </div>
+
+    </div>
+
+
+  </fieldset>
+  <input type="submit" value="boe"/>
+</form>
+-->
+
+
+<form *ngIf="apiRegistrationSteps" [formGroup]="form">
+  jay
+  <fieldset *ngFor="let layoutGroup of apiRegistrationSteps.currentStep.formDefinition.fieldLayoutGroups"
+            name="{{layoutGroup.groupTitle}}" formArrayName="all">
+
+    <!-- This iteration assumes there are the same number of items in the layoutGroup.fields collection as in the
+    FormGroup's field collections and that they are in the same order. If not, index i will be wrong -->
+    <div *ngFor="let field of layoutGroup.fields; let i=index">
+      <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
+      <div *ngIf="field.labelExplanation.explanation" class="small p-1">{{field.labelExplanation.explanation}}</div>
+      <input type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
+      <select *ngIf="field.type == 'SELECT'">
+        <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
+      </select>
+    </div>
+
+  </fieldset>
+</form>
+

@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ApiRegistrationStepResult} from './admin/organization/api-registration/api.registration.step.result';
 import {ApiRegistration} from './admin/organization/api-registration/api.registration';
+import {ApiRegistrationSteps} from './admin/organization/api-registration/api.registration.steps';
 
 
 @Injectable()
@@ -23,9 +24,7 @@ export class ApiRegistrationService {
     return this.http.get<ApiRegistration[]>(this.registrationsUrl);
   }
 
-  findRegistrationSteps(apiId): Observable<ApiRegistrationStepResult[]> {
-    return this.http.get<ApiRegistrationStepResult[]>(this.stepResultsUrl + '/' + apiId);
+  findRegistrationSteps(apiId): Observable<ApiRegistrationSteps> {
+    return this.http.get<ApiRegistrationSteps>(this.stepResultsUrl + '/' + apiId);
   }
-
-
 }
