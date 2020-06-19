@@ -72,11 +72,19 @@ a {
   border: 1px solid white;
 }
 
-
-
 .btn-top {
   color: #fff;
   background-color: #99b3d0;
   border-color: #99b3d0;
 }
 
+label {
+  padding: 0;
+  margin: 0 0 0 2px;
+}
+
+.form-field-description {
+  font-size: 12px;
+  margin: 2px 0px 8px 2px;
+
+}

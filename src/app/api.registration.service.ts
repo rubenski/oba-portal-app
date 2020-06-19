@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {ApiRegistrationStepResult} from './admin/organization/api-registration/api.registration.step.result';
 import {ApiRegistration} from './admin/organization/api-registration/api.registration';
 import {ApiRegistrationSteps} from './admin/organization/api-registration/api.registration.steps';
+import {FilledOutForm} from './admin/organization/api-registration/filled.out.form';
 
 
 @Injectable()
@@ -26,5 +27,9 @@ export class ApiRegistrationService {
 
   findRegistrationSteps(apiId): Observable<ApiRegistrationSteps> {
     return this.http.get<ApiRegistrationSteps>(this.stepResultsUrl + '/' + apiId);
+  }
+
+  submitRegistrationStep(form: FilledOutForm, apiId): Observable<ApiRegistrationStepResult> {
+    return this.http.post<ApiRegistrationStepResult>(this.stepResultsUrl + '/' + apiId, form);
   }
 }

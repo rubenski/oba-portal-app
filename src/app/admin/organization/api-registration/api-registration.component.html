@@ -21,23 +21,32 @@
 </form>
 -->
 
+<form *ngIf="render" [formGroup]="form" (ngSubmit)="submit()">
+  <div formArrayName="all">
 
-<form *ngIf="apiRegistrationSteps" [formGroup]="form">
-  jay
-  <fieldset *ngFor="let layoutGroup of apiRegistrationSteps.currentStep.formDefinition.fieldLayoutGroups"
-            name="{{layoutGroup.groupTitle}}" formArrayName="all">
-
-    <!-- This iteration assumes there are the same number of items in the layoutGroup.fields collection as in the
-    FormGroup's field collections and that they are in the same order. If not, index i will be wrong -->
-    <div *ngFor="let field of layoutGroup.fields; let i=index">
+    <div *ngFor="let field of fields; let i=index" class="form-group">
       <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
-      <div *ngIf="field.labelExplanation.explanation" class="small p-1">{{field.labelExplanation.explanation}}</div>
-      <input type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
-      <select *ngIf="field.type == 'SELECT'">
+      <div *ngIf="field.labelExplanation.explanation"
+           class="form-field-description">{{field.labelExplanation.explanation}}</div>
+      <input class="form-control" type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
+      <select multiple class="form-control" *ngIf="field.type == 'SELECT'" [formControlName]="i">
         <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
       </select>
     </div>
 
-  </fieldset>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </div>
 </form>
 
+<!--
+<div class="form-group">
+  <label for="purpose">Purpose</label>
+  <div class="small p-1">Certificates can be used for either signing or transport (TLS).</div>
+  <select class="form-control" name="purpose" id="purpose"
+          [(ngModel)]="certificate.purpose" required appNotEmpty maxlength="50" #purpose=ngModel>
+    <option value="TRANSPORT">Transport (eIDAS QWAC)</option>
+    <option value="SIGNING">Signing (eIDAS QSEAL)</option>
+  </select>
+  <div [hidden]="!(purpose.touched && purpose.invalid)" class="alert alert-danger">Purpose is required</div>
+</div>
+-->
