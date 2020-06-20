@@ -88,3 +88,8 @@ label {
   margin: 2px 0px 8px 2px;
 
 }
+
+.checkbox-label {
+  display: block;
+  padding: 5px;
+}
