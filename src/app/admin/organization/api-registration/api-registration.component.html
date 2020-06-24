@@ -1,6 +1,6 @@
 <form *ngIf="render" [formGroup]="form" (ngSubmit)="submit()">
   <div formArrayName="all">
-    <div *ngFor="let field of fields; let i=index" class="form-group">
+    <div *ngFor="let field of fieldDefinitions; let i=index" class="form-group">
       <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
       <div *ngIf="field.labelExplanation.explanation"
            class="form-field-description">{{field.labelExplanation.explanation}}</div>
@@ -36,8 +36,8 @@
       </div>
 
       <div *ngIf="field.type == 'CHECKBOXES'" class="form-group" [formGroupName]="i">
-        <label *ngFor="let choice of field.checkBoxValues; let i=index" class="checkbox-label">
-          <input type="checkbox" [value]="choice.value" [formControlName]="i">
+        <label *ngFor="let choice of field.checkBoxValues; let j=index" class="checkbox-label">
+          <input type="checkbox" [value]="choice.value" [formControlName]="j">
           {{choice.label}}
         </label>
         <div *ngIf="form.get('all').get('' + i).errors" class="alert alert-danger">
@@ -48,5 +48,3 @@
     <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
   </div>
 </form>
-
-

@@ -5,6 +5,7 @@ import {ApiRegistration} from './api.registration';
 import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angular/forms';
 import {FieldDefinition} from './field.definition';
 import {FilledOutForm, KeyValue} from './filled.out.form';
+import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
 
 @Component({
   templateUrl: './api-registration.component.html'
@@ -13,9 +14,10 @@ export class ApiRegistrationComponent implements OnInit {
 
   apiId: string = this.route.snapshot.paramMap.get('apiId');
   apiRegistrations: ApiRegistration[];
-  fields: FieldDefinition[] = [];
+  fieldDefinitions: FieldDefinition[] = [];
   form: FormGroup;
   render: boolean;
+  currentStep: ApiRegistrationStepDefinition;
 
   constructor(private apiRegistrationService: ApiRegistrationService,
               private route: ActivatedRoute,
@@ -26,16 +28,16 @@ export class ApiRegistrationComponent implements OnInit {
     return this.form.get('all') as FormArray;
   }
 
-  addControlToFormGroup(value) {
-    this.getFields().push(this.fb.control(value));
+  addControlToFormGroup(values) {
+    this.getFields().push(this.fb.control(values));
   }
 
-  addCheckBoxesControl(value, minSelected: number) {
-    this.getFields().push(this.fb.array(value, minSelectedCheckboxes(minSelected)));
+  addCheckBoxesControl(values, minSelected: number) {
+    this.getFields().push(this.fb.array(values, minSelectedCheckboxes(minSelected)));
   }
 
-  addSelectListControl(value, required: boolean) {
-    this.getFields().push(this.fb.control(value, selectListValidator(required)));
+  addSelectListControl(values, required: boolean) {
+    this.getFields().push(this.fb.control(values, selectListValidator(required)));
   }
 
   addTextInputControl(value, required: boolean, minLength: number, maxLength: number) {
@@ -52,6 +54,7 @@ export class ApiRegistrationComponent implements OnInit {
       if (registrations.length === 0) {
         console.log('No existing registrations found');
         this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
+            this.currentStep = steps.currentStep;
             steps.currentStep.formDefinition.fieldLayoutGroups.forEach(flg => flg.fields.forEach(
               f => {
                 if (f.type === 'CHECKBOXES') {
@@ -59,11 +62,11 @@ export class ApiRegistrationComponent implements OnInit {
                   f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(true)));
                   this.addCheckBoxesControl(checkBoxes, 1);
                 } else if (f.type === 'SELECT') {
-                  this.addSelectListControl(f.value, f.required);
+                  this.addSelectListControl(f.values, f.required);
                 } else if (f.type === 'TEXT') {
-                  this.addTextInputControl(f.value, f.required, f.minLength, f.maxLength);
+                  this.addTextInputControl(f.values, f.required, f.minLength, f.maxLength);
                 } else {
-                  this.addControlToFormGroup(f.value);
+                  this.addControlToFormGroup(f.values);
                 }
 
                 /**
@@ -74,7 +77,7 @@ export class ApiRegistrationComponent implements OnInit {
                  * It may be worth considering a different approach to dynamic forms in the future if you want to
                  * use the fieldLayoutGroup and represent these as subdivisions in the view using divs or fieldsets.
                  */
-                this.fields.push(f);
+                this.fieldDefinitions.push(f);
               }
             ));
             this.render = true;
@@ -102,20 +105,41 @@ export class ApiRegistrationComponent implements OnInit {
   getSubmittedFormValues(): FilledOutForm {
     const filledOutForm = new FilledOutForm();
     let i = 0;
-    this.fields.forEach(f => {
-      const submittedValue = this.form.value.all[i];
-      if (submittedValue instanceof Array) {
-        filledOutForm.values.push(new KeyValue(f.key, submittedValue));
+    this.fieldDefinitions.forEach(f => {
+      const submittedValues = this.form.value.all[i];
+      if (submittedValues instanceof Array) {
+        const selected = this.getSelectedFormArrayValues(f, submittedValues);
+        filledOutForm.values.push(new KeyValue(f.key, selected));
       } else {
         const val = [];
-        val.push(submittedValue);
+        val.push(submittedValues);
         filledOutForm.values.push(new KeyValue(f.key, val));
       }
       i++;
     });
+
+    filledOutForm.stepNr = this.currentStep.stepNr;
     return filledOutForm;
   }
+
+  // The Angular FormArray approach is not exactly pretty. We get a list of trues/falses with indexes which
+  // we then need to turn into something the backend understands by linking the trues/falses
+  // back to the original field definition and the actual checkbox values provided there
+  // (redirect url ids for example). It works, but that is all I can say about it
+  getSelectedFormArrayValues(f: FieldDefinition, submittedValues: boolean[]): string[] {
+    const selected = [];
+    const checkBoxValues = f.checkBoxValues;
+    for (let j = 0; j < checkBoxValues.length; j++) {
+      const checkBoxValue = checkBoxValues[j];
+      const submittedValue = submittedValues[j];
+      if (submittedValue === true) {
+        selected.push(checkBoxValue.value);
+      }
+    }
+    return selected;
+  }
 }
+
 
 function selectListValidator(required: boolean) {
   const validator: ValidatorFn = (formControl: FormControl) => {

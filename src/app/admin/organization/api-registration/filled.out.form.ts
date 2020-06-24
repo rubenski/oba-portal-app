@@ -1,10 +1,8 @@
 
 
 export class FilledOutForm {
-
+  stepNr: number;
   values: KeyValue[] = [];
-
-
 }
 
 export class KeyValue {

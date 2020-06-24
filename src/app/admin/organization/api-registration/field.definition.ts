@@ -12,7 +12,7 @@ export class FieldDefinition {
   checkBoxesMinSelectedValidator: CheckBoxesMinSelectedValidator;
   required: boolean;
   description: string;
-  value: string;
+  values: string[];
   options: LabelValue[];
   regex: string;
   minLength: number;
