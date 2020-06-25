@@ -48,3 +48,32 @@
     <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
   </div>
 </form>
+
+<div *ngIf="apiRegistrations && api">
+  <h1>Registrations for {{api.bank.displayName}} - {{api.type}} {{api.sandbox ? 'Sandbox' : 'Production API'}}</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Consents created</th>
+      <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let apiRegistration of apiRegistrations">
+      <td><a routerLink="{{apiRegistration.id}}">{{apiRegistration.id}}</a></td>
+      <td>#</td>
+      <td>
+        <select (change)="setStatus(apiRegistration.id, statusSelect.value)" #statusSelect>
+          <option value="ENABLED">Enabled</option>
+          <option value="BETA">Beta</option>
+          <option value="TESTING">Testing</option>
+          <option value="DISABLED">Disabled</option>
+        </select>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button type="submit" class="btn btn-success" routerLink="new">Create registration</button>
+</div>

@@ -6,6 +6,7 @@ import {ApiRegistrationStepResult} from './admin/organization/api-registration/a
 import {ApiRegistration} from './admin/organization/api-registration/api.registration';
 import {ApiRegistrationSteps} from './admin/organization/api-registration/api.registration.steps';
 import {FilledOutForm} from './admin/organization/api-registration/filled.out.form';
+import {RegistrationStatusRequest} from './admin/organization/api-registration/registrationStatusRequest';
 
 
 @Injectable()
@@ -18,7 +19,7 @@ export class ApiRegistrationService {
   }
 
   findRegistrationsForApi(apiId): Observable<ApiRegistration[]> {
-    return this.http.get<ApiRegistration[]>(this.registrationsUrl + '/' + apiId);
+    return this.http.get<ApiRegistration[]>(this.registrationsUrl + '?apiId=' + apiId);
   }
 
   findRegistrationsForOrganization(): Observable<ApiRegistration[]> {
@@ -31,5 +32,10 @@ export class ApiRegistrationService {
 
   submitRegistrationStep(form: FilledOutForm, apiId): Observable<ApiRegistrationStepResult> {
     return this.http.post<ApiRegistrationStepResult>(this.stepResultsUrl + '/' + apiId, form);
+  }
+
+  setStatus(apiRegistrationId: string, status: string): Observable<ApiRegistrationStepResult> {
+    const request1 = new RegistrationStatusRequest(status);
+    return this.http.patch<ApiRegistrationStepResult>(this.registrationsUrl + '/' + apiRegistrationId, request1);
   }
 }

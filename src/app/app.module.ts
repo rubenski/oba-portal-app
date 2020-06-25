@@ -21,6 +21,7 @@ import {ErrorService} from './error.service';
 import {RedirectUrlService} from './redirect-url.service';
 import {BankService} from './banks.service';
 import {ApiRegistrationService} from './api.registration.service';
+import {ApiService} from './api.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import {ApiRegistrationService} from './api.registration.service';
     LayoutModule
   ],
   exports: [],
-  providers: [ApiRegistrationService, BankService, RedirectUrlService, ErrorService, LoginService,
+  providers: [ApiService, ApiRegistrationService, BankService, RedirectUrlService, ErrorService, LoginService,
     CertificateService, OrganizationService, CognitoUtil, RegistrationService, {
     provide: HTTP_INTERCEPTORS,
     useClass: FindActiveSessionInterceptor,

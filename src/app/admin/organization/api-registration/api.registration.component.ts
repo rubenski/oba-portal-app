@@ -6,6 +6,9 @@ import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angu
 import {FieldDefinition} from './field.definition';
 import {FilledOutForm, KeyValue} from './filled.out.form';
 import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
+import {ApiService} from '../../../api.service';
+import {Api} from './api';
+import {RegistrationStatusRequest} from './registrationStatusRequest';
 
 @Component({
   templateUrl: './api-registration.component.html'
@@ -17,9 +20,11 @@ export class ApiRegistrationComponent implements OnInit {
   fieldDefinitions: FieldDefinition[] = [];
   form: FormGroup;
   render: boolean;
+  api: Api;
   currentStep: ApiRegistrationStepDefinition;
 
   constructor(private apiRegistrationService: ApiRegistrationService,
+              private apiService: ApiService,
               private route: ActivatedRoute,
               private fb: FormBuilder) {
   }
@@ -49,45 +54,50 @@ export class ApiRegistrationComponent implements OnInit {
       all: this.fb.array([])
     });
 
-    this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
-      console.log(registrations);
-      if (registrations.length === 0) {
-        console.log('No existing registrations found');
-        this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
-            this.currentStep = steps.currentStep;
-            steps.currentStep.formDefinition.fieldLayoutGroups.forEach(flg => flg.fields.forEach(
-              f => {
-                if (f.type === 'CHECKBOXES') {
-                  const checkBoxes = [];
-                  f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(true)));
-                  this.addCheckBoxesControl(checkBoxes, 1);
-                } else if (f.type === 'SELECT') {
-                  this.addSelectListControl(f.values, f.required);
-                } else if (f.type === 'TEXT') {
-                  this.addTextInputControl(f.values, f.required, f.minLength, f.maxLength);
-                } else {
-                  this.addControlToFormGroup(f.values);
-                }
+    this.apiService.findOne(this.apiId).subscribe(api => {
+      this.api = api;
+      this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
+        console.log(registrations);
+        if (registrations.length === 0) {
+          console.log('No existing registrations found');
+          this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
+              this.currentStep = steps.currentStep;
+              steps.currentStep.formDefinition.fieldLayoutGroups.forEach(flg => flg.fields.forEach(
+                f => {
+                  if (f.type === 'CHECKBOXES') {
+                    const checkBoxes = [];
+                    f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(true)));
+                    this.addCheckBoxesControl(checkBoxes, 1);
+                  } else if (f.type === 'SELECT') {
+                    this.addSelectListControl(f.values, f.required);
+                  } else if (f.type === 'TEXT') {
+                    this.addTextInputControl(f.values, f.required, f.minLength, f.maxLength);
+                  } else {
+                    this.addControlToFormGroup(f.values);
+                  }
 
-                /**
-                 * Pushing fields onto a separate collection, leaving behind the fieldLayoutGroup subdivision of fields. The layout group
-                 * approach doesn't work with Angular's FormArray, because it will result in a nested loop in the template
-                 * and I am no longer able to use the iteration index to assign a unique index to each [formControlName].
-                 *
-                 * It may be worth considering a different approach to dynamic forms in the future if you want to
-                 * use the fieldLayoutGroup and represent these as subdivisions in the view using divs or fieldsets.
-                 */
-                this.fieldDefinitions.push(f);
-              }
-            ));
-            this.render = true;
-          },
-          error => {
-            console.log(error);
-          });
-      } else {
-        this.apiRegistrations = registrations;
-      }
+                  /**
+                   * Pushing fields onto a separate collection, leaving behind the fieldLayoutGroup subdivision of fields. The layout group
+                   * approach doesn't work with Angular's FormArray, because it will result in a nested loop in the template
+                   * and I am no longer able to use the iteration index to assign a unique index to each [formControlName].
+                   *
+                   * It may be worth considering a different approach to dynamic forms in the future if you want to
+                   * use the fieldLayoutGroup and represent these as subdivisions in the view using divs or fieldsets.
+                   */
+                  this.fieldDefinitions.push(f);
+                }
+              ));
+              this.render = true;
+            },
+            error => {
+              console.log(error);
+            });
+        } else {
+          this.apiRegistrations = registrations;
+        }
+      }, error => {
+        console.log(error);
+      });
     }, error => {
       console.log(error);
     });
@@ -100,6 +110,14 @@ export class ApiRegistrationComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  setStatus(apiRegistrationId: string, status: string) {
+    this.apiRegistrationService.setStatus(apiRegistrationId, status).subscribe(
+      result => {
+        console.log(result);
+      },
+      error => console.log(error));
   }
 
   getSubmittedFormValues(): FilledOutForm {
