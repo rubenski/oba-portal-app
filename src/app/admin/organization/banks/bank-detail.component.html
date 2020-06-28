@@ -28,7 +28,7 @@
     <thead>
     <th>Name</th>
     <th>Services</th>
-    <th>Sandbox</th>
+    <th>Environment</th>
     <th></th>
     </thead>
     <tbody>
@@ -37,9 +37,9 @@
       <td>
         <div *ngFor="let service of api.mainServices">{{service.displayName}}</div>
       </td>
-      <td>{{api.sandbox}}</td>
+      <td>{{api.sandbox ? 'Sandbox' : 'Production API'}}</td>
       <td>
-        <a href="#" routerLink="/admin/organization/api-registration/{{api.id}}">Registration</a>
+        <a href="#" [routerLink]="['/admin/organization/api-registrations']" [queryParams]="{'apiId' : api.id}">Registration</a>
       </td>
     </tr>
     </tbody>

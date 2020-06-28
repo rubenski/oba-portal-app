@@ -1,19 +1,24 @@
 import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angular/forms';
 import {ApiRegistrationService} from '../../../api.registration.service';
+import {ApiService} from '../../../api.service';
 import {ActivatedRoute} from '@angular/router';
 import {ApiRegistration} from './api.registration';
-import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angular/forms';
 import {FieldDefinition} from './field.definition';
-import {FilledOutForm, KeyValue} from './filled.out.form';
-import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
-import {ApiService} from '../../../api.service';
 import {Api} from './api';
-import {RegistrationStatusRequest} from './registrationStatusRequest';
+import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
+import {FilledOutForm, KeyValue} from './filled.out.form';
+
+/**
+ * We assume in the component that an existing registration can be managed without the need
+ * for the 'steps' approach that is needed for some banks when initially registering. That is why this
+ * component manages the registration directly.
+ */
 
 @Component({
-  templateUrl: './api-registration.component.html'
+  templateUrl: 'api-registration-update.component.html'
 })
-export class ApiRegistrationComponent implements OnInit {
+export class ApiRegistrationUpdateComponent implements OnInit {
 
   apiId: string = this.route.snapshot.paramMap.get('apiId');
   apiRegistrations: ApiRegistration[];
@@ -23,10 +28,58 @@ export class ApiRegistrationComponent implements OnInit {
   api: Api;
   currentStep: ApiRegistrationStepDefinition;
 
+
   constructor(private apiRegistrationService: ApiRegistrationService,
               private apiService: ApiService,
               private route: ActivatedRoute,
               private fb: FormBuilder) {
+  }
+
+  submit() {
+    console.log(this.form.value);
+    this.apiRegistrationService.submitRegistrationStep(this.getSubmittedFormValues(), this.apiId).subscribe(result => {
+      console.log(result);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getSubmittedFormValues(): FilledOutForm {
+    const filledOutForm = new FilledOutForm();
+    let i = 0;
+    this.fieldDefinitions.forEach(f => {
+      const submittedValues = this.form.value.all[i];
+      if (submittedValues instanceof Array) {
+        const selected = this.getSelectedFormArrayValues(f, submittedValues);
+        filledOutForm.values.push(new KeyValue(f.key, selected));
+      } else {
+        const val = [];
+        val.push(submittedValues);
+        filledOutForm.values.push(new KeyValue(f.key, val));
+      }
+      i++;
+    });
+
+    filledOutForm.stepNr = this.currentStep.stepNr;
+    return filledOutForm;
+  }
+
+
+  // The Angular FormArray approach is not exactly pretty. We get a list of trues/falses with indexes which
+  // we then need to turn into something the backend understands by linking the trues/falses
+  // back to the original field definition and the actual checkbox values provided there
+  // (redirect url ids for example). It works, but that is all I can say about it
+  getSelectedFormArrayValues(f: FieldDefinition, submittedValues: boolean[]): string[] {
+    const selected = [];
+    const checkBoxValues = f.checkBoxValues;
+    for (let j = 0; j < checkBoxValues.length; j++) {
+      const checkBoxValue = checkBoxValues[j];
+      const submittedValue = submittedValues[j];
+      if (submittedValue === true) {
+        selected.push(checkBoxValue.value);
+      }
+    }
+    return selected;
   }
 
   getFields() {
@@ -102,60 +155,6 @@ export class ApiRegistrationComponent implements OnInit {
       console.log(error);
     });
   }
-
-  submit() {
-    console.log(this.form.value);
-    this.apiRegistrationService.submitRegistrationStep(this.getSubmittedFormValues(), this.apiId).subscribe(result => {
-      console.log(result);
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  setStatus(apiRegistrationId: string, status: string) {
-    this.apiRegistrationService.setStatus(apiRegistrationId, status).subscribe(
-      result => {
-        console.log(result);
-      },
-      error => console.log(error));
-  }
-
-  getSubmittedFormValues(): FilledOutForm {
-    const filledOutForm = new FilledOutForm();
-    let i = 0;
-    this.fieldDefinitions.forEach(f => {
-      const submittedValues = this.form.value.all[i];
-      if (submittedValues instanceof Array) {
-        const selected = this.getSelectedFormArrayValues(f, submittedValues);
-        filledOutForm.values.push(new KeyValue(f.key, selected));
-      } else {
-        const val = [];
-        val.push(submittedValues);
-        filledOutForm.values.push(new KeyValue(f.key, val));
-      }
-      i++;
-    });
-
-    filledOutForm.stepNr = this.currentStep.stepNr;
-    return filledOutForm;
-  }
-
-  // The Angular FormArray approach is not exactly pretty. We get a list of trues/falses with indexes which
-  // we then need to turn into something the backend understands by linking the trues/falses
-  // back to the original field definition and the actual checkbox values provided there
-  // (redirect url ids for example). It works, but that is all I can say about it
-  getSelectedFormArrayValues(f: FieldDefinition, submittedValues: boolean[]): string[] {
-    const selected = [];
-    const checkBoxValues = f.checkBoxValues;
-    for (let j = 0; j < checkBoxValues.length; j++) {
-      const checkBoxValue = checkBoxValues[j];
-      const submittedValue = submittedValues[j];
-      if (submittedValue === true) {
-        selected.push(checkBoxValue.value);
-      }
-    }
-    return selected;
-  }
 }
 
 
@@ -205,4 +204,6 @@ function minSelectedCheckboxes(min = 1) {
 
   return validator;
 }
+
+
 

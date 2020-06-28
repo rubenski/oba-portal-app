@@ -24,7 +24,12 @@ body {
 
 h1 {
   font-size: 1.5rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1.7rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
 }
 
 app-header {
@@ -92,20 +97,4 @@ label {
 .checkbox-label {
   display: block;
   padding: 5px;
-}
-
-.traffic-light-on {
-  width: 15px;
-  height: 15px;
-  background-color: #42A948;
-  border-radius: 2px;
-  margin-top: 7px
-}
-
-.traffic-light-off {
-  width: 15px;
-  height: 15px;
-  background-color: #d22e29;
-  border-radius: 2px;
-  margin-top: 7px
 }

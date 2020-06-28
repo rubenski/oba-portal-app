@@ -1,0 +1,78 @@
+<div *ngIf="apiRegistration && api">
+
+  <h1>Registration for {{api.bank.displayName}} - {{api.type}} {{api.sandbox ? 'Sandbox' : 'Production API'}}</h1>
+
+  <h2>Info</h2>
+  <table class="table table-striped">
+    <tbody>
+    <tr>
+      <th scope="row" style="width:20%">Id</th>
+      <td style="width:80%">{{apiRegistration.id}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Created</th>
+      <td>{{apiRegistration.created}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Consents created</th>
+      <td><a [routerLink]="['/consents']">54 consents for 22 users</a></td>
+    </tr>
+    </tbody>
+  </table>
+  <br/>
+
+
+  <h2>Api registration fields</h2>
+  <form *ngIf="api && fieldDefinitions" [formGroup]="form" (ngSubmit)="submit()">
+    <div formArrayName="all">
+      <div *ngFor="let field of fieldDefinitions; let i=index" class="form-group">
+        <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
+        <div *ngIf="field.labelExplanation.explanation"
+             class="form-field-description">{{field.labelExplanation.explanation}}</div>
+
+        <input class="form-control" type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
+        <div *ngIf="field.type == 'TEXT' &&
+        !form.get('all').get('' + i).pristine &&
+        form.get('all').get('' + i).errors &&
+        form.get('all').get('' + i).errors.minLength" class="alert alert-danger">
+          This value is too short
+        </div>
+        <div *ngIf="field.type == 'TEXT' &&
+        !form.get('all').get('' + i).pristine &&
+        form.get('all').get('' + i).errors &&
+        form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
+          This value is too long
+        </div>
+        <div *ngIf="field.type == 'TEXT' &&
+        !form.get('all').get('' + i).pristine &&
+        form.get('all').get('' + i).errors &&
+        form.get('all').get('' + i).errors.required" class="alert alert-danger">
+          This field is required
+        </div>
+
+        <select class="form-control" *ngIf="field.type == 'SELECT'" [formControlName]="i">
+          <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
+        </select>
+        <div *ngIf="field.type == 'SELECT' &&
+        form.get('all').get('' + i).touched &&
+        form.get('all').get('' + i).errors &&
+        form.get('all').get('' + i).errors.required" class="alert alert-danger">
+          This field is required
+        </div>
+
+        <div *ngIf="field.type == 'CHECKBOXES'" class="form-group" [formGroupName]="i">
+          <label *ngFor="let choice of field.checkBoxValues; let j=index" class="checkbox-label">
+            <input type="checkbox" [value]="choice.value" [formControlName]="j">
+            {{choice.label}}
+          </label>
+          <div *ngIf="form.get('all').get('' + i).errors" class="alert alert-danger">
+            {{field.checkBoxesMinSelectedValidator.message}}
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
+    </div>
+  </form>
+
+
+</div>

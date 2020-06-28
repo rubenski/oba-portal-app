@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Api} from './admin/organization/api-registration/api';
+import {Api} from './admin/organization/api-registrations/api';
 
 
 @Injectable()
