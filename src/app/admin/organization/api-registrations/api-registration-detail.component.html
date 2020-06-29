@@ -33,26 +33,32 @@
         <div *ngIf="field.labelExplanation.explanation"
              class="form-field-description">{{field.labelExplanation.explanation}}</div>
 
-        <input class="form-control" type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
-        <div *ngIf="field.type == 'TEXT' &&
-        !formAndFields.form.get('all').get('' + i).pristine &&
-        formAndFields.form.get('all').get('' + i).errors &&
-        formAndFields.form.get('all').get('' + i).errors.minLength" class="alert alert-danger">
-          This value is too short
-        </div>
-        <div *ngIf="field.type == 'TEXT' &&
-        !formAndFields.form.get('all').get('' + i).pristine &&
-        formAndFields.form.get('all').get('' + i).errors &&
-        formAndFields.form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
-          This value is too long
-        </div>
-        <div *ngIf="field.type == 'TEXT' &&
-        !formAndFields.form.get('all').get('' + i).pristine &&
-        formAndFields.form.get('all').get('' + i).errors &&
-        formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
-          This field is required
+        <div *ngIf="field.type == 'TEXT' && !field.secret">
+          <input class="form-control" type="text" [formControlName]="i">
+          <div
+            *ngIf="!formAndFields.form.get('all').get('' + i).pristine &&
+            formAndFields.form.get('all').get('' + i).errors &&
+            formAndFields.form.get('all').get('' + i).errors.minLength"
+            class="alert alert-danger">
+            This value is too short
+          </div>
+          <div
+            *ngIf="!formAndFields.form.get('all').get('' + i).pristine &&
+            formAndFields.form.get('all').get('' + i).errors &&
+            formAndFields.form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
+            This value is too long
+          </div>
+          <div
+            *ngIf="!formAndFields.form.get('all').get('' + i).pristine &&
+            formAndFields.form.get('all').get('' + i).errors &&
+            formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
+            This field is required
+          </div>
         </div>
 
+        <div *ngIf="field.type == 'TEXT' && field.secret">
+          <b>***************</b>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" (click)="field.secret = false">Edit</a>
+        </div>
         <select class="form-control" *ngIf="field.type == 'SELECT'" [formControlName]="i">
           <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
         </select>

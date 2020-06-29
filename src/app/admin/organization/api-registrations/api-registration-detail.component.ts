@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
 import {ApiService} from '../../../api.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Api} from './api';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
+import {FieldDefinition} from './field.definition';
 
 @Component({
   templateUrl: './api-registration-detail.component.html'
@@ -55,5 +56,9 @@ export class ApiRegistrationDetailComponent implements OnInit {
       }, error => {
         this.globalError = 'An error occurred';
       });
+  }
+
+  setEditable(field: FieldDefinition) {
+    field.secret = true;
   }
 }

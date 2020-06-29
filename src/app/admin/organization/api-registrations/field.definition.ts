@@ -7,7 +7,6 @@ import {CheckBoxesMinSelectedValidator} from './checkbox.min.selected.validator'
 export class FieldDefinition {
   key: string;
   labelExplanation: LabelExplanation;
-  buttonText: string;
   checkBoxValues: CheckBoxValue[];
   checkBoxesMinSelectedValidator: CheckBoxesMinSelectedValidator;
   required: boolean;
@@ -18,4 +17,7 @@ export class FieldDefinition {
   minLength: number;
   maxLength: number;
   type: string;
+  secret: boolean;
+
+  editable = false;
 }
