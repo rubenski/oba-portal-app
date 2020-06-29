@@ -2,6 +2,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angu
 import {ApiRegistrationSteps} from './api.registration.steps';
 import {FieldDefinition} from './field.definition';
 import {FilledOutForm, KeyValue} from './filled.out.form';
+import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
 
 
 export class ApiRegistrationFormUtil {
@@ -58,25 +59,25 @@ export class ApiRegistrationFormUtil {
     return validator;
   }
 
-  stepsToFormAndFields(steps: ApiRegistrationSteps): FormAndFields {
+  stepsToFormAndFields(step: ApiRegistrationStepDefinition): FormAndFields {
 
     const fieldDefinitions: FieldDefinition[] = [];
     const form = this.fb.group({
       all: this.fb.array([])
     });
 
-    steps.currentStep.formDefinition.fieldLayoutGroups.forEach(flg => flg.fields.forEach(
+    step.formDefinition.fieldLayoutGroups.forEach(flg => flg.fields.forEach(
       f => {
         if (f.type === 'CHECKBOXES') {
           const checkBoxes = [];
-          f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(true)));
+          f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(cbv.selected)));
           this.addCheckBoxesControl(form, this.fb, checkBoxes, 1);
         } else if (f.type === 'SELECT') {
-          this.addSelectListControl(form, this.fb, f.values, f.required);
+          this.addSelectListControl(form, this.fb, f.values ?  f.values[0] : null, f.required);
         } else if (f.type === 'TEXT') {
-          this.addTextInputControl(form, this.fb, f.values, f.required, f.minLength, f.maxLength);
+          this.addTextInputControl(form, this.fb, f.values ?  f.values[0] : null, f.required, f.minLength, f.maxLength);
         } else {
-          this.addControlToFormGroup(form, this.fb, f.values);
+          this.addControlToFormGroup(form, this.fb, f.values ?  f.values[0] : null);
         }
 
         /**

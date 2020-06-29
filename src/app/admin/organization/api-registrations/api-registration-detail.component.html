@@ -23,30 +23,30 @@
 
 
   <h2>Api registration fields</h2>
-  <form *ngIf="api && fieldDefinitions" [formGroup]="form" (ngSubmit)="submit()">
+  <form *ngIf="formAndFields" [formGroup]="formAndFields.form" (ngSubmit)="submit()">
     <div formArrayName="all">
-      <div *ngFor="let field of fieldDefinitions; let i=index" class="form-group">
+      <div *ngFor="let field of formAndFields.fieldDefinitions; let i=index" class="form-group">
         <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
         <div *ngIf="field.labelExplanation.explanation"
              class="form-field-description">{{field.labelExplanation.explanation}}</div>
 
         <input class="form-control" type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
         <div *ngIf="field.type == 'TEXT' &&
-        !form.get('all').get('' + i).pristine &&
-        form.get('all').get('' + i).errors &&
-        form.get('all').get('' + i).errors.minLength" class="alert alert-danger">
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.minLength" class="alert alert-danger">
           This value is too short
         </div>
         <div *ngIf="field.type == 'TEXT' &&
-        !form.get('all').get('' + i).pristine &&
-        form.get('all').get('' + i).errors &&
-        form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
           This value is too long
         </div>
         <div *ngIf="field.type == 'TEXT' &&
-        !form.get('all').get('' + i).pristine &&
-        form.get('all').get('' + i).errors &&
-        form.get('all').get('' + i).errors.required" class="alert alert-danger">
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
           This field is required
         </div>
 
@@ -54,9 +54,9 @@
           <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
         </select>
         <div *ngIf="field.type == 'SELECT' &&
-        form.get('all').get('' + i).touched &&
-        form.get('all').get('' + i).errors &&
-        form.get('all').get('' + i).errors.required" class="alert alert-danger">
+        formAndFields.form.get('all').get('' + i).touched &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
           This field is required
         </div>
 
@@ -65,12 +65,12 @@
             <input type="checkbox" [value]="choice.value" [formControlName]="j">
             {{choice.label}}
           </label>
-          <div *ngIf="form.get('all').get('' + i).errors" class="alert alert-danger">
+          <div *ngIf="formAndFields.form.get('all').get('' + i).errors" class="alert alert-danger">
             {{field.checkBoxesMinSelectedValidator.message}}
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid">Submit</button>
     </div>
   </form>
 

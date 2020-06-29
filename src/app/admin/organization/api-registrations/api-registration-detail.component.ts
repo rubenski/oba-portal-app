@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
 import {ApiService} from '../../../api.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Api} from './api';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApiRegistration} from './api.registration';
-import {FieldDefinition} from './field.definition';
+import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
 
 @Component({
   templateUrl: './api-registration-detail.component.html'
@@ -14,30 +13,26 @@ export class ApiRegistrationDetailComponent implements OnInit {
 
   registrationId: string = this.route.snapshot.paramMap.get('apiRegistrationId');
   api: Api;
-  form: FormGroup;
   apiRegistration: ApiRegistration;
-  fieldDefinitions: FieldDefinition[];
+  formAndFields: FormAndFields;
+  stepNr: number;
+  globalError: string;
+  globalSuccess: string;
 
   constructor(private apiRegistrationService: ApiRegistrationService,
               private apiService: ApiService,
-              private route: ActivatedRoute,
-              private fb: FormBuilder) {
-
+              private route: ActivatedRoute) {
   }
 
   // TODO: turn this nested mess into proper RxJs approach
   ngOnInit(): void {
-
-    this.form = this.fb.group({
-      all: this.fb.array([])
-    });
-
+    const formUtil = new ApiRegistrationFormUtil();
     this.apiRegistrationService.findRegistration(this.registrationId).subscribe(registration => {
       this.apiRegistration = registration;
       this.apiRegistrationService.findUpdateRegistrationStep(this.registrationId).subscribe(
         step => {
-          // TODO: getting steps here as well. You should just ditch the field layout groups
-          this.fieldDefinitions = step.formDefinition.fieldLayoutGroups.flatMap(f => f.fields);
+          this.stepNr = step.stepNr;
+          this.formAndFields = formUtil.stepsToFormAndFields(step);
           this.apiService.findOne(this.apiRegistration.apiId).subscribe(api => {
             this.api = api;
           }, error => {
@@ -52,7 +47,13 @@ export class ApiRegistrationDetailComponent implements OnInit {
   }
 
   submit() {
-
-
+    const formUtil = new ApiRegistrationFormUtil();
+    const submittedFormValues = formUtil.getSubmittedFormValues(this.formAndFields, this.stepNr);
+    this.apiRegistrationService.submitUpdateRegistrationStep(submittedFormValues, this.apiRegistration.id).subscribe(
+      result => {
+        this.globalSuccess = 'Organization info saved';
+      }, error => {
+        this.globalError = 'An error occurred';
+      });
   }
 }

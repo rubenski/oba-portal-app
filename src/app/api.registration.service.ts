@@ -6,7 +6,6 @@ import {ApiRegistrationStepResult} from './admin/organization/api-registrations/
 import {ApiRegistration} from './admin/organization/api-registrations/api.registration';
 import {ApiRegistrationSteps} from './admin/organization/api-registrations/api.registration.steps';
 import {FilledOutForm} from './admin/organization/api-registrations/filled.out.form';
-import {RegistrationUpdateStatusRequest} from './admin/organization/api-registrations/registration.update.status.request';
 import {ApiRegistrationStepDefinition} from './admin/organization/api-registrations/api.registration.step.definition';
 
 
@@ -44,8 +43,7 @@ export class ApiRegistrationService {
     return this.http.get<ApiRegistrationStepDefinition>(this.registrationUpdateUrl + '/' + registrationId);
   }
 
-  setStatus(apiRegistrationId: string, status: string): Observable<ApiRegistrationStepResult> {
-    const request1 = new RegistrationUpdateStatusRequest(status);
-    return this.http.patch<ApiRegistrationStepResult>(this.registrationsUrl + '/' + apiRegistrationId, request1);
+  submitUpdateRegistrationStep(form: FilledOutForm, registrationId: string): Observable<ApiRegistrationStepResult> {
+    return this.http.post<ApiRegistrationStepResult>(this.registrationUpdateUrl + '/' + registrationId, form);
   }
 }

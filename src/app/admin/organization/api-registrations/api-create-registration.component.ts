@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiRegistration} from './api.registration';
-import {FieldDefinition} from './field.definition';
-import {FilledOutForm, KeyValue} from './filled.out.form';
 import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
 import {ApiService} from '../../../api.service';
 import {Api} from './api';
@@ -20,18 +18,14 @@ export class ApiCreateRegistrationComponent implements OnInit {
   currentStep: ApiRegistrationStepDefinition;
   formAndFields: FormAndFields;
 
-
   constructor(private apiRegistrationService: ApiRegistrationService,
               private apiService: ApiService,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
-
   ngOnInit(): void {
-
     const formUtil = new ApiRegistrationFormUtil();
-
     this.apiService.findOne(this.apiId).subscribe(api => {
       this.api = api;
       this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
@@ -40,7 +34,7 @@ export class ApiCreateRegistrationComponent implements OnInit {
           console.log('No existing registrations found');
           this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
               this.currentStep = steps.currentStep;
-              this.formAndFields = formUtil.stepsToFormAndFields(steps);
+              this.formAndFields = formUtil.stepsToFormAndFields( this.currentStep);
             },
             error => {
               console.log(error);
@@ -59,7 +53,8 @@ export class ApiCreateRegistrationComponent implements OnInit {
   submit() {
     const formUtil = new ApiRegistrationFormUtil();
     console.log(this.formAndFields.form.value);
-    this.apiRegistrationService.submitRegistrationStep(formUtil.getSubmittedFormValues(this.formAndFields, this.currentStep.stepNr), this.apiId)
+    this.apiRegistrationService.submitRegistrationStep(formUtil.getSubmittedFormValues(this.formAndFields, this.currentStep.stepNr),
+      this.apiId)
       .subscribe(result => {
         this.router.navigate(['admin/organization/api-registrations'], {queryParams: {apiId: this.apiId}});
       }, error => {

@@ -64,7 +64,6 @@ export class ApiRegistrationUpdateComponent implements OnInit {
     return filledOutForm;
   }
 
-
   // The Angular FormArray approach is not exactly pretty. We get a list of trues/falses with indexes which
   // we then need to turn into something the backend understands by linking the trues/falses
   // back to the original field definition and the actual checkbox values provided there
