@@ -3,6 +3,7 @@
   <tr>
     <th scope="col">Id</th>
     <th scope="col">URL</th>
+    <th scope="col">Used in</th>
     <th scope="col">Created</th>
     <th></th>
   </tr>
@@ -11,6 +12,7 @@
   <tr *ngFor="let redirectUrl of redirectUrls">
     <td>{{redirectUrl.id}}</td>
     <td>{{redirectUrl.redirectUrl}}</td>
+    <td><a href=""># registrations</a></td>
     <td>{{redirectUrl.created}}</td>
     <td><span (click)="delete(redirectUrl.id)"><img src="../assets/img/del.png" width="20" height="20"/></span></td>
   </tr>
