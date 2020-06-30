@@ -5,7 +5,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Api} from './api';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
-import {FieldDefinition} from './field.definition';
 
 @Component({
   templateUrl: './api-registration-detail.component.html'
@@ -27,6 +26,28 @@ export class ApiRegistrationDetailComponent implements OnInit {
 
   // TODO: turn this nested mess into proper RxJs approach
   ngOnInit(): void {
+    this.init();
+  }
+
+  submit() {
+    const formUtil = new ApiRegistrationFormUtil();
+    const submittedFormValues = formUtil.getSubmittedFormValues(this.formAndFields, this.stepNr);
+    this.apiRegistrationService.submitUpdateRegistrationStep(submittedFormValues, this.apiRegistration.id).subscribe(
+      result => {
+        this.globalSuccess = 'Organization info saved';
+        // Reload the data here so that any unlocked secret input fields will go back to being locked
+        this.init();
+      }, error => {
+        this.globalError = 'An error occurred';
+      });
+  }
+
+  toggle(i: number) {
+    const control = this.formAndFields.form.controls.all.get('' + i);
+    control.setValue('');
+  }
+
+  init() {
     const formUtil = new ApiRegistrationFormUtil();
     this.apiRegistrationService.findRegistration(this.registrationId).subscribe(registration => {
       this.apiRegistration = registration;
@@ -45,20 +66,5 @@ export class ApiRegistrationDetailComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-  }
-
-  submit() {
-    const formUtil = new ApiRegistrationFormUtil();
-    const submittedFormValues = formUtil.getSubmittedFormValues(this.formAndFields, this.stepNr);
-    this.apiRegistrationService.submitUpdateRegistrationStep(submittedFormValues, this.apiRegistration.id).subscribe(
-      result => {
-        this.globalSuccess = 'Organization info saved';
-      }, error => {
-        this.globalError = 'An error occurred';
-      });
-  }
-
-  setEditable(field: FieldDefinition) {
-    field.secret = true;
   }
 }
