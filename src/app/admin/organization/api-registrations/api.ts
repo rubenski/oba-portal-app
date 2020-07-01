@@ -7,9 +7,9 @@ export class Api {
   mutualTlsUsed: boolean;
   sandbox: boolean;
   beta: boolean;
-  bank: BankApi;
+  financialOrganization: FinancialOrganization;
 }
 
-export class BankApi {
+export class FinancialOrganization {
   displayName: string;
 }

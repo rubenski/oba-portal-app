@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {OrganizationService} from '../../../organization.service';
-import {Bank} from './bank';
+import {FinancialOrganization} from './financial.organization';
 import {BankService} from '../../../banks.service';
 
 @Component({
@@ -9,7 +9,7 @@ import {BankService} from '../../../banks.service';
 })
 export class BanksListComponent implements OnInit {
 
-  banks: Bank[];
+  financialOrganizations: FinancialOrganization[];
   globalError: any;
   isOrganizationComplete: boolean;
   render = false;
@@ -30,7 +30,7 @@ export class BanksListComponent implements OnInit {
         }
         if (this.isOrganizationComplete) {
           this.bankService.findAll().subscribe(data => {
-              this.banks = data;
+              this.financialOrganizations = data;
               this.render = true;
             },
             error => {

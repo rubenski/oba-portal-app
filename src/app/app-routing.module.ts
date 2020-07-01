@@ -35,6 +35,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'admin/organization/applications',
+    loadChildren: './admin/organization/applications.module#ApplicationsModule',
+    data: {showHeader: true, admin: true},
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'admin/organization/banks',
     loadChildren: './admin/organization/banks/banks.module#BanksModule',
     data: {showHeader: true, admin: true},

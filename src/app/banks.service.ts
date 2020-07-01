@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Bank} from './admin/organization/banks/bank';
+import {FinancialOrganization} from './admin/organization/banks/financial.organization';
 
 
 @Injectable()
@@ -13,11 +13,11 @@ export class BankService {
   constructor(private http: HttpClient) {
   }
 
-  findAll(): Observable<Bank[]> {
-    return this.http.get<Bank[]>(this.bankServiceUrl);
+  findAll(): Observable<FinancialOrganization[]> {
+    return this.http.get<FinancialOrganization[]>(this.bankServiceUrl);
   }
 
-  findOne(systemName): Observable<Bank> {
-    return this.http.get<Bank>(this.bankServiceUrl + '/' + systemName);
+  findOne(systemName): Observable<FinancialOrganization> {
+    return this.http.get<FinancialOrganization>(this.bankServiceUrl + '/' + systemName);
   }
 }

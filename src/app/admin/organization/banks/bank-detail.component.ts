@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {OrganizationService} from '../../../organization.service';
-import {Bank} from './bank';
+import {FinancialOrganization} from './financial.organization';
 import {BankService} from '../../../banks.service';
 
 @Component({
@@ -9,7 +9,7 @@ import {BankService} from '../../../banks.service';
 })
 export class BankDetailComponent implements OnInit {
 
-  bank: Bank;
+  bank: FinancialOrganization;
   globalError: any;
   systemName: string = this.route.snapshot.paramMap.get('systemName');
 
