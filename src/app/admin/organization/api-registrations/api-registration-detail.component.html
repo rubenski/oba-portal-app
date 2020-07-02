@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit</button>
     </div>
   </form>
 </div>
