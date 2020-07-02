@@ -4,7 +4,7 @@ import {Application} from './application';
 import {ApplicationService} from '../../../application.service';
 
 @Component({
-  templateUrl: './applications-list.component.html'
+  templateUrl: './applications.list.component.html'
 })
 export class ApplicationsListComponent implements OnInit {
 

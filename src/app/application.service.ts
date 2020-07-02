@@ -25,4 +25,6 @@ export class ApplicationService {
   create(createApplication: CreateApplicationRequest): Observable<Application> {
     return this.http.post<Application>(this.applicationsUrl, createApplication, AppConstants.HTTP_OPTIONS);
   }
+
+
 }

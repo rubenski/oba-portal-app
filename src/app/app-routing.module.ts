@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'admin/organization/applications',
-    loadChildren: './admin/organization/applications.module#ApplicationsModule',
+    loadChildren: './admin/organization/applications/applications.module#ApplicationsModule',
     data: {showHeader: true, admin: true},
     canActivate: [AuthGuard]
   },

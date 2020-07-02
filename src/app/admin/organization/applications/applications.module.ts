@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ApplicationsRoutingModule} from './applications.routing.module';
 import {ApplicationsListComponent} from './applications.list.component';
 import {SharedModule} from '../../../shared/shared.module';
+import {CreateApplicationComponent} from './create.application.component';
 
 
 @NgModule({
@@ -14,8 +15,8 @@ import {SharedModule} from '../../../shared/shared.module';
     ApplicationsRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ApplicationsListComponent],
-  exports: [ApplicationsListComponent]
+  declarations: [ApplicationsListComponent, CreateApplicationComponent],
+  exports: [ApplicationsListComponent, CreateApplicationComponent]
 })
 export class ApplicationsModule {
 
