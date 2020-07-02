@@ -6,5 +6,6 @@ export class Application {
   technicalContactEmail: string;
   administrativeContactName: string;
   administrativeContactEmail: string;
+  hasConnections: boolean;
   created: string;
 }

@@ -4,6 +4,7 @@
     <th scope="col">Name</th>
     <th scope="col">Id</th>
     <th scope="col">Created</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -11,6 +12,7 @@
     <td><a routerLink="{{application.id}}">{{application.name}}</a></td>
     <td>{{application.id}}</td>
     <td>{{application.created}}</td>
+    <td><span (click)="delete(application.id)" *ngIf="!application.hasConnections"><img src="../assets/img/del.png" width="20" height="20"/></span></td>
   </tr>
   <tr *ngIf="applications?.length == 0">
     <td colspan="6">You have no applications yet</td>

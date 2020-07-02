@@ -9,7 +9,7 @@ import {CreateApplicationRequest} from './admin/organization/applications/create
 @Injectable()
 export class ApplicationService {
 
-  private applicationsUrl = environment.obaPortalBackendHostName + '/applications/';
+  private applicationsUrl = environment.obaPortalBackendHostName + '/applications';
 
   constructor(private http: HttpClient) {
   }
@@ -22,9 +22,11 @@ export class ApplicationService {
     return this.http.get<Application[]>(this.applicationsUrl);
   }
 
+  delete(id): Observable<void> {
+    return this.http.delete<void>(this.applicationsUrl + '/' + id);
+  }
+
   create(createApplication: CreateApplicationRequest): Observable<Application> {
     return this.http.post<Application>(this.applicationsUrl, createApplication, AppConstants.HTTP_OPTIONS);
   }
-
-
 }

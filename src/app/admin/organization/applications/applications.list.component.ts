@@ -23,4 +23,9 @@ export class ApplicationsListComponent implements OnInit {
       }
     );
   }
+
+  delete(id: any) {
+    this.applicationService.delete(id)
+      .subscribe(result => this.ngOnInit());
+  }
 }
