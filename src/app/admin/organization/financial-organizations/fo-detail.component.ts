@@ -5,9 +5,9 @@ import {FinancialOrganization} from './financial.organization';
 import {BankService} from '../../../banks.service';
 
 @Component({
-  templateUrl: './bank-detail.component.html'
+  templateUrl: './fo-detail.component.html'
 })
-export class BankDetailComponent implements OnInit {
+export class FoDetailComponent implements OnInit {
 
   bank: FinancialOrganization;
   globalError: any;

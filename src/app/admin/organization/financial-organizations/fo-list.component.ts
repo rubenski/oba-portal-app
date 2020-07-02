@@ -5,9 +5,9 @@ import {FinancialOrganization} from './financial.organization';
 import {BankService} from '../../../banks.service';
 
 @Component({
-  templateUrl: './banks-list.component.html'
+  templateUrl: './fo-list.component.html'
 })
-export class BanksListComponent implements OnInit {
+export class FoListComponent implements OnInit {
 
   financialOrganizations: FinancialOrganization[];
   globalError: any;
