@@ -1,27 +1,46 @@
 <nav class="navbar navbar-expand-lg rounded-top p-2">
 
-  <button type="button" class="btn btn-light" routerLink="admin" routerLinkActive="button-active" [routerLinkActiveOptions]="{exact: true}">Home</button>
+  <button type="button" class="btn btn-light" routerLink="admin" routerLinkActive="button-active"
+          [routerLinkActiveOptions]="{exact: true}">Home
+  </button>
   &nbsp;&nbsp;
-  <button type="button" class="btn btn-light" routerLink="admin/organization" routerLinkActive="button-active">Organization</button>
+  <button type="button" class="btn btn-light" routerLink="admin/organization" routerLinkActive="button-active">
+    Organization
+  </button>
   &nbsp;&nbsp;
-  <button type="button" class="btn btn-light">Application 1</button>
+  <button *ngFor="let app of allApplications() | async" (click)="selectApplication(app.id)" type="button" class="btn btn-light" routerLinkActive="button-active"
+          routerLink="{{ 'admin/applications/' + app.id}}">{{app.name}}</button>
 
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Statistics</a>
-    <a class="dropdown-item" href="#">Settings (batch settings)</a>
-    <a class="dropdown-item" href="#">Banks & tags</a>
-    <a class="dropdown-item" href="#">Users</a>
-  </div>
 </nav>
 
 <nav *ngIf="isOrganization()" class="navbar navbar-expand  primary-color p-2" style="background-color: #b5cae2">
   <div>
-    <button class="btn btn-light" type="button" routerLink="admin/organization" routerLinkActive="button-active" [routerLinkActiveOptions]="{exact: true}">Info</button>&nbsp;
-    <button class="btn btn-light" type="button" routerLink="admin/organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;
-    <button class="btn btn-light" type="button" routerLink="admin/organization/redirect-urls" routerLinkActive="button-active">Redirect URLs</button>&nbsp;
-    <button class="btn btn-light" type="button" routerLink="admin/organization/financial-organizations" routerLinkActive="button-active">Financial Organizations</button>&nbsp;
-    <button class="btn btn-light" type="button" routerLink="admin/organization/applications" routerLinkActive="button-active">Applications</button>&nbsp;
-    <button class="btn btn-light" type="button" routerLink="admin/organization/invoices" routerLinkActive="button-active">Invoices</button>&nbsp;
+    <button class="btn btn-light" type="button" routerLink="admin/organization" routerLinkActive="button-active"
+            [routerLinkActiveOptions]="{exact: true}">Info
+    </button>&nbsp;
+    <button class="btn btn-light" type="button" routerLink="admin/organization/keys-certs"
+            routerLinkActive="button-active">Keys & Certificates
+    </button>&nbsp;
+    <button class="btn btn-light" type="button" routerLink="admin/organization/redirect-urls"
+            routerLinkActive="button-active">Redirect URLs
+    </button>&nbsp;
+    <button class="btn btn-light" type="button" routerLink="admin/organization/financial-organizations"
+            routerLinkActive="button-active">Financial Organizations
+    </button>&nbsp;
+    <button class="btn btn-light" type="button" routerLink="admin/organization/applications"
+            routerLinkActive="button-active">Applications
+    </button>&nbsp;
+    <button class="btn btn-light" type="button" routerLink="admin/organization/invoices"
+            routerLinkActive="button-active">Invoices
+    </button>&nbsp;
+  </div>
+</nav>
+
+<nav *ngIf="isApplication() && selectedApplication" class="navbar navbar-expand  primary-color p-2" style="background-color: #b5cae2">
+  <div>
+    <button class="btn btn-light" type="button" [routerLink]="['admin/applications', selectedApplication.id]" routerLinkActive="button-active"
+            [routerLinkActiveOptions]="{exact: true}">Info
+    </button>
   </div>
 </nav>
 

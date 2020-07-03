@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AppConstants} from '../../../app.constants';
 import {CreateApplicationRequest} from './create.application.request';
 import {ApplicationService} from '../../../application.service';
+import {AdminHeaderService} from '../../../admin.header.service';
 
 @Component({
   templateUrl: './create.application.component.html'
@@ -13,13 +14,14 @@ export class CreateApplicationComponent implements OnInit {
   globalError: any;
   applicationLimitReached = false;
 
-  constructor(private applicationService: ApplicationService, private router: Router) {
+  constructor(private applicationService: ApplicationService, private router: Router, private adminHeaderService: AdminHeaderService) {
   }
 
   onSubmit() {
     this.applicationService.create(this.application).subscribe(
       a => {
         this.application = a;
+        this.adminHeaderService.updateApplications();
         this.router.navigate(['admin/organization/applications']);
       },
       () => {
