@@ -26,6 +26,7 @@ export class PublicKeysListComponent extends ApplicationBaseComponent {
   submit() {
     this.applicationService.createApplicationPublicKeys(this.application.id, this.publicKeyRequest).subscribe(result => {
       this.ngOnInit();
+      this.publicKeyRequest = new CreatePublicKeyRequest();
     }, error => {
       if (error.error.code === 'APP004') {
         this.globalError = 'Not a valid public key';
