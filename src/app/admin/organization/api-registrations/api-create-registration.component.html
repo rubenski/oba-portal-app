@@ -1,4 +1,11 @@
-<form *ngIf="formAndFields" [formGroup]="formAndFields.form" (ngSubmit)="submit()">
+
+<div class="alert alert-warning" *ngIf="!organizationComplete && render">
+  Before you can register with and use APIs we need some more information about your organization.
+  Please complete your <a routerLink="/admin" href="#">pending tasks</a>.
+</div>
+
+
+<form *ngIf="formAndFields && organizationComplete" [formGroup]="formAndFields.form" (ngSubmit)="submit()">
   <div formArrayName="all">
     <div *ngFor="let field of formAndFields.fieldDefinitions; let i=index" class="form-group">
       <label for="{{field.key}}">{{field.labelExplanation.label}}</label>

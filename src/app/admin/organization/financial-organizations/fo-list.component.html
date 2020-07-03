@@ -1,11 +1,4 @@
-<div *ngIf="!isOrganizationComplete && render">Before you can work with banks you must complete your organization's information.
-  <br/>
-  We need some more information about your organization in order to onboard you with banks. Please review your
-  <a routerLink="/admin" href="#">pending tasks</a>
-</div>
-
-
-<table *ngIf="isOrganizationComplete && render" class="table table-striped">
+<table *ngIf="financialOrganizations" class="table table-striped">
   <thead>
   <tr>
     <th scope="col">Name</th>
@@ -13,9 +6,9 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let bank of financialOrganizations">
-    <td><a routerLink="{{bank.systemName}}">{{bank.displayName}}</a></td>
-    <td>{{bank.bankSystemName}}</td>
+  <tr *ngFor="let fo of financialOrganizations">
+    <td><a routerLink="{{fo.systemName}}">{{fo.displayName}}</a></td>
+    <td>{{fo.systemName}}</td>
   </tr>
   </tbody>
 </table>

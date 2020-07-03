@@ -6,6 +6,7 @@ import {ApiRegistrationStepDefinition} from './api.registration.step.definition'
 import {ApiService} from '../../../api.service';
 import {Api} from './api';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
+import {OrganizationService} from '../../../organization.service';
 
 @Component({
   templateUrl: './api-create-registration.component.html'
@@ -17,9 +18,12 @@ export class ApiCreateRegistrationComponent implements OnInit {
   api: Api;
   currentStep: ApiRegistrationStepDefinition;
   formAndFields: FormAndFields;
+  organizationComplete: boolean;
+  render: boolean; // Prevents the 'incomplete organization' warning from appearing briefly before the form is loaded
 
   constructor(private apiRegistrationService: ApiRegistrationService,
               private apiService: ApiService,
+              private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -28,23 +32,31 @@ export class ApiCreateRegistrationComponent implements OnInit {
     const formUtil = new ApiRegistrationFormUtil();
     this.apiService.findOne(this.apiId).subscribe(api => {
       this.api = api;
-      this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
-        console.log(registrations);
-        if (registrations.length === 0) {
-          console.log('No existing registrations found');
-          this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
-              this.currentStep = steps.currentStep;
-              this.formAndFields = formUtil.stepsToFormAndFields( this.currentStep);
-            },
-            error => {
+      this.organizationService.completenessReport().subscribe(
+        report => {
+          this.organizationComplete = report.validSigningCertificate && report.validTransportCertificate
+            && report.redirectUrl && report.organizationFieldsComplete;
+          this.render = true;
+          if (this.organizationComplete) {
+            this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
+              console.log(registrations);
+              if (registrations.length === 0) {
+                console.log('No existing registrations found');
+                this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
+                    this.currentStep = steps.currentStep;
+                    this.formAndFields = formUtil.stepsToFormAndFields(this.currentStep);
+                  },
+                  error => {
+                    console.log(error);
+                  });
+              } else {
+                this.apiRegistrations = registrations;
+              }
+            }, error => {
               console.log(error);
             });
-        } else {
-          this.apiRegistrations = registrations;
-        }
-      }, error => {
-        console.log(error);
-      });
+          }
+        });
     }, error => {
       console.log(error);
     });
