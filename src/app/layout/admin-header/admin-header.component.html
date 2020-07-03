@@ -6,9 +6,9 @@
   <button type="button" class="btn btn-light" routerLink="admin/organization" routerLinkActive="button-active">
     Organization
   </button>
-  <button *ngFor="let app of allApplications() | async" (click)="selectApplication(app.id)" type="button" class="btn btn-light" routerLinkActive="button-active"
+  <button *ngFor="let app of allApplications() | async" (click)="selectApplication(app.id)" type="button"
+          class="btn btn-light" routerLinkActive="button-active"
           routerLink="{{ 'admin/applications/' + app.id}}">{{app.name}}</button>
-
 </nav>
 
 <nav *ngIf="isOrganization()" class="navbar navbar-expand  primary-color p-2" style="background-color: #b5cae2">
@@ -34,10 +34,15 @@
   </div>
 </nav>
 
-<nav *ngIf="isApplication() && selectedApplication" class="navbar navbar-expand  primary-color p-2" style="background-color: #b5cae2">
+<nav *ngIf="isApplication() && selectedApplication" class="navbar navbar-expand  primary-color p-2"
+     style="background-color: #b5cae2">
   <div>
-    <button class="btn btn-light" type="button" [routerLink]="['admin/applications', selectedApplication.id]" routerLinkActive="button-active"
-            [routerLinkActiveOptions]="{exact: true}">Info
+    <button class="btn btn-light" type="button" [routerLink]="['admin/applications', selectedApplication.id]"
+            routerLinkActive="button-active">Home
+    </button>
+    <button class="btn btn-light" type="button"
+            [routerLink]="['admin/applications', selectedApplication.id, 'public-keys']"
+            routerLinkActive="button-active">Public keys
     </button>
   </div>
 </nav>

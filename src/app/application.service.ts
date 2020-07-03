@@ -5,6 +5,8 @@ import {Observable} from 'rxjs';
 import {AppConstants} from './app.constants';
 import {Application} from './admin/organization/applications/application';
 import {CreateApplicationRequest} from './admin/organization/applications/create.application.request';
+import {PublicKey} from './admin/applications/public-keys/public.key';
+import {CreatePublicKeyRequest} from './admin/applications/public-keys/create.public.key.request';
 
 @Injectable()
 export class ApplicationService {
@@ -14,19 +16,31 @@ export class ApplicationService {
   constructor(private http: HttpClient) {
   }
 
-  findOne(id): Observable<Application> {
+  findApplication(id): Observable<Application> {
     return this.http.get<Application>(this.applicationsUrl + '/' + id);
   }
 
-  findAll(): Observable<Application[]> {
+  findAllApplications(): Observable<Application[]> {
     return this.http.get<Application[]>(this.applicationsUrl);
   }
 
-  delete(id): Observable<void> {
+  deleteApplication(id): Observable<void> {
     return this.http.delete<void>(this.applicationsUrl + '/' + id);
   }
 
-  create(createApplication: CreateApplicationRequest): Observable<Application> {
+  createApplication(createApplication: CreateApplicationRequest): Observable<Application> {
     return this.http.post<Application>(this.applicationsUrl, createApplication, AppConstants.HTTP_OPTIONS);
+  }
+
+  findAllApplicationPublicKeys(applicationId): Observable<PublicKey[]> {
+    return this.http.get<PublicKey[]>(this.applicationsUrl + '/' + applicationId + '/public-keys');
+  }
+
+  createApplicationPublicKeys(applicationId, createPublicKeyRequest: CreatePublicKeyRequest): Observable<PublicKey> {
+    return this.http.post<PublicKey>(this.applicationsUrl + '/' + applicationId + '/public-keys', createPublicKeyRequest);
+  }
+
+  deleteApplicationPublicKey(applicationId, id): Observable<void> {
+    return this.http.delete<void>(this.applicationsUrl + '/' + applicationId + '/public-keys/' + id);
   }
 }

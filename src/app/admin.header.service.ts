@@ -11,13 +11,14 @@ import {ApplicationService} from './application.service';
 export class AdminHeaderService {
 
   private applications: BehaviorSubject<Application[]> = new BehaviorSubject<Application[]>([]);
+  private currentApplication: BehaviorSubject<Application> = new BehaviorSubject<Application>(null);
 
   constructor(private applicationService: ApplicationService) {
     this.updateApplications();
   }
 
   updateApplications() {
-    return this.applicationService.findAll().subscribe(result => {
+    return this.applicationService.findAllApplications().subscribe(result => {
         this.applications.next(result);
       }
     );
@@ -25,6 +26,14 @@ export class AdminHeaderService {
 
   findApplications(): Observable<Application[]> {
     return this.applications;
+  }
+
+  updateApplication(application: Application): void {
+    this.currentApplication.next(application);
+  }
+
+  subscribeToApplicationChanges(): Observable<Application> {
+    return this.currentApplication;
   }
 
 }

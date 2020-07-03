@@ -18,7 +18,7 @@ export class CreateApplicationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.applicationService.create(this.application).subscribe(
+    this.applicationService.createApplication(this.application).subscribe(
       a => {
         this.application = a;
         this.adminHeaderService.updateApplications();
@@ -30,7 +30,7 @@ export class CreateApplicationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.applicationService.findAll().subscribe(all => {
+    this.applicationService.findAllApplications().subscribe(all => {
       if (all.length >= AppConstants.MAX_NUMBER_OF_APPLICATIONS) {
         this.applicationLimitReached = true;
       }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {ErrorService} from '../../error.service';
 import {LoginService} from '../../login/login.service';
 import {ApplicationService} from '../../application.service';
@@ -21,11 +21,23 @@ export class AdminHeaderComponent implements OnInit {
   constructor(private router: Router, private errorService: ErrorService,
               private loginService: LoginService,
               private applicationService: ApplicationService,
-              private adminHeaderService: AdminHeaderService) {
-
+              private adminHeaderService: AdminHeaderService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    console.log(this.selectedApplication);
+    console.log(this.isApplication());
+    console.log('id ' + JSON.stringify(this.route.params));
+
+    this.route.params.subscribe(parameter => {
+      console.log('param: ' + JSON.stringify(parameter));
+    });
+
+    this.adminHeaderService.subscribeToApplicationChanges().subscribe(app => {
+      this.selectedApplication = app;
+    });
+
     this.errorService.hasServerError().subscribe(e => this.serverError = e);
     this.loginService.getServerSession();
   }
@@ -39,13 +51,13 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   isApplication(): boolean {
-    return this.router.url.includes('admin/application');
+    return this.router.url.includes('admin/applications');
   }
 
   selectApplication(id) {
     console.log('ID: ' + id);
-    this.applicationService.findOne(id).subscribe(app => {
-      this.selectedApplication = app;
+    this.applicationService.findApplication(id).subscribe(result => {
+      this.selectedApplication = result;
     });
   }
 

@@ -15,7 +15,7 @@ export class ApplicationsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.applicationService.findAll().subscribe(
+    this.applicationService.findAllApplications().subscribe(
       data => {
         this.applications = data;
       }, error => {
@@ -25,7 +25,7 @@ export class ApplicationsListComponent implements OnInit {
   }
 
   delete(id: any) {
-    this.applicationService.delete(id)
+    this.applicationService.deleteApplication(id)
       .subscribe(result => this.ngOnInit());
   }
 }

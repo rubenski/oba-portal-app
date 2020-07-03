@@ -1,9 +1,11 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {ApplicationHomeComponent} from './application.home.component';
+import {ApplicationHomeComponent} from './home/application.home.component';
+import {PublicKeysListComponent} from './public-keys/public-keys-list.component';
 
 const routes: Routes = [
-  {path: ':id', component: ApplicationHomeComponent}
+  {path: ':id', component: ApplicationHomeComponent},
+  {path: ':id/public-keys', component: PublicKeysListComponent}
 ];
 
 @NgModule({
