@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RedirectUrlService} from '../../../redirect-url.service';
 import {RedirectUrl} from './redirect.url';
 import {CreateRedirectUrl} from './create.redirect.url';
@@ -13,6 +13,7 @@ export class RedirectUrlsListComponent implements OnInit {
   redirectUrls: RedirectUrl[];
   newRedirectUrl: CreateRedirectUrl = new CreateRedirectUrl();
   globalError: any;
+  @ViewChild('form') form;
 
   constructor(private redirectUrlService: RedirectUrlService) {
   }
@@ -35,6 +36,7 @@ export class RedirectUrlsListComponent implements OnInit {
     this.redirectUrlService.create(this.newRedirectUrl).subscribe(
       data => {
         this.initData();
+        this.form.reset();
       }, error => {
         this.globalError = 'An error occurred';
       }
