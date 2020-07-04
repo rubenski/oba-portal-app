@@ -21,7 +21,9 @@ export class PublicKeysListComponent extends ApplicationBaseComponent {
   }
 
   delete(id: string) {
-    this.applicationService.deleteApplicationPublicKey(this.application.id, id).subscribe(() => this.init());
+    if (confirm('Are you sure you want to delete this public key?')) {
+      this.applicationService.deleteApplicationPublicKey(this.application.id, id).subscribe(() => this.init());
+    }
   }
 
   submit() {
