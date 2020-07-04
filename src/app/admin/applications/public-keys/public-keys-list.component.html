@@ -1,39 +1,42 @@
+<div *ngIf="keys">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Kid</th>
+      <th scope="col">Key</th>
+      <th scope="col">Created</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let key of keys">
+      <td>{{key.kid}}</td>
+      <td>
+        <pre>{{key.publicKey}}</pre>
+      </td>
+      <td>{{key.created}}</td>
+      <td><span (click)="delete(key.id)"><img src="../assets/img/del.png" width="20" height="20"/></span></td>
+    </tr>
+    <tr *ngIf="keys.length == 0">
+      <td colspan="6">You have no public keys yet</td>
+    </tr>
+    </tbody>
+  </table>
 
-<table class="table table-striped" *ngIf="keys">
-  <thead>
-  <tr>
-    <th scope="col">Kid</th>
-    <th scope="col">Key</th>
-    <th scope="col">Created</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let key of keys">
-    <td>{{key.kid}}</td>
-    <td><pre>{{key.publicKey}}</pre></td>
-    <td>{{key.created}}</td>
-    <td><span (click)="delete(key.id)"><img src="../assets/img/del.png" width="20" height="20"/></span></td>
-  </tr>
-  <tr *ngIf="keys.length == 0">
-    <td colspan="6">You have no public keys yet</td>
-  </tr>
-  </tbody>
-</table>
-
-<div class="row">
-  <div class="col mr-5">
-    <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
-    <form (ngSubmit)="submit()" #form="ngForm">
-      <div class="form-group">
-        <label for="key">Public key</label>
-        <textarea style="height: 200px;" class="form-control" name="key" id="key" [(ngModel)]="publicKeyRequest.publicKey" required
-                  appNotEmpty #key=ngModel></textarea>
-        <div [hidden]="!(key.touched && key.invalid)" class="alert alert-danger">A public key is required</div>
-      </div>
-      <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Save public key</button>
-    </form>
+  <div class="row">
+    <div class="col mr-5">
+      <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
+      <form (ngSubmit)="submit()" #form="ngForm">
+        <div class="form-group">
+          <label for="key">Public key</label>
+          <textarea style="height: 200px;" class="form-control" name="key" id="key"
+                    [(ngModel)]="publicKeyRequest.publicKey" required
+                    appNotEmpty #key=ngModel></textarea>
+          <div [hidden]="!(key.touched && key.invalid)" class="alert alert-danger">A public key is required</div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Save public key</button>
+      </form>
+    </div>
   </div>
-
 </div>
 
