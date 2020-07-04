@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ApplicationBaseComponent} from '../application.base.component';
 import {PublicKey} from './public.key';
 import {CreatePublicKeyRequest} from './create.public.key.request';
@@ -8,6 +8,7 @@ import {CreatePublicKeyRequest} from './create.public.key.request';
 })
 export class PublicKeysListComponent extends ApplicationBaseComponent {
 
+  @ViewChild('form') form;
   public keys: PublicKey[];
   globalError: any;
   publicKeyRequest: CreatePublicKeyRequest = new CreatePublicKeyRequest();
@@ -26,7 +27,7 @@ export class PublicKeysListComponent extends ApplicationBaseComponent {
   submit() {
     this.applicationService.createApplicationPublicKeys(this.application.id, this.publicKeyRequest).subscribe(result => {
       this.ngOnInit();
-      this.publicKeyRequest = new CreatePublicKeyRequest();
+      this.form.reset();
     }, error => {
       if (error.error.code === 'APP004') {
         this.globalError = 'Not a valid public key';
