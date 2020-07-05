@@ -19,7 +19,7 @@ import {OrganizationService} from './organization.service';
 import {CertificateService} from './certificate.service';
 import {ErrorService} from './error.service';
 import {RedirectUrlService} from './redirect-url.service';
-import {BankService} from './banks.service';
+import {FOService} from './banks.service';
 import {ApiRegistrationService} from './api.registration.service';
 import {ApiService} from './api.service';
 import {ApplicationService} from './application.service';
@@ -42,7 +42,7 @@ import {AdminHeaderService} from './admin.header.service';
     LayoutModule
   ],
   exports: [],
-  providers: [AdminHeaderService, ApplicationService, ApiService, ApiRegistrationService, BankService, RedirectUrlService, ErrorService, LoginService,
+  providers: [AdminHeaderService, ApplicationService, ApiService, ApiRegistrationService, FOService, RedirectUrlService, ErrorService, LoginService,
     CertificateService, OrganizationService, CognitoUtil, RegistrationService, {
     provide: HTTP_INTERCEPTORS,
     useClass: FindActiveSessionInterceptor,

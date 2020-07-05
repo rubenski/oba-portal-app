@@ -6,7 +6,7 @@ import {FinancialOrganization} from './admin/organization/financial-organization
 
 
 @Injectable()
-export class BankService {
+export class FOService {
 
   private bankServiceUrl = environment.obaPortalBackendHostName + '/banks';
 

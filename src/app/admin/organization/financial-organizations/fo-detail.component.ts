@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {OrganizationService} from '../../../organization.service';
 import {FinancialOrganization} from './financial.organization';
-import {BankService} from '../../../banks.service';
+import {FOService} from '../../../banks.service';
 
 @Component({
   templateUrl: './fo-detail.component.html'
@@ -15,13 +15,13 @@ export class FoDetailComponent implements OnInit {
 
   constructor(private router: Router,
               private organizationService: OrganizationService,
-              private bankService: BankService,
+              private foService: FOService,
               private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.bankService.findOne(this.systemName).subscribe(data => {
+    this.foService.findOne(this.systemName).subscribe(data => {
         this.bank = data;
       },
       error => {

@@ -1,4 +1,5 @@
 import {MainService} from './main.service';
+import {GlobalApiStatus} from './global.api.status';
 
 
 export class Api {
@@ -6,4 +7,5 @@ export class Api {
   type: string;
   sandbox: boolean;
   mainServices: MainService[];
+  globalStatus: GlobalApiStatus;
 }

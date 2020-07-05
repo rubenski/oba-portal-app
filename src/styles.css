@@ -102,3 +102,7 @@ label {
 .btn {
   margin-right: 5px;
 }
+
+.badge {
+  padding: .6em .7em;
+}

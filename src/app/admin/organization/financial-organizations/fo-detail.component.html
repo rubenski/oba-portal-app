@@ -29,6 +29,7 @@
     <th>Name</th>
     <th>Services</th>
     <th>Environment</th>
+    <th>Global status</th>
     <th></th>
     </thead>
     <tbody>
@@ -38,6 +39,11 @@
         <div *ngFor="let service of api.mainServices">{{service.displayName}}</div>
       </td>
       <td>{{api.sandbox ? 'Sandbox' : 'Production API'}}</td>
+      <td>
+        <span *ngIf="api.globalStatus.status == 'BETA'" class="badge badge-info">{{api.globalStatus.status}}</span>
+        <span *ngIf="api.globalStatus.status == 'OPEN'" class="badge badge-success">{{api.globalStatus.status}}</span>
+        <span *ngIf="api.globalStatus.status == 'CLOSED'" class="badge badge-danger">{{api.globalStatus.status}}</span>
+      </td>
       <td>
         <a href="#" [routerLink]="['/admin/organization/api-registrations']" [queryParams]="{'apiId' : api.id}">Registration</a>
       </td>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {OrganizationService} from '../../../organization.service';
 import {FinancialOrganization} from './financial.organization';
-import {BankService} from '../../../banks.service';
+import {FOService} from '../../../banks.service';
 
 @Component({
   templateUrl: './fo-list.component.html'
@@ -15,7 +15,7 @@ export class FoListComponent implements OnInit {
 
   constructor(private router: Router,
               private organizationService: OrganizationService,
-              private bankService: BankService) {
+              private bankService: FOService) {
 
   }
 
