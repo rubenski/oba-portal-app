@@ -1,1 +1,21 @@
-<span *ngIf="application">{{application.name}}</span>
+<table *ngIf="application" class="table">
+  <tbody>
+  <tr>
+    <th scope="row" style="width:20%">Id</th>
+    <td style="width:80%"><b>{{application.id}}</b> <br/>Use this id as the <b>application-id</b> claim in your API token request</td>
+  </tr>
+  <tr>
+    <th scope="row">Name</th>
+    <td>{{application.name}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Created</th>
+    <td>{{application.created}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Technical contact</th>
+    <td>{{application.technicalContactName}} ({{application.technicalContactEmail}})</td>
+  </tr>
+  </tbody>
+</table>
+
