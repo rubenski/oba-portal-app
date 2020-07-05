@@ -34,7 +34,7 @@ export class ApiRegistrationDetailComponent implements OnInit {
     const submittedFormValues = formUtil.getSubmittedFormValues(this.formAndFields, this.stepNr);
     this.apiRegistrationService.submitUpdateRegistrationStep(submittedFormValues, this.apiRegistration.id).subscribe(
       result => {
-        this.globalSuccess = 'Organization info saved';
+        this.globalSuccess = 'Registration updated';
         // Reload the data here so that any unlocked secret input fields will go back to being locked
         this.init();
       }, error => {
