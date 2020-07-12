@@ -19,7 +19,7 @@ import {OrganizationService} from './organization.service';
 import {CertificateService} from './certificate.service';
 import {ErrorService} from './error.service';
 import {RedirectUrlService} from './redirect-url.service';
-import {FOService} from './banks.service';
+import {FOService} from './fo-service';
 import {ApiRegistrationService} from './api.registration.service';
 import {ApiService} from './api.service';
 import {ApplicationService} from './application.service';

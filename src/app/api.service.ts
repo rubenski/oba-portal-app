@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Api} from './admin/organization/api-registrations/api';
+import {ApiWithCountryDataProviders} from './admin/organization/apis/api.with.country.data.providers';
 
 
 @Injectable()
@@ -13,7 +13,11 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
-  findOne(apiId): Observable<Api> {
-    return this.http.get<Api>(this.apisUrl + '/' + apiId);
+  findOneApiWithCountryDataProvidersAndRegistrations(apiId): Observable<ApiWithCountryDataProviders> {
+    return this.http.get<ApiWithCountryDataProviders>(this.apisUrl + '/' + apiId);
+  }
+
+  findAllApisWithCountryDataProviders(): Observable<ApiWithCountryDataProviders[]> {
+    return this.http.get<ApiWithCountryDataProviders[]>(this.apisUrl);
   }
 }

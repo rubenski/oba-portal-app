@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Api} from './api';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
+import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.providers';
 
 @Component({
   templateUrl: './api-registration-detail.component.html'
@@ -12,7 +13,7 @@ import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
 export class ApiRegistrationDetailComponent implements OnInit {
 
   registrationId: string = this.route.snapshot.paramMap.get('apiRegistrationId');
-  api: Api;
+  api: ApiWithCountryDataProviders;
   apiRegistration: ApiRegistration;
   formAndFields: FormAndFields;
   stepNr: number;
@@ -55,7 +56,7 @@ export class ApiRegistrationDetailComponent implements OnInit {
         step => {
           this.stepNr = step.stepNr;
           this.formAndFields = formUtil.stepsToFormAndFields(step);
-          this.apiService.findOne(this.apiRegistration.apiId).subscribe(api => {
+          this.apiService.findOneApiWithCountryDataProvidersAndRegistrations(this.apiRegistration.apiId).subscribe(api => {
             this.api = api;
           }, error => {
             console.log(error);

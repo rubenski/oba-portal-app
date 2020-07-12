@@ -1,5 +1,5 @@
-<div *ngIf="apiRegistrations && api">
-  <h1>Registrations for {{api.financialOrganization.displayName}} - {{api.type}} {{api.sandbox ? 'Sandbox' : 'Production API'}}</h1>
+<div *ngIf="apiWithDataProviders">
+  <h1>Registrations for {{apiWithDataProviders.title}}</h1>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -9,17 +9,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let apiRegistration of apiRegistrations">
+    <tr *ngFor="let apiRegistration of apiWithDataProviders.apiRegistrations">
       <td><a routerLink="{{apiRegistration.id}}">{{apiRegistration.id}}</a></td>
       <td>#</td>
       <td>{{apiRegistration.created}}</td>
     </tr>
-    <tr *ngIf="apiRegistrations?.length == 0">
+    <tr *ngIf="apiWithDataProviders.apiRegistrations?.length == 0">
       <td colspan="4">You have no registrations for this API yet</td>
     </tr>
     </tbody>
   </table>
 
-  <button type="submit" class="btn btn-success" [routerLink]="[api.id + '/new']">Create registration</button>
+  <button type="submit" class="btn btn-success" [routerLink]="[apiWithDataProviders.apiId + '/new']">Create
+    registration
+  </button>
 </div>
 

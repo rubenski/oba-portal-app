@@ -9,14 +9,19 @@ export abstract class ApplicationBaseComponent implements OnInit {
 
   protected application: Application;
 
+
   public constructor(public applicationService: ApplicationService,
                      public route: ActivatedRoute,
                      public adminHeaderService: AdminHeaderService) {
-    // When we navigate between application, the route doesn't change, only the value of the path variable. Wem must therefore subscribe
-    // to the params collection in order to detect changes and run ngOnInit() ourselves.
+    // When we navigate between applications, the route doesn't change, only the value of the id variable in the path. We therefore
+    // subscribe to the params collection in order to detect changes and run ngOnInit() ourselves.
     // See : https://stackoverflow.com/questions/41678356/router-navigate-does-not-call-ngoninit-when-same-page
+    // We also check if the id in the path changed. If not, we are navigating within the application and we should not run ngOnInit again
     route.params.subscribe(val => {
-      this.ngOnInit();
+      const applicationId = this.route.snapshot.paramMap.get('id');
+      if (this.application && applicationId !== this.application.id) {
+        this.ngOnInit();
+      }
     });
   }
 

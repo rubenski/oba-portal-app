@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
-import {ApiRegistration} from './api.registration';
 import {ApiService} from '../../../api.service';
 import {ActivatedRoute} from '@angular/router';
-import {Api} from './api';
+import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.providers';
 
 
 @Component({
@@ -11,8 +10,7 @@ import {Api} from './api';
 })
 export class ApiRegistrationsListComponent implements OnInit {
 
-  private apiRegistrations: ApiRegistration[];
-  private api: Api;
+  private apiWithDataProviders: ApiWithCountryDataProviders;
   private apiId: string;
 
   constructor(private apiRegistrationService: ApiRegistrationService, private apiService: ApiService, private route: ActivatedRoute) {
@@ -22,14 +20,9 @@ export class ApiRegistrationsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.findOne(this.apiId).subscribe(api => {
-      this.api = api;
-      this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(
-        registrations => {
-          this.apiRegistrations = registrations;
-        }, error => {
-          console.log(error);
-        });
-    });
+    this.apiService.findOneApiWithCountryDataProvidersAndRegistrations(this.apiId).subscribe(result => {
+        this.apiWithDataProviders = result;
+      }
+    );
   }
 }

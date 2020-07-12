@@ -27,10 +27,6 @@ export class ApiRegistrationService {
     return this.http.get<ApiRegistration>(this.registrationsUrl + '/' + registrationId);
   }
 
-  findRegistrationsForOrganization(): Observable<ApiRegistration[]> {
-    return this.http.get<ApiRegistration[]>(this.registrationsUrl);
-  }
-
   findRegistrationSteps(apiId: string): Observable<ApiRegistrationSteps> {
     return this.http.get<ApiRegistrationSteps>(this.stepResultsUrl + '/' + apiId);
   }

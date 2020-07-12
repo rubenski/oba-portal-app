@@ -1,0 +1,30 @@
+
+<div *ngIf="availableCountryDataProviders">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Country</th>
+      <th scope="col">System Name</th>
+      <th scope="col">Enabled</th>
+      <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let countryDataProvider of availableCountryDataProviders">
+      <td>{{countryDataProvider.countryDataProvider.displayName}} {{countryDataProvider.countryDataProvider.sandbox ? 'Sandbox' : 'Production'}}</td>
+      <td>{{countryDataProvider.countryDataProvider.type}}</td>
+      <td>{{countryDataProvider.countryDataProvider.country}}</td>
+      <td>{{countryDataProvider.countryDataProvider.systemName}}</td>
+      <td><input type="checkbox"  (click)="submit(countryDataProvider.countryDataProvider.systemName, countryDataProvider.enabled)"
+                 [checked]="countryDataProvider.enabled"/></td>
+      <td>{{countryDataProvider.countryDataProvider.status}}</td>
+    </tr>
+    <tr *ngIf="availableCountryDataProviders?.length == 0">
+      <td colspan="4">Your organization has not been registered with any APIs yet</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -22,14 +22,11 @@
     <button class="btn btn-light" type="button" routerLink="admin/organization/redirect-urls"
             routerLinkActive="button-active">Redirect URLs
     </button>
-    <button class="btn btn-light" type="button" routerLink="admin/organization/financial-organizations"
-            routerLinkActive="button-active">Financial Organizations
+    <button class="btn btn-light" type="button" routerLink="admin/organization/apis"
+            routerLinkActive="button-active">Apis
     </button>
     <button class="btn btn-light" type="button" routerLink="admin/organization/applications"
             routerLinkActive="button-active">Applications
-    </button>
-    <button class="btn btn-light" type="button" routerLink="admin/organization/invoices"
-            routerLinkActive="button-active">Invoices
     </button>
   </div>
 </nav>
@@ -46,6 +43,11 @@
             [routerLink]="['admin/applications', selectedApplication.id, 'public-keys']"
             (click)="setHomeButtonInactive()"
             routerLinkActive="button-active">Public keys
+    </button>
+    <button class="btn btn-light" type="button"
+            [routerLink]="['admin/applications', selectedApplication.id, 'available-apis']"
+            (click)="setHomeButtonInactive()"
+            routerLinkActive="button-active">Country Data Providers
     </button>
   </div>
 </nav>

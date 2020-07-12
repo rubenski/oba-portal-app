@@ -7,6 +7,9 @@ import {Application} from './admin/organization/applications/application';
 import {CreateApplicationRequest} from './admin/organization/applications/create.application.request';
 import {PublicKey} from './admin/applications/public-keys/public.key';
 import {CreatePublicKeyRequest} from './admin/applications/public-keys/create.public.key.request';
+import {FinancialOrganization} from './admin/organization/apis/financial.organization';
+import {AvailableCountryDataProvider} from './admin/applications/country-data-providers/available.country.data.provider';
+import {EnableCountryDataProviderRequest} from './admin/applications/country-data-providers/enableCountryDataProviderRequest';
 
 @Injectable()
 export class ApplicationService {
@@ -42,5 +45,18 @@ export class ApplicationService {
 
   deleteApplicationPublicKey(applicationId, id): Observable<void> {
     return this.http.delete<void>(this.applicationsUrl + '/' + applicationId + '/public-keys/' + id);
+  }
+
+  findAvailableCountryDataProvidersWithEnabledProjection(applicationId): Observable<AvailableCountryDataProvider[]> {
+    return this.http.get<AvailableCountryDataProvider[]>(environment.obaPortalBackendHostName + '/applications/' + applicationId + '/available-country-data-providers');
+  }
+
+  createEnabledCountryDataProvider(applicationId: string, systemName: string): Observable<void> {
+    return this.http.post<void>(environment.obaPortalBackendHostName + '/applications/' + applicationId + '/enabled-country-data-providers',
+      new EnableCountryDataProviderRequest(systemName));
+  }
+
+  deleteEnabledCountryDataProvider(applicationId: string, systemName: string): Observable<void> {
+    return this.http.delete<void>(environment.obaPortalBackendHostName + '/applications/' + applicationId + '/enabled-country-data-providers/' + systemName);
   }
 }

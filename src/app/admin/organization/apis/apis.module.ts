@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../../../shared/shared.module';
-import {FoListComponent} from './fo-list.component';
-import {FoRoutingModule} from './fo.routing.module';
+import {ApiListComponent} from './api-list.component';
+import {ApisRoutingModule} from './apis.routing.module';
 import {FoDetailComponent} from './fo-detail.component';
 
 @NgModule({
@@ -11,11 +11,11 @@ import {FoDetailComponent} from './fo-detail.component';
     CommonModule,
     FormsModule,
     SharedModule,
-    FoRoutingModule
+    ApisRoutingModule
   ],
-  declarations: [FoListComponent, FoDetailComponent],
-  exports: [FoListComponent, FoDetailComponent]
+  declarations: [ApiListComponent, FoDetailComponent],
+  exports: [ApiListComponent, FoDetailComponent]
 })
-export class FoModule {
+export class ApisModule {
 
 }

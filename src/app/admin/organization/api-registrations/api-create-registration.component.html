@@ -1,9 +1,9 @@
+<h1>Register with {{api.title}}</h1>
 
 <div class="alert alert-warning" *ngIf="!organizationComplete && render">
   Before you can register with and use APIs we need some more information about your organization.
   Please complete your <a routerLink="/admin" href="#">pending tasks</a>.
 </div>
-
 
 <form *ngIf="formAndFields && organizationComplete" [formGroup]="formAndFields.form" (ngSubmit)="submit()">
   <div formArrayName="all">

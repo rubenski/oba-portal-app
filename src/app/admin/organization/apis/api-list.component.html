@@ -1,0 +1,31 @@
+<table *ngIf="apis" class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Type</th>
+    <th scope="col">Country Data Providers</th>
+    <th scope="col">Flow type</th>
+    <th scope="col">Registration</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let api of apis">
+    <td>{{api.type}}</td>
+    <td>
+      <table class="p-0 m-0" style="width: 50%">
+        <tr style="background: rgba(0,0,0,0.0);" *ngFor="let cdp of api.countryDataProviders">
+          <td style="border: none; width: 50%" class="p-0 m-0">{{cdp.displayName}} </td>
+          <td style="border: none; width: 50%" class="p-0 m-0">{{cdp.country}}</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      {{api.flowType}}
+    </td>
+    <td>
+      <a href="#" [routerLink]="['/admin/organization/api-registrations']" [queryParams]="{'apiId' : api.apiId}">Registration</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+

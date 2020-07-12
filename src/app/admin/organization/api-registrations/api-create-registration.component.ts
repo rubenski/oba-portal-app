@@ -4,9 +4,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
 import {ApiService} from '../../../api.service';
-import {Api} from './api';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
 import {OrganizationService} from '../../../organization.service';
+import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.providers';
 
 @Component({
   templateUrl: './api-create-registration.component.html'
@@ -15,7 +15,7 @@ export class ApiCreateRegistrationComponent implements OnInit {
 
   apiId: string = this.route.snapshot.paramMap.get('apiId');
   apiRegistrations: ApiRegistration[];
-  api: Api;
+  api: ApiWithCountryDataProviders;
   currentStep: ApiRegistrationStepDefinition;
   formAndFields: FormAndFields;
   organizationComplete: boolean;
@@ -30,7 +30,7 @@ export class ApiCreateRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     const formUtil = new ApiRegistrationFormUtil();
-    this.apiService.findOne(this.apiId).subscribe(api => {
+    this.apiService.findOneApiWithCountryDataProvidersAndRegistrations(this.apiId).subscribe(api => {
       this.api = api;
       this.organizationService.completenessReport().subscribe(
         report => {

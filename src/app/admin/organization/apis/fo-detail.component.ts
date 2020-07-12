@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {OrganizationService} from '../../../organization.service';
 import {FinancialOrganization} from './financial.organization';
-import {FOService} from '../../../banks.service';
+import {FOService} from '../../../fo-service';
 
 @Component({
-  templateUrl: './fo-detail.component.html'
+  templateUrl: './apis.component.html'
 })
 export class FoDetailComponent implements OnInit {
 

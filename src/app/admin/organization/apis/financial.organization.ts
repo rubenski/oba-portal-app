@@ -1,10 +1,10 @@
 import {Group} from './group';
-import {Api} from './api';
+import {ApiWithCountryDataProviders} from './api.with.country.data.providers';
 
 export class FinancialOrganization {
   systemName: string;
   displayName: string;
   beta: boolean;
   groups: Group[];
-  apis: Api[];
+  apis: ApiWithCountryDataProviders[];
 }
