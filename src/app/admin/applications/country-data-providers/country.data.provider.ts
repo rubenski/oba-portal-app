@@ -5,7 +5,4 @@ export class CountryDataProvider {
   country;
   timeZone;
   currency;
-  type;
-  status;
-  sandbox;
 }

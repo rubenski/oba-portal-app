@@ -13,13 +13,13 @@
     </thead>
     <tbody>
     <tr *ngFor="let countryDataProvider of availableCountryDataProviders">
-      <td>{{countryDataProvider.countryDataProvider.displayName}} {{countryDataProvider.countryDataProvider.sandbox ? 'Sandbox' : 'Production'}}</td>
-      <td>{{countryDataProvider.countryDataProvider.type}}</td>
+      <td>{{countryDataProvider.countryDataProvider.displayName}} {{countryDataProvider.availableCountryDataProviderApi.sandbox ? 'Sandbox' : 'Production'}}</td>
+      <td>{{countryDataProvider.availableCountryDataProviderApi.type}}</td>
       <td>{{countryDataProvider.countryDataProvider.country}}</td>
       <td>{{countryDataProvider.countryDataProvider.systemName}}</td>
       <td><input type="checkbox"  (click)="submit(countryDataProvider.countryDataProvider.systemName, countryDataProvider.enabled)"
                  [checked]="countryDataProvider.enabled"/></td>
-      <td>{{countryDataProvider.countryDataProvider.status}}</td>
+      <td>{{countryDataProvider.availableCountryDataProviderApi.status}}</td>
     </tr>
     <tr *ngIf="availableCountryDataProviders?.length == 0">
       <td colspan="4">Your organization has not been registered with any APIs yet</td>
