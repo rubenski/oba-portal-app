@@ -23,7 +23,7 @@ export class OrganizationService {
   }
 
   updateOrganization(updatedOrganization: Organization): Observable<Organization> {
-    updatedOrganization.organizationId = localStorage.getItem('loggedInOrganization');
+    updatedOrganization.id = localStorage.getItem('loggedInOrganization');
     return this.http.put<Organization>(this.organizationsUrl, updatedOrganization, AppConstants.HTTP_OPTIONS);
   }
 

@@ -1,5 +1,5 @@
 export class Organization {
-  organizationId: string;
+  id: string;
   name: string;
   created: string;
   vatNumber: string;

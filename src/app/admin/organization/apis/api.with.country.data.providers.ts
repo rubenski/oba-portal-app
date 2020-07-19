@@ -12,4 +12,5 @@ export class ApiWithCountryDataProviders {
   apiRegistrations: ApiRegistration[] = [];
   countryDataProviders: CountryDataProvider[];
   title: string;
+  products: string[];
 }

@@ -1,6 +1,16 @@
+<h1>Your organization</h1>
 
 
 <div class="row" *ngIf="organization">
+  <table class="table table-info" style="border-radius: 5px">
+    <tr>
+      <td>
+        Organization ID
+      </td>
+      <td>{{organization.id}}</td>
+    </tr>
+  </table>
+  <br/><br/>
   <div class="col mr-5">
     <form autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
 
@@ -10,14 +20,17 @@
       <div class="form-group">
         <label for="name">Organization Name</label>
         <div class="small p-1">Organization Name is used when we register your organization with a bank.
-          Note that changing your Organization Name does not automatically update your organization's name with the banks you are registered with.</div>
+          Note that changing your Organization Name does not automatically update your organization's name with the
+          banks you are registered with.
+        </div>
         <input type="text" class="form-control" name="name" id="name" [(ngModel)]="organization.name" required
                appNotEmpty maxlength="50" #name=ngModel>
         <div [hidden]="!(name.touched && name.invalid)" class="alert alert-danger">Name is required</div>
       </div>
       <div class="form-group">
         <label for="vatNumber">VAT Number (optional)</label>
-        <input type="text" class="form-control" name="vatNumber" id="vatNumber" [(ngModel)]="organization.vatNumber" maxlength="50">
+        <input type="text" class="form-control" name="vatNumber" id="vatNumber" [(ngModel)]="organization.vatNumber"
+               maxlength="50">
       </div>
       <div class="form-group">
         <label for="street">Street</label>
@@ -52,5 +65,5 @@
       <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Save</button>
     </form>
   </div>
-  <div class="col">Hello</div>
+  <div class="col"></div>
 </div>
