@@ -7,9 +7,8 @@ import {Application} from './admin/organization/applications/application';
 import {CreateApplicationRequest} from './admin/organization/applications/create.application.request';
 import {PublicKey} from './admin/applications/public-keys/public.key';
 import {CreatePublicKeyRequest} from './admin/applications/public-keys/create.public.key.request';
-import {FinancialOrganization} from './admin/organization/apis/financial.organization';
 import {AvailableCountryDataProvider} from './admin/applications/country-data-providers/available.country.data.provider';
-import {EnableCountryDataProviderRequest} from './admin/applications/country-data-providers/enableCountryDataProviderRequest';
+import {EnableCountryDataProviderRequest} from './admin/applications/country-data-providers/enable.country.data.provider.request';
 
 @Injectable()
 export class ApplicationService {

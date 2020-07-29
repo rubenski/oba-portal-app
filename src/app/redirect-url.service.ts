@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {AppConstants} from './app.constants';
 import {RedirectUrl} from './admin/organization/redirect-urls/redirect.url';
 import {CreateRedirectUrl} from './admin/organization/redirect-urls/create.redirect.url';
+import {RedirectUrlWithNumberOfRegistrations} from './admin/organization/redirect-urls/redirect.url.with.number.of.registrations';
 
 
 @Injectable()
@@ -15,8 +16,8 @@ export class RedirectUrlService {
   constructor(private http: HttpClient) {
   }
 
-  findAll(): Observable<RedirectUrl[]> {
-    return this.http.get<RedirectUrl[]>(this.redirectUrlServiceUrl);
+  findAll(): Observable<RedirectUrlWithNumberOfRegistrations[]> {
+    return this.http.get<RedirectUrlWithNumberOfRegistrations[]>(this.redirectUrlServiceUrl);
   }
 
   create(redirectUrl: CreateRedirectUrl): Observable<RedirectUrl> {

@@ -10,11 +10,13 @@
   </thead>
   <tbody>
   <tr *ngFor="let redirectUrl of redirectUrls">
-    <td>{{redirectUrl.id}}</td>
-    <td>{{redirectUrl.redirectUrl}}</td>
-    <td><a href=""># registrations</a></td>
-    <td>{{redirectUrl.created}}</td>
-    <td><span (click)="delete(redirectUrl.id)"><img src="../assets/img/del.png" width="20" height="20"/></span></td>
+    <td>{{redirectUrl.redirectUrl.id}}</td>
+    <td>{{redirectUrl.redirectUrl.redirectUrl}}</td>
+    <td>{{redirectUrl.usedInNumberOfRegistrations}} registrations</td>
+    <td>{{redirectUrl.redirectUrl.created}}</td>
+    <td><span *ngIf="redirectUrl.usedInNumberOfRegistrations == 0" (click)="delete(redirectUrl.redirectUrl.id)">
+      <img src="../assets/img/del.png" width="20" height="20"/>
+    </span></td>
   </tr>
   <tr *ngIf="redirectUrls?.length == 0">
     <td colspan="4">You have no redirect URLs yet</td>

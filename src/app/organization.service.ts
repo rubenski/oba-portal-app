@@ -24,7 +24,7 @@ export class OrganizationService {
 
   updateOrganization(updatedOrganization: Organization): Observable<Organization> {
     updatedOrganization.id = localStorage.getItem('loggedInOrganization');
-    return this.http.put<Organization>(this.organizationsUrl, updatedOrganization, AppConstants.HTTP_OPTIONS);
+    return this.http.put<Organization>(this.organizationsUrl + updatedOrganization.id, updatedOrganization, AppConstants.HTTP_OPTIONS);
   }
 
   completenessReport(): Observable<CompletenessReport> {

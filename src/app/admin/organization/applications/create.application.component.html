@@ -12,7 +12,7 @@
         <label for="name">Name</label>
         <div class="small p-1">The name of the application</div>
         <input type="text" class="form-control" name="name" id="name" [(ngModel)]="application.name" required
-               appNotEmpty maxlength="50" #name=ngModel>
+               appNotEmpty maxlength="20" #name=ngModel>
         <div [hidden]="!(name.touched && name.invalid)" class="alert alert-danger">Name is required</div>
       </div>
 

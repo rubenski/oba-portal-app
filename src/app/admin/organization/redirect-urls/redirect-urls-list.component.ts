@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {RedirectUrlService} from '../../../redirect-url.service';
 import {RedirectUrl} from './redirect.url';
 import {CreateRedirectUrl} from './create.redirect.url';
+import {RedirectUrlWithNumberOfRegistrations} from './redirect.url.with.number.of.registrations';
 
 // TODO: when anew URL is added the URL value will remain in the input field. Doing this.newRedirectUrl = new CreateRedirectUrl()
 //  triggers validation. Solve maybe with @ViewChild. Not urgent, so leaving this for now.
@@ -10,7 +11,7 @@ import {CreateRedirectUrl} from './create.redirect.url';
 })
 export class RedirectUrlsListComponent implements OnInit {
 
-  redirectUrls: RedirectUrl[];
+  redirectUrls: RedirectUrlWithNumberOfRegistrations[];
   newRedirectUrl: CreateRedirectUrl = new CreateRedirectUrl();
   globalError: any;
   @ViewChild('form') form;
