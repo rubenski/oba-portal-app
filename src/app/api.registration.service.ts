@@ -42,4 +42,8 @@ export class ApiRegistrationService {
   submitUpdateRegistrationStep(form: FilledOutForm, registrationId: string): Observable<ApiRegistrationStepResult> {
     return this.http.post<ApiRegistrationStepResult>(this.registrationUpdateUrl + '/' + registrationId, form);
   }
+
+  deleteRegistration(registrationId: string): Observable<void> {
+    return this.http.delete<void>(this.registrationsUrl + '/' + registrationId);
+  }
 }

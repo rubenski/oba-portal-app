@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
 import {ApiService} from '../../../api.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Api} from './api';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
@@ -22,7 +22,8 @@ export class ApiRegistrationDetailComponent implements OnInit {
 
   constructor(private apiRegistrationService: ApiRegistrationService,
               private apiService: ApiService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   // TODO: turn this nested mess into proper RxJs approach
@@ -41,6 +42,14 @@ export class ApiRegistrationDetailComponent implements OnInit {
       }, error => {
         this.globalError = 'An error occurred';
       });
+  }
+
+  delete() {
+    if (confirm('Are you sure you want to delete this registration?')) {
+      this.apiRegistrationService.deleteRegistration(this.apiRegistration.id).subscribe(result => {
+        this.router.navigate(['admin/organization/api-registrations'], {queryParams: {apiId: this.apiRegistration.apiId}});
+      });
+    }
   }
 
   toggle(i: number) {

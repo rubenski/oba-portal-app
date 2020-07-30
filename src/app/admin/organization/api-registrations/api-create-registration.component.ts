@@ -39,19 +39,13 @@ export class ApiCreateRegistrationComponent implements OnInit {
           this.render = true;
           if (this.organizationComplete) {
             this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
-              console.log(registrations);
-              if (registrations.length === 0) {
-                console.log('No existing registrations found');
-                this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
-                    this.currentStep = steps.currentStep;
-                    this.formAndFields = formUtil.stepsToFormAndFields(this.currentStep);
-                  },
-                  error => {
-                    console.log(error);
-                  });
-              } else {
-                this.apiRegistrations = registrations;
-              }
+              this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
+                  this.currentStep = steps.currentStep;
+                  this.formAndFields = formUtil.stepsToFormAndFields(this.currentStep);
+                },
+                error => {
+                  console.log(error);
+                });
             }, error => {
               console.log(error);
             });

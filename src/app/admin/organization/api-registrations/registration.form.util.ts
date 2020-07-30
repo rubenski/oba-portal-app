@@ -1,5 +1,4 @@
 import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angular/forms';
-import {ApiRegistrationSteps} from './api.registration.steps';
 import {FieldDefinition} from './field.definition';
 import {FilledOutForm, KeyValue} from './filled.out.form';
 import {ApiRegistrationStepDefinition} from './api.registration.step.definition';

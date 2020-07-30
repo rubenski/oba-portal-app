@@ -23,7 +23,7 @@
 
 
   <h2>Api registration fields</h2>
-  <form *ngIf="formAndFields" [formGroup]="formAndFields.form" (ngSubmit)="submit()">
+  <form *ngIf="formAndFields" [formGroup]="formAndFields.form">
     <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
     <div *ngIf="globalSuccess" class="alert alert-success">{{globalSuccess}}</div>
 
@@ -80,7 +80,8 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit</button>
+      <button (click)="submit()" type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit</button>
+      <button (click)="delete()" type="submit" class="btn btn-danger">Delete from OBA</button>
     </div>
   </form>
 </div>
