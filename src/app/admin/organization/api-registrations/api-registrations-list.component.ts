@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
 import {ApiService} from '../../../api.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.providers';
 
 
@@ -10,10 +10,13 @@ import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.provide
 })
 export class ApiRegistrationsListComponent implements OnInit {
 
-  private apiWithDataProviders: ApiWithCountryDataProviders;
+  public apiWithDataProviders: ApiWithCountryDataProviders;
   private apiId: string;
 
-  constructor(private apiRegistrationService: ApiRegistrationService, private apiService: ApiService, private route: ActivatedRoute) {
+  constructor(private apiRegistrationService: ApiRegistrationService,
+              private apiService: ApiService,
+              private route: ActivatedRoute,
+              private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.apiId = params.apiId;
     });
@@ -24,5 +27,15 @@ export class ApiRegistrationsListComponent implements OnInit {
         this.apiWithDataProviders = result;
       }
     );
+  }
+
+  setEnabled(apiRegistrationId: any, currentState: boolean) {
+    // If the registration is already enabled, we do nothing.
+    if (currentState) {
+      return;
+    }
+    this.apiRegistrationService.enableRegistration(apiRegistrationId).subscribe(result => {
+      this.ngOnInit();
+    });
   }
 }

@@ -7,6 +7,7 @@ import {ApiRegistration} from './admin/organization/api-registrations/api.regist
 import {ApiRegistrationSteps} from './admin/organization/api-registrations/api.registration.steps';
 import {FilledOutForm} from './admin/organization/api-registrations/filled.out.form';
 import {ApiRegistrationStepDefinition} from './admin/organization/api-registrations/api.registration.step.definition';
+import {PatchEnableRegistration} from './admin/organization/api-registrations/patch.enable.registration';
 
 
 @Injectable()
@@ -45,5 +46,9 @@ export class ApiRegistrationService {
 
   deleteRegistration(registrationId: string): Observable<void> {
     return this.http.delete<void>(this.registrationsUrl + '/' + registrationId);
+  }
+
+  enableRegistration(registrationId: string): Observable<ApiRegistration> {
+    return this.http.patch<ApiRegistration>(this.registrationsUrl + '/' + registrationId, new PatchEnableRegistration());
   }
 }

@@ -6,6 +6,7 @@
       <th scope="col">Id</th>
       <th scope="col"># Consents</th>
       <th scope="col">Created</th>
+      <th scope="col">Active</th>
     </tr>
     </thead>
     <tbody>
@@ -13,6 +14,8 @@
       <td><a routerLink="{{apiRegistration.id}}">{{apiRegistration.id}}</a></td>
       <td>#</td>
       <td>{{apiRegistration.created}}</td>
+      <td><input type="radio"  (click)="setEnabled(apiRegistration.id, apiRegistration.enabled)"
+                 [checked]="apiRegistration.enabled"/></td>
     </tr>
     <tr *ngIf="apiWithDataProviders.apiRegistrations?.length == 0">
       <td colspan="4">You have no registrations for this API yet</td>
