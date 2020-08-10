@@ -8,13 +8,11 @@ export class ErrorService {
   private isServerError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   setServerError(err) {
-    console.log('setting error');
     this.serverError = err;
     this.isServerError.next(true);
   }
 
   hasServerError(): Observable<boolean> {
-    console.log('whuuuut');
     return this.isServerError;
   }
 

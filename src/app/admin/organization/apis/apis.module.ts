@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../../../shared/shared.module';
 import {ApiListComponent} from './api-list.component';
 import {ApisRoutingModule} from './apis.routing.module';
-import {FoDetailComponent} from './fo-detail.component';
 
 @NgModule({
   imports: [
@@ -13,8 +12,8 @@ import {FoDetailComponent} from './fo-detail.component';
     SharedModule,
     ApisRoutingModule
   ],
-  declarations: [ApiListComponent, FoDetailComponent],
-  exports: [ApiListComponent, FoDetailComponent]
+  declarations: [ApiListComponent],
+  exports: [ApiListComponent]
 })
 export class ApisModule {
 

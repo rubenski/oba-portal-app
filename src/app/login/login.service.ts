@@ -18,11 +18,10 @@ export class LoginService {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private cognito: CognitoUtil, private http: HttpClient, private router: Router) {
-    console.log('login service created');
+
   }
 
   login(credentials: Credentials, cognitoCallback: CognitoCallback) {
-    console.log('LOGIN called!');
 
     const authenticationDetails = new AuthenticationDetails({
       Username: credentials.username,
