@@ -1,29 +1,29 @@
-<div *ngIf="apiWithDataProviders">
-  <h1>Registrations for {{apiWithDataProviders.title}}</h1>
+<div *ngIf="apiWithRegistrations">
+  <h1>Registrations for {{apiWithRegistrations.title}}</h1>
   <table class="table table-striped">
     <thead>
     <tr>
       <th scope="col">Id</th>
-      <th scope="col"># Consents</th>
+      <th scope="col"># Connections</th>
       <th scope="col">Created</th>
       <th scope="col">Use for new consents</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let apiRegistration of apiWithDataProviders.apiRegistrations">
+    <tr *ngFor="let apiRegistration of apiWithRegistrations.apiRegistrations">
       <td><a routerLink="{{apiRegistration.id}}">{{apiRegistration.id}}</a></td>
-      <td>#</td>
+      <td>{{apiRegistration.nrOfConnections}}</td>
       <td>{{apiRegistration.created}}</td>
-      <td><input type="radio"  (click)="setEnabled(apiRegistration.id, apiRegistration.enabled)"
+      <td><input type="radio" (click)="setEnabled(apiRegistration.id, apiRegistration.enabled)"
                  [checked]="apiRegistration.enabled"/></td>
     </tr>
-    <tr *ngIf="apiWithDataProviders.apiRegistrations?.length == 0">
+    <tr *ngIf="apiWithRegistrations.apiRegistrations?.length == 0">
       <td colspan="4">You have no registrations for this API yet</td>
     </tr>
     </tbody>
   </table>
 
-  <button type="submit" class="btn btn-success" [routerLink]="[apiWithDataProviders.apiId + '/new']">Create
+  <button type="submit" class="btn btn-success" [routerLink]="[apiWithRegistrations.id + '/new']">Create
     registration
   </button>
 </div>

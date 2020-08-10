@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ApiRegistrationService} from '../../../api.registration.service';
 import {ApiService} from '../../../api.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Api} from './api';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
-import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.providers';
+import {ApiWithRegistrations} from './api.with.registrations';
+import {ApiRegistrationWithNrOfConnections} from './api.registration.with.nr.of.connections';
 
 @Component({
   templateUrl: './api-registration-detail.component.html'
@@ -13,7 +13,8 @@ import {ApiWithCountryDataProviders} from '../apis/api.with.country.data.provide
 export class ApiRegistrationDetailComponent implements OnInit {
 
   registrationId: string = this.route.snapshot.paramMap.get('apiRegistrationId');
-  api: ApiWithCountryDataProviders;
+  api: ApiWithRegistrations;
+  numberOfConnections: number;
   apiRegistration: ApiRegistration;
   formAndFields: FormAndFields;
   stepNr: number;
@@ -67,6 +68,8 @@ export class ApiRegistrationDetailComponent implements OnInit {
           this.formAndFields = formUtil.stepsToFormAndFields(step);
           this.apiService.findOneApiWithCountryDataProvidersAndRegistrations(this.apiRegistration.apiId).subscribe(api => {
             this.api = api;
+            const result = api.apiRegistrations.filter(ar => ar.id === this.apiRegistration.id)[0];
+            this.numberOfConnections = result.nrOfConnections;
           }, error => {
             console.log(error);
           });

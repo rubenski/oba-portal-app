@@ -14,8 +14,8 @@
       <td>{{apiRegistration.created}}</td>
     </tr>
     <tr>
-      <th scope="row">Consents created</th>
-      <td><a [routerLink]="['/consents']">54 consents for 22 users</a></td>
+      <th scope="row">Connections created</th>
+      <td>{{numberOfConnections}}</td>
     </tr>
     </tbody>
   </table>
@@ -80,8 +80,18 @@
           </div>
         </div>
       </div>
-      <button (click)="submit()" type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit</button>
-      <button (click)="delete()" type="submit" class="btn btn-danger">Delete from OBA</button>
+      <button (click)="submit()" type="submit" class="btn btn-success"
+              [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit
+      </button>
+
+      <div class="float-right">
+        <button (click)="delete()" [disabled]="numberOfConnections>0" type="submit" class="btn btn-danger">
+          Delete from OBA
+        </button>
+        <div *ngIf="numberOfConnections>0" class="small">Registration has {{numberOfConnections}} connections</div>
+        <br/><br/>
+      </div>
+
     </div>
   </form>
 </div>
