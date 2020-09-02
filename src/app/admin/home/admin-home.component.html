@@ -1,7 +1,7 @@
 <h1 *ngIf="organization">Welcome {{organization.name}}</h1>
 
 
-<table class="table table-striped" *ngIf="completenessReport && !isComplete()">
+<table class="table" *ngIf="completenessReport && !isComplete()">
   <thead>
   <tr>
     <td colspan="2">
@@ -22,12 +22,20 @@
       <td>Provide a redirect URL</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/redirect-urls" routerLinkActive="button-active">Redirect URLs</button></td>
     </tr>
-    <tr *ngIf="!completenessReport.validTransportCertificate">
+    <tr *ngIf="!completenessReport.transportCertificateExists">
       <td>Provide a transport certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
-    <tr *ngIf="!completenessReport.validSigningCertificate">
+    <tr class="alert-danger" *ngIf="!completenessReport.transportCertificateValid">
+      <td>Transport certificate has expired</td>
+      <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
+    </tr>
+    <tr *ngIf="!completenessReport.signingCertificateExists">
       <td>Provide a signing certificate</td>
+      <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
+    </tr>
+    <tr class="alert-danger" *ngIf="!completenessReport.signingCertificateValid">
+      <td>Signing certificate has expired</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
   </tbody>

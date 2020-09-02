@@ -31,6 +31,7 @@ export class AdminHomeComponent implements OnInit {
 
   isComplete() {
     return this.completenessReport.organizationFieldsComplete && this.completenessReport.redirectUrl
-      && this.completenessReport.validSigningCertificate && this.completenessReport.validTransportCertificate;
+      && this.completenessReport.signingCertificateExists && this.completenessReport.transportCertificateExists
+      && this.completenessReport.signingCertificateValid && this.completenessReport.transportCertificateValid;
   }
 }

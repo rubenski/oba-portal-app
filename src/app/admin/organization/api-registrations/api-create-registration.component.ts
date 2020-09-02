@@ -33,7 +33,7 @@ export class ApiCreateRegistrationComponent implements OnInit {
       this.api = api;
       this.organizationService.completenessReport().subscribe(
         report => {
-          this.organizationComplete = report.validSigningCertificate && report.validTransportCertificate
+          this.organizationComplete = report.signingCertificateExists && report.transportCertificateExists
             && report.redirectUrl && report.organizationFieldsComplete;
           this.render = true;
           if (this.organizationComplete) {
