@@ -11,8 +11,9 @@
       <div *ngFor="let field of formAndFields.fieldDefinitions; let i=index" class="form-group">
         <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
         <div *ngIf="field.labelExplanation.explanation"
-             class="form-field-description">{{field.labelExplanation.explanation}}</div>
+             class="form-field-description" [innerHTML]="field.labelExplanation.explanation"></div>
 
+        <!-- TEXT field -->
         <input class="form-control" type="text" *ngIf="field.type == 'TEXT'" [formControlName]="i">
         <div *ngIf="field.type == 'TEXT' &&
         !formAndFields.form.get('all').get('' + i).pristine &&
@@ -33,6 +34,7 @@
           This field is required
         </div>
 
+        <!-- SELECT field -->
         <select class="form-control" *ngIf="field.type == 'SELECT'" [formControlName]="i">
           <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
         </select>
@@ -43,6 +45,7 @@
           This field is required
         </div>
 
+        <!-- CHECKBOXES field -->
         <div *ngIf="field.type == 'CHECKBOXES'" class="form-group" [formGroupName]="i">
           <label *ngFor="let choice of field.checkBoxValues; let j=index" class="checkbox-label">
             <input type="checkbox" [value]="choice.value" [formControlName]="j">
@@ -52,6 +55,30 @@
             {{field.checkBoxesMinSelectedValidator.message}}
           </div>
         </div>
+
+        <!-- TEXTAREA field -->
+        <textarea class="form-control" *ngIf="field.type == 'TEXT_AREA'" [formControlName]="i" rows="{{field.rows}}"></textarea>
+        <div *ngIf="field.type == 'TEXT_AREA' &&
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.minLength" class="alert alert-danger">
+          This value is too short
+        </div>
+        <div *ngIf="field.type == 'TEXT_AREA' &&
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
+          This value is too long
+        </div>
+        <div *ngIf="field.type == 'TEXT_AREA' &&
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
+          This field is required
+        </div>
+
+
+
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid">Submit</button>
     </div>

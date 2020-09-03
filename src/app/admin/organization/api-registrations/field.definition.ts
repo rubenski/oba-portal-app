@@ -18,6 +18,7 @@ export class FieldDefinition {
   maxLength: number;
   type: string;
   secret: boolean;
+  rows: string;
 
   editable = false;
 }
