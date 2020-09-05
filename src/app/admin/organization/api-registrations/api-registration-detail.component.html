@@ -30,8 +30,9 @@
     <div formArrayName="all">
       <div *ngFor="let field of formAndFields.fieldDefinitions; let i=index" class="form-group">
         <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
+
         <div *ngIf="field.labelExplanation.explanation"
-             class="form-field-description">{{field.labelExplanation.explanation}}</div>
+             class="form-field-description" [innerHTML]="field.labelExplanation.explanation"></div>
 
         <div *ngIf="field.type == 'TEXT' && !field.secret">
           <input class="form-control" type="text" [formControlName]="i">
@@ -79,6 +80,29 @@
             {{field.checkBoxesMinSelectedValidator.message}}
           </div>
         </div>
+
+        <!-- TEXTAREA field -->
+        <textarea class="form-control" *ngIf="field.type == 'TEXT_AREA'" [formControlName]="i" rows="{{field.rows}}"></textarea>
+        <div *ngIf="field.type == 'TEXT_AREA' &&
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.minLength" class="alert alert-danger">
+          This value is too short
+        </div>
+        <div *ngIf="field.type == 'TEXT_AREA' &&
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.maxLength" class="alert alert-danger">
+          This value is too long
+        </div>
+        <div *ngIf="field.type == 'TEXT_AREA' &&
+        !formAndFields.form.get('all').get('' + i).pristine &&
+        formAndFields.form.get('all').get('' + i).errors &&
+        formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
+          This field is required
+        </div>
+
+
       </div>
       <button (click)="submit()" type="submit" class="btn btn-success"
               [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit

@@ -10,6 +10,7 @@
     <div formArrayName="all">
       <div *ngFor="let field of formAndFields.fieldDefinitions; let i=index" class="form-group">
         <label for="{{field.key}}">{{field.labelExplanation.label}}</label>
+
         <div *ngIf="field.labelExplanation.explanation"
              class="form-field-description" [innerHTML]="field.labelExplanation.explanation"></div>
 
@@ -76,9 +77,6 @@
         formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
           This field is required
         </div>
-
-
-
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!formAndFields.form.valid">Submit</button>
     </div>

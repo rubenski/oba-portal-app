@@ -37,17 +37,13 @@ export class ApiCreateRegistrationComponent implements OnInit {
             && report.redirectUrl && report.organizationFieldsComplete;
           this.render = true;
           if (this.organizationComplete) {
-            this.apiRegistrationService.findRegistrationsForApi(this.apiId).subscribe(registrations => {
-              this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
-                  this.currentStep = steps.currentStep;
-                  this.formAndFields = formUtil.stepsToFormAndFields(this.currentStep);
-                },
-                error => {
-                  console.log(error);
-                });
-            }, error => {
-              console.log(error);
-            });
+            this.apiRegistrationService.findRegistrationSteps(this.apiId).subscribe(steps => {
+                this.currentStep = steps.currentStep;
+                this.formAndFields = formUtil.stepsToFormAndFields(this.currentStep);
+              },
+              error => {
+                console.log(error);
+              });
           }
         });
     }, error => {

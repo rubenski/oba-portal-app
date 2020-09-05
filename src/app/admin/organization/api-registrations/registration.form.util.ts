@@ -14,6 +14,9 @@ export class ApiRegistrationFormUtil {
   private textInputValidator(required: boolean, minLength: number, maxLength: number) {
     const validator: ValidatorFn = (formControl: FormControl) => {
       const value = formControl.value;
+
+      console.log('Validation running!');
+
       if (!value && required === true) {
         console.log('false1');
         return {require: true};
@@ -69,14 +72,16 @@ export class ApiRegistrationFormUtil {
       f => {
         if (f.type === 'CHECKBOXES') {
           const checkBoxes = [];
-          f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(cbv.selected)));
+          f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(f.values ? cbv.value === f.values[0] : false)));
           this.addCheckBoxesControl(form, this.fb, checkBoxes, 1);
         } else if (f.type === 'SELECT') {
-          this.addSelectListControl(form, this.fb, f.values ?  f.values[0] : null, f.required);
+          this.addSelectListControl(form, this.fb, f.values ? f.values[0] : null, f.required);
         } else if (f.type === 'TEXT') {
-          this.addTextInputControl(form, this.fb, f.values ?  f.values[0] : null, f.required, f.minLength, f.maxLength);
+          this.addTextInputControl(form, this.fb, f.values ? f.values[0] : null, f.required, f.minLength, f.maxLength);
         } else {
-          this.addControlToFormGroup(form, this.fb, f.values ?  f.values[0] : null);
+          console.log('type : ' + f.type);
+          console.log('type : ' + f.values[0]);
+          this.addControlToFormGroup(form, this.fb, f.values ? f.values[0] : null, f.required, f.minLength, f.maxLength);
         }
 
         /**
@@ -136,8 +141,9 @@ export class ApiRegistrationFormUtil {
     return form.get('all') as FormArray;
   }
 
-  private addControlToFormGroup(form: FormGroup, fb: FormBuilder, values) {
-    this.getFields(form).push(fb.control(values));
+  private addControlToFormGroup(form: FormGroup, fb: FormBuilder, values, required: boolean, minLength: number, maxLength: number) {
+    console.log('bla ' + values);
+    this.getFields(form).push(fb.control(values, this.textInputValidator(required, minLength, maxLength)));
   }
 
   private addCheckBoxesControl(form: FormGroup, fb: FormBuilder, values, minSelected: number) {

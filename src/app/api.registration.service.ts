@@ -27,6 +27,14 @@ export class ApiRegistrationService {
   findRegistration(registrationId): Observable<ApiRegistration> {
     return this.http.get<ApiRegistration>(this.registrationsUrl + '/' + registrationId);
   }
+  
+  deleteRegistration(registrationId: string): Observable<void> {
+    return this.http.delete<void>(this.registrationsUrl + '/' + registrationId);
+  }
+
+  enableRegistration(registrationId: string): Observable<ApiRegistration> {
+    return this.http.patch<ApiRegistration>(this.registrationsUrl + '/' + registrationId, new PatchEnableRegistration());
+  }
 
   findRegistrationSteps(apiId: string): Observable<ApiRegistrationSteps> {
     return this.http.get<ApiRegistrationSteps>(this.stepResultsUrl + '/' + apiId);
@@ -41,14 +49,7 @@ export class ApiRegistrationService {
   }
 
   submitUpdateRegistrationStep(form: FilledOutForm, registrationId: string): Observable<ApiRegistrationStepResult> {
-    return this.http.post<ApiRegistrationStepResult>(this.registrationUpdateUrl + '/' + registrationId, form);
+    return this.http.put<ApiRegistrationStepResult>(this.registrationUpdateUrl + '/' + registrationId, form);
   }
 
-  deleteRegistration(registrationId: string): Observable<void> {
-    return this.http.delete<void>(this.registrationsUrl + '/' + registrationId);
-  }
-
-  enableRegistration(registrationId: string): Observable<ApiRegistration> {
-    return this.http.patch<ApiRegistration>(this.registrationsUrl + '/' + registrationId, new PatchEnableRegistration());
-  }
 }

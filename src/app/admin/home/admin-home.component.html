@@ -27,7 +27,7 @@
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
     <tr class="alert-danger" *ngIf="!completenessReport.transportCertificateValid">
-      <td>Transport certificate has expired</td>
+      <td>You have no valid transport certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
     <tr *ngIf="!completenessReport.signingCertificateExists">
@@ -35,7 +35,7 @@
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
     <tr class="alert-danger" *ngIf="!completenessReport.signingCertificateValid">
-      <td>Signing certificate has expired</td>
+      <td>You have no valid signing certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
   </tbody>
