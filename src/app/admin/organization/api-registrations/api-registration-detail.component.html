@@ -82,7 +82,8 @@
         </div>
 
         <!-- TEXTAREA field -->
-        <textarea class="form-control" *ngIf="field.type == 'TEXT_AREA'" [formControlName]="i" rows="{{field.rows}}"></textarea>
+        <textarea class="form-control" *ngIf="field.type == 'TEXT_AREA'" [formControlName]="i"
+                  rows="{{field.rows}}"></textarea>
         <div *ngIf="field.type == 'TEXT_AREA' &&
         !formAndFields.form.get('all').get('' + i).pristine &&
         formAndFields.form.get('all').get('' + i).errors &&
@@ -104,6 +105,7 @@
 
 
       </div>
+
       <button (click)="submit()" type="submit" class="btn btn-success"
               [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit
       </button>

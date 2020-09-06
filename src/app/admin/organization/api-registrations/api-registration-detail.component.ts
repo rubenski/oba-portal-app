@@ -5,7 +5,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiRegistration} from './api.registration';
 import {ApiRegistrationFormUtil, FormAndFields} from './registration.form.util';
 import {ApiWithRegistrations} from './api.with.registrations';
-import {ApiRegistrationWithNrOfConnections} from './api.registration.with.nr.of.connections';
 
 @Component({
   templateUrl: './api-registration-detail.component.html'

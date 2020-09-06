@@ -1,6 +1,5 @@
 
-export class CheckBoxValue {
+export class LabelValue {
   label: string;
   value: string;
-  selected: boolean;
 }

@@ -2,6 +2,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn} from '@angu
 import {FieldDefinition} from './field.definition';
 import {FilledOutForm, KeyValue} from './filled.out.form';
 import {ApiRegistrationStepDefinition} from './api.registration.step.definition';
+import {throwError} from 'rxjs';
 
 
 export class ApiRegistrationFormUtil {
@@ -15,21 +16,16 @@ export class ApiRegistrationFormUtil {
     const validator: ValidatorFn = (formControl: FormControl) => {
       const value = formControl.value;
 
-      console.log('Validation running!');
-
       if (!value && required === true) {
-        console.log('false1');
         return {require: true};
       }
       if (minLength && value && value.length < minLength) {
-        console.log('false2');
         return {minLength: true};
       }
       if (maxLength && value && value.length > maxLength) {
-        console.log('false3');
         return {maxLength: true};
       }
-      console.log('OK');
+
       return null;
     };
 
@@ -72,15 +68,13 @@ export class ApiRegistrationFormUtil {
       f => {
         if (f.type === 'CHECKBOXES') {
           const checkBoxes = [];
-          f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(f.values ? cbv.value === f.values[0] : false)));
+          f.checkBoxValues.forEach(cbv => checkBoxes.push(this.fb.control(f.values ? f.values.includes(cbv.value) : false)));
           this.addCheckBoxesControl(form, this.fb, checkBoxes, 1);
         } else if (f.type === 'SELECT') {
           this.addSelectListControl(form, this.fb, f.values ? f.values[0] : null, f.required);
         } else if (f.type === 'TEXT') {
           this.addTextInputControl(form, this.fb, f.values ? f.values[0] : null, f.required, f.minLength, f.maxLength);
         } else {
-          console.log('type : ' + f.type);
-          console.log('type : ' + f.values[0]);
           this.addControlToFormGroup(form, this.fb, f.values ? f.values[0] : null, f.required, f.minLength, f.maxLength);
         }
 
@@ -100,13 +94,20 @@ export class ApiRegistrationFormUtil {
     return new FormAndFields(form, fieldDefinitions);
   }
 
+  /**
+   * The array of submitted form values has the same order and size as the field definitions array. We use this fact to
+   * link submitted values back to the field
+   */
   getSubmittedFormValues(formAndFields: FormAndFields, stepNumber: number): FilledOutForm {
     const filledOutForm = new FilledOutForm();
     let i = 0;
     formAndFields.fieldDefinitions.forEach(f => {
       const submittedValues = formAndFields.form.value.all[i];
-      if (submittedValues instanceof Array) {
-        const selected = this.getSelectedFormArrayValues(f, submittedValues);
+      if (f.type === 'CHECKBOXES') {
+        const selected = this.getSubmittedCheckBoxValues(f, submittedValues);
+        filledOutForm.values.push(new KeyValue(f.key, selected));
+      } else if (f.type === 'RADIO_BUTTONS') {
+        const selected = this.getSubmittedRadioButtonValue(f, submittedValues);
         filledOutForm.values.push(new KeyValue(f.key, selected));
       } else {
         const val = [];
@@ -120,11 +121,29 @@ export class ApiRegistrationFormUtil {
     return filledOutForm;
   }
 
+
+  /**
+   * Radio buttons are returned as an array of elements containing either the selected value (a UUID in our case) or 'false'.
+   * Since we want only a single value from the RADIO_BUTTON control we can immediately return the first value we find that is not 'false'.
+   *
+   * @param f
+   * @param submittedValues
+   * @private
+   */
+  private getSubmittedRadioButtonValue(f: FieldDefinition, submittedValues: any[]): string[] {
+    for (const item of submittedValues) {
+      if (item !== false) {
+        return [item];
+      }
+    }
+    throwError('Nothing was selected for RADIO_BUTTON form component');
+  }
+
   // The Angular FormArray approach is not exactly pretty. We get a list of trues/falses with indexes which
   // we then need to turn into something the backend understands by linking the trues/falses
-  // back to the original field definition and the actual checkbox values provided there
-  // (redirect url ids for example). It works, but that is all I can say about it
-  private getSelectedFormArrayValues(f: FieldDefinition, submittedValues: boolean[]): string[] {
+  // back to their original field definition and the actual checkbox values provided there
+  // (redirect url ids for example). It works, but that's it.
+  private getSubmittedCheckBoxValues(f: FieldDefinition, submittedValues: boolean[]): string[] {
     const selected = [];
     const checkBoxValues = f.checkBoxValues;
     for (let j = 0; j < checkBoxValues.length; j++) {
@@ -142,7 +161,6 @@ export class ApiRegistrationFormUtil {
   }
 
   private addControlToFormGroup(form: FormGroup, fb: FormBuilder, values, required: boolean, minLength: number, maxLength: number) {
-    console.log('bla ' + values);
     this.getFields(form).push(fb.control(values, this.textInputValidator(required, minLength, maxLength)));
   }
 
@@ -151,6 +169,7 @@ export class ApiRegistrationFormUtil {
   }
 
   private addSelectListControl(form: FormGroup, fb: FormBuilder, values, required: boolean) {
+    console.log(JSON.stringify(values) + ' : ' + required);
     this.getFields(form).push(fb.control(values, this.selectListValidator(required)));
   }
 

@@ -1,5 +1,4 @@
 import {LabelExplanation} from './label.explanation';
-import {CheckBoxValue} from './checkbox.value';
 import {LabelValue} from './label.value';
 import {CheckBoxesMinSelectedValidator} from './checkbox.min.selected.validator';
 
@@ -7,7 +6,8 @@ import {CheckBoxesMinSelectedValidator} from './checkbox.min.selected.validator'
 export class FieldDefinition {
   key: string;
   labelExplanation: LabelExplanation;
-  checkBoxValues: CheckBoxValue[];
+  checkBoxValues: LabelValue[];
+  radioButtonValues: LabelValue[];
   checkBoxesMinSelectedValidator: CheckBoxesMinSelectedValidator;
   required: boolean;
   description: string;
