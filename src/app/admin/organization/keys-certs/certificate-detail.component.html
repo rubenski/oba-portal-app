@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit()" #form="ngForm" style="width:80%">
-  <table class="table" *ngIf="certificate" >
+  <table class="table" *ngIf="certificate">
     <tbody>
     <tr>
       <th scope="row" style="width:20%">Id</th>
@@ -48,10 +48,15 @@
     </tr>
     <tr>
       <th scope="row">Valid until</th>
-      <td>{{certificate.validUntil}} (expires in {{certificate.daysUntilExpiration}} days)</td>
+      <td *ngIf="certificate.daysUntilExpiration >= 0">{{certificate.validUntil}} (expires
+        in {{certificate.daysUntilExpiration}} days)
+      </td>
+      <td *ngIf="certificate.daysUntilExpiration < 0"><span class="alert-danger">Expired</span></td>
     </tr>
     <tr *ngIf="!certificate.signedCertificate">
-      <td colspan="2" align="right"><button type="submit" class="btn btn-success">Save</button></td>
+      <td colspan="2" align="right">
+        <button type="submit" class="btn btn-success">Save</button>
+      </td>
     </tr>
     </tbody>
 

@@ -13,5 +13,5 @@ export class Certificate {
   created: string;
   validFrom: string;
   validUntil: string;
-  daysUntilExpiration: string;
+  daysUntilExpiration: number;
 }
