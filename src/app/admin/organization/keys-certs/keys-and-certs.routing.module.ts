@@ -1,12 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CertificateAddComponent} from './certificate-add.component';
+import {GenerateNewCertificateComponent} from './generate-new-certificate.component';
 import {CertificateListComponent} from './certificate-list.component';
 import {CertificateDetailComponent} from './certificate-detail.component';
+import {UploadCertificateComponent} from './upload-certificate.component';
 
 const routes: Routes = [
   {path: '', component: CertificateListComponent},
-  {path: 'new', component: CertificateAddComponent},
+  {path: 'create', component: GenerateNewCertificateComponent},
+  {path: 'upload', component: UploadCertificateComponent},
   {path: ':id', component: CertificateDetailComponent}
 ];
 

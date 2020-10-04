@@ -26,7 +26,7 @@
       <td>Provide a transport certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
-    <tr class="alert-danger" *ngIf="!completenessReport.transportCertificateValid">
+    <tr class="alert-danger" *ngIf="completenessReport.transportCertificateExists && !completenessReport.transportCertificateValid">
       <td>You have no valid transport certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
@@ -34,7 +34,7 @@
       <td>Provide a signing certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>
-    <tr class="alert-danger" *ngIf="!completenessReport.signingCertificateValid">
+    <tr class="alert-danger" *ngIf="completenessReport.signingCertificateExists && !completenessReport.signingCertificateValid">
       <td>You have no valid signing certificate</td>
       <td><button class="btn btn-success" type="button" routerLink="organization/keys-certs" routerLinkActive="button-active">Keys & Certificates</button>&nbsp;</td>
     </tr>

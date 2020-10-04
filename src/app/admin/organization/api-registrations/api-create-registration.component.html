@@ -7,6 +7,7 @@
   </div>
 
   <form *ngIf="formAndFields && organizationComplete" [formGroup]="formAndFields.form" (ngSubmit)="submit()">
+    <div *ngIf="globalError" class="alert alert-danger">{{globalError}}</div>
     <div formArrayName="all">
       <div *ngFor="let field of formAndFields.fieldDefinitions; let i=index" class="form-group">
         <label for="{{field.key}}">{{field.labelExplanation.label}}</label>

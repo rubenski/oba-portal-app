@@ -19,6 +19,7 @@ export class ApiCreateRegistrationComponent implements OnInit {
   formAndFields: FormAndFields;
   organizationComplete: boolean;
   render: boolean; // Prevents the 'incomplete organization' warning from appearing briefly before the form is loaded
+  globalError: string;
 
   constructor(private apiRegistrationService: ApiRegistrationService,
               private apiService: ApiService,
@@ -52,14 +53,18 @@ export class ApiCreateRegistrationComponent implements OnInit {
   }
 
   submit() {
+    this.globalError = null;
     const formUtil = new ApiRegistrationFormUtil();
-    console.log(this.formAndFields.form.value);
     this.apiRegistrationService.submitRegistrationStep(formUtil.getSubmittedFormValues(this.formAndFields, this.currentStep.stepNr),
       this.apiId)
       .subscribe(result => {
         this.router.navigate(['admin/organization/api-registrations'], {queryParams: {apiId: this.apiId}});
       }, error => {
-        console.log(error);
+        if (error.error.code === 'RegistrationFieldsException') {
+          this.globalError = error.error.message;
+        } else {
+          this.globalError = 'An error occurred';
+        }
       });
   }
 }

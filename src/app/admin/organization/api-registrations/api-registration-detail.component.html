@@ -34,6 +34,7 @@
         <div *ngIf="field.labelExplanation.explanation"
              class="form-field-description" [innerHTML]="field.labelExplanation.explanation"></div>
 
+        <!-- TEXT REGULAR field -->
         <div *ngIf="field.type == 'TEXT' && !field.secret">
           <input class="form-control" type="text" [formControlName]="i">
           <div
@@ -56,11 +57,13 @@
           </div>
         </div>
 
+        <!-- TEXT SECRET field -->
         <div *ngIf="field.type == 'TEXT' && field.secret">
           <input class="form-control" type="password" readonly [formControlName]="i">
           <a href="javascript:void(0);" (click)="toggle(i); field.secret = false">Unlock</a>
         </div>
 
+        <!-- SELECT field -->
         <select class="form-control" *ngIf="field.type == 'SELECT'" [formControlName]="i">
           <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
         </select>
@@ -71,6 +74,7 @@
           This field is required
         </div>
 
+        <!-- CHECKBOXES field -->
         <div *ngIf="field.type == 'CHECKBOXES'" class="form-group" [formGroupName]="i">
           <label *ngFor="let choice of field.checkBoxValues; let j=index" class="checkbox-label">
             <input type="checkbox" [value]="choice.value" [formControlName]="j">
@@ -102,13 +106,12 @@
         formAndFields.form.get('all').get('' + i).errors.required" class="alert alert-danger">
           This field is required
         </div>
-
-
       </div>
 
       <button (click)="submit()" type="submit" class="btn btn-success"
               [disabled]="!formAndFields.form.valid || formAndFields.form.pristine">Submit
       </button>
+
 
       <div class="float-right">
         <button (click)="delete()" [disabled]="numberOfConnections>0" type="submit" class="btn btn-danger">

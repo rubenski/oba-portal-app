@@ -5,13 +5,17 @@ import {Observable} from 'rxjs';
 import {AppConstants} from './app.constants';
 import {CreateCertificate} from './admin/organization/keys-certs/create-certificate';
 import {Certificate} from './admin/organization/keys-certs/certificate';
+import {UploadKeyAndCertificate} from './admin/organization/keys-certs/upload.key.and.certificate';
 
 @Injectable()
 export class CertificateService {
 
   private readonly certificatesUrl = environment.obaPortalBackendHostName + '/certificates';
+  private readonly generatedCertificatesUrl = environment.obaPortalBackendHostName + '/generated-certificates';
+  private readonly uploadedCertificatesUrl = environment.obaPortalBackendHostName + '/uploaded-certificates';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   findOne(id): Observable<Certificate> {
     return this.http.get<Certificate>(this.certificatesUrl + '/' + id);
@@ -22,8 +26,12 @@ export class CertificateService {
     return this.http.get<Certificate[]>(this.certificatesUrl + '?nonExpiredOnly=' + nonExpiredOnly);
   }
 
-  create(certificate: CreateCertificate): Observable<CreateCertificate> {
-    return this.http.post<CreateCertificate>(this.certificatesUrl, certificate, AppConstants.HTTP_OPTIONS);
+  createGenerated(certificate: CreateCertificate): Observable<CreateCertificate> {
+    return this.http.post<CreateCertificate>(this.generatedCertificatesUrl, certificate, AppConstants.HTTP_OPTIONS);
+  }
+
+  createUploaded(certificate: UploadKeyAndCertificate): Observable<CreateCertificate> {
+    return this.http.post<CreateCertificate>(this.uploadedCertificatesUrl, certificate, AppConstants.HTTP_OPTIONS);
   }
 
   delete(id): Observable<void> {

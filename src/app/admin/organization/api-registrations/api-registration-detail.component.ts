@@ -32,6 +32,8 @@ export class ApiRegistrationDetailComponent implements OnInit {
   }
 
   submit() {
+    this.globalError = null;
+    this.globalSuccess = null;
     const formUtil = new ApiRegistrationFormUtil();
     const submittedFormValues = formUtil.getSubmittedFormValues(this.formAndFields, this.stepNr);
     this.apiRegistrationService.submitUpdateRegistrationStep(submittedFormValues, this.apiRegistration.id).subscribe(
@@ -40,7 +42,11 @@ export class ApiRegistrationDetailComponent implements OnInit {
         // Reload the data here so that any unlocked secret input fields will go back to being locked
         this.init();
       }, error => {
-        this.globalError = 'An error occurred';
+        if (error.error.code === 'RegistrationFieldsException') {
+          this.globalError = error.error.message;
+        } else {
+          this.globalError = 'An error occurred';
+        }
       });
   }
 
@@ -65,6 +71,7 @@ export class ApiRegistrationDetailComponent implements OnInit {
         step => {
           this.stepNr = step.stepNr;
           this.formAndFields = formUtil.stepsToFormAndFields(step);
+
           this.apiService.findOneApiWithCountryDataProvidersAndRegistrations(this.apiRegistration.apiId).subscribe(api => {
             this.api = api;
             const result = api.apiRegistrations.filter(ar => ar.id === this.apiRegistration.id)[0];

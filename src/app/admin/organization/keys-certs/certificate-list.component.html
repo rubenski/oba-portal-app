@@ -22,7 +22,8 @@
     <td><a href=""># registrations</a></td>
     <td>{{certificate.created}}</td>
     <td *ngIf="certificate.daysUntilExpiration >= 0"> {{certificate.daysUntilExpiration}} days</td>
-    <td *ngIf="certificate.daysUntilExpiration < 0"><span class="alert-danger">Expired {{-certificate.daysUntilExpiration}} days ago</span></td>
+    <td *ngIf="certificate.daysUntilExpiration < 0"><span
+      class="alert-danger">Expired {{-certificate.daysUntilExpiration}} days ago</span></td>
   </tr>
   <tr *ngIf="certificates?.length == 0">
     <td colspan="6">You have no certificates yet</td>
@@ -30,4 +31,7 @@
   </tbody>
 </table>
 
-<button type="submit" class="btn btn-success" routerLink="new">New certificate</button>
+<button type="submit" class="btn btn-success" routerLink="create">Create key and certificate</button>
+<br/><br/>
+<button type="submit" class="btn btn-success" routerLink="upload">Upload existing key and certificate (sandbox only)
+</button>

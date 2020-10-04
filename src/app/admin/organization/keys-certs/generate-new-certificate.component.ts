@@ -5,10 +5,10 @@ import {Router} from '@angular/router';
 import {AppConstants} from '../../../app.constants';
 
 @Component({
-  templateUrl: './certificate-add.component.html',
-  styleUrls: ['./certificate-add.component.css']
+  templateUrl: './generate-new-certificate.component.html',
+  styleUrls: ['./generate-new-certificate.component.css']
 })
-export class CertificateAddComponent implements OnInit {
+export class GenerateNewCertificateComponent implements OnInit {
 
   certificate: CreateCertificate = new CreateCertificate();
   globalError: any;
@@ -18,7 +18,7 @@ export class CertificateAddComponent implements OnInit {
   }
 
   onSubmit() {
-    this.certificateService.create(this.certificate).subscribe(
+    this.certificateService.createGenerated(this.certificate).subscribe(
       o => {
         this.certificate = o;
         this.router.navigate(['admin/organization/keys-certs']);
