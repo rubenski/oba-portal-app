@@ -1,6 +1,9 @@
 <div *ngIf="api">
   <h1>Register with {{api.title}}</h1>
 
+  <a href="#" data-toggle="collapse" href="#explanation">Toggle registration steps</a>
+  <p class="collapse" id="explanation" *ngIf="currentStep" [innerHTML]=currentStep.formDefinition.explanation></p>
+  <br/><br/>
   <div class="alert alert-warning" *ngIf="!organizationComplete && render">
     Before you can register with and use APIs we need some more information about your organization.
     Please complete your <a routerLink="/admin" href="#">pending tasks</a>.
@@ -59,7 +62,8 @@
         </div>
 
         <!-- TEXTAREA field -->
-        <textarea class="form-control" *ngIf="field.type == 'TEXT_AREA'" [formControlName]="i" rows="{{field.rows}}"></textarea>
+        <textarea class="form-control" *ngIf="field.type == 'TEXT_AREA'" [formControlName]="i"
+                  rows="{{field.rows}}"></textarea>
         <div *ngIf="field.type == 'TEXT_AREA' &&
         !formAndFields.form.get('all').get('' + i).pristine &&
         formAndFields.form.get('all').get('' + i).errors &&

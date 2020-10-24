@@ -8,7 +8,7 @@ import {CreatePublicKeyRequest} from './create.public.key.request';
 })
 export class PublicKeysListComponent extends ApplicationBaseComponent {
 
-  @ViewChild('form') form;
+  @ViewChild('form', null) form;
   public keys: PublicKey[];
   globalError: any;
   publicKeyRequest: CreatePublicKeyRequest = new CreatePublicKeyRequest();
@@ -17,7 +17,7 @@ export class PublicKeysListComponent extends ApplicationBaseComponent {
     this.applicationService.findAllApplicationPublicKeys(this.application.id).subscribe(keys => {
       this.keys = keys;
       console.log('ttt ' + this.keys.length);
-    });
+    }, error => {});
   }
 
   delete(id: string) {

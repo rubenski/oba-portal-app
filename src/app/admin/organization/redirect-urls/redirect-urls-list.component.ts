@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RedirectUrlService} from '../../../redirect-url.service';
-import {RedirectUrl} from './redirect.url';
 import {CreateRedirectUrl} from './create.redirect.url';
 import {RedirectUrlWithNumberOfRegistrations} from './redirect.url.with.number.of.registrations';
 
@@ -14,7 +13,7 @@ export class RedirectUrlsListComponent implements OnInit {
   redirectUrls: RedirectUrlWithNumberOfRegistrations[];
   newRedirectUrl: CreateRedirectUrl = new CreateRedirectUrl();
   globalError: any;
-  @ViewChild('form') form;
+  @ViewChild('form', null) form;
 
   constructor(private redirectUrlService: RedirectUrlService) {
   }
