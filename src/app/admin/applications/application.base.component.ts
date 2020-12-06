@@ -7,7 +7,7 @@ import {Application} from '../organization/applications/application';
 
 export abstract class ApplicationBaseComponent implements OnInit {
 
-  protected application: Application;
+  public application: Application;
 
 
   public constructor(public applicationService: ApplicationService,

@@ -9,9 +9,9 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit, AfterViewInit {
+export class RegistrationComponent implements AfterViewInit {
 
-  @ViewChild('registrationForm', null) public registrationForm: NgForm;
+  @ViewChild('registrationForm', {}) public registrationForm: NgForm;
 
   public display: string;
   public registration: Registration = new Registration();
@@ -22,10 +22,6 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.display = 'none';
-  }
-
-  ngOnInit() {
-    // this.registrationForm.form.setErrors({});
   }
 
   onSubmitRegistration() {

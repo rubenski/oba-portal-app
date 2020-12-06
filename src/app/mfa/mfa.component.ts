@@ -11,7 +11,7 @@ import {LoginService} from '../login/login.service';
 })
 export class MfaComponent implements OnInit {
 
-  @ViewChild('totpForm', null) totpForm: NgForm;
+  @ViewChild('totpForm', {}) totpForm: NgForm;
   @Input() scenario: string;
   @Input() cognitoUser: CognitoUser;
   globalError: any;

@@ -13,7 +13,7 @@ export class RedirectUrlsListComponent implements OnInit {
   redirectUrls: RedirectUrlWithNumberOfRegistrations[];
   newRedirectUrl: CreateRedirectUrl = new CreateRedirectUrl();
   globalError: any;
-  @ViewChild('form', null) form;
+  @ViewChild('form', {}) form;
 
   constructor(private redirectUrlService: RedirectUrlService) {
   }

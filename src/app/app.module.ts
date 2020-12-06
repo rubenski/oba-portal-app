@@ -36,7 +36,7 @@ import {AdminHeaderService} from './admin.header.service';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserModule,
-    RouterModule.forRoot([], {enableTracing: false}),
+    RouterModule.forRoot([], { enableTracing: false, relativeLinkResolution: 'legacy' }),
     FlexLayoutModule,
     LayoutModule
   ],

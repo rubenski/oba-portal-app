@@ -8,7 +8,7 @@ import {CreatePublicKeyRequest} from './create.public.key.request';
 })
 export class PublicKeysListComponent extends ApplicationBaseComponent {
 
-  @ViewChild('form', null) form;
+  @ViewChild('form', {}) form;
   public keys: PublicKey[];
   globalError: any;
   publicKeyRequest: CreatePublicKeyRequest = new CreatePublicKeyRequest();
