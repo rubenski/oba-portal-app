@@ -21,6 +21,7 @@ export class PageComponent implements OnInit {
 
   getPage() {
     const uniqueUrlName = this.route.snapshot.paramMap.get('uniqueUrlName');
+    console.log(uniqueUrlName);
     this.pageService.getPage(uniqueUrlName).subscribe(page => this.page = page);
   }
 

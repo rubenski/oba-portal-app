@@ -20,6 +20,7 @@ export class PageService {
   }
 
   getPage(uniqueUrlName: string): Observable<Page> {
+    console.log('requesting : ' + this.pagesUrl + uniqueUrlName);
     return this.http.get<Page>(this.pagesUrl + uniqueUrlName)
       .pipe(
         tap(_ => this.log('fetched page' + uniqueUrlName)),

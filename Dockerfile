@@ -27,5 +27,13 @@ RUN apk update && apk add --no-cache bash
 # Remove the default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /appdir/dist/oba-portal-app /usr/share/nginx/html
-EXPOSE 80
+# Remove the default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/cert.crt /etc/nginx/conf.d
+COPY nginx/private.key /etc/nginx/conf.d
+# This docker.conf configures NGINX as a web server (instead of as a reverse proxy for local development)
+COPY nginx/oba-portal-docker.conf /etc/nginx/conf.d
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
+
+
